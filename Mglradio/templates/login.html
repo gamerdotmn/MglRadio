@@ -1,0 +1,12 @@
+<ion-view title="{{logo}}">
+    <ion-content class="login" scroll="false">
+        <center>
+            <input ng-model="newUser.name" type="text" placeholder="Нэвтрэх нэр">
+            <input ng-model="newUser.pwd" type="password" placeholder="Нууц үг">
+            <button class="button submit" ng-click="createContact(newUser)">НЭВТРЭХ</button>
+            <button class="button facebook" ng-click="createContact(newUser)">FACEBOOK-р НЭВТРЭХ</button>
+            <button class="button signup" ng-click="signup()">Бүртгүүлэх</button>
+            <button class="button forget" ng-click="forget()">Нууц үгээ мартсан уу?</button>
+        </center>
+    </ion-content>
+</ion-view>

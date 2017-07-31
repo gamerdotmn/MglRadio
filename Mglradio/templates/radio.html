@@ -1,0 +1,33 @@
+<ion-view title="{{logo}}">
+    <ion-content scroll="false" id="ioncontent">
+        <div class="radiodiv" id="radiodiv">
+            <center>
+                <button ng-if="!playstatus" ng-click="play()" class="button ion-play icon"></button>
+                <button ng-if="playstatus" ng-click="pause()" class="button ion-ios-pause icon"></button>
+                <h5 class="bl">{{rtitle}}</h5>
+            </center>
+        </div>
+        <div ng-if="rs==1" style="padding-top:20%;color:white;">
+            <br/>
+            <center>
+                <span class="fa fa-headphones" style="font-size:50px;"></span><br/>
+                <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Өнөөдрийн радио нэвтрүүлгийн хувиар ороогүй байна.</p>
+            </center>
+        </div>
+        <ion-scroll class="hutulburdiv" id="hutulburdiv" has-bouncing="true">
+            <ion-list ng-repeat="t in timetables" >
+                <a id="r{{t.id}}" ng-click="notif({{t.id}})">
+                    <ion-item ng-class="(t.isactive==true) ? 'active' : ''">
+                        <h2>{{t.ttime}}</h2>
+                        <p>{{t.title}}</p><img ng-if="!t.isnotif" src="img/next.png"><img ng-if="t.isnotif" src="img/done.png">
+                    </ion-item>
+                </a>
+            </ion-list>
+            
+            <div style="height:30%;">
+                <input type="hidden" id="h" value=""/>
+            </div>
+        </ion-scroll>
+
+    </ion-content>
+</ion-view>

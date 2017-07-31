@@ -1,0 +1,115 @@
+<ion-view title="{{logo}}">
+    <ion-content  id="rent" class="rent" scroll="false" has-bouncing="true">
+        <!--content<br>
+        <button class="btn btn-success" ng-click="download()">Татах</button>
+        <div id="status"></div>-->
+        <ion-tabs class="top-tab" tabs-swipable>
+
+            <ion-tab title="ИХ ҮЗСЭН">
+                <ion-nav-view>
+                    <ion-content class="animated fadeIn most">
+                        <ion-slide-box auto-play="true" >
+                            <ion-slide>
+                                <div class="slide">
+                                    <a ng-click="detail()">
+                                        <div class="desc">
+                                            <p>Fast and furious 6</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </ion-slide>
+                            <ion-slide>
+                                <div class="slide">
+                                    <a ng-click="detail()">
+                                        <div class="desc">
+                                            <p>Fast and furious 6</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </ion-slide>
+                            <ion-slide>
+                                <div class="slide">
+                                    <a ng-click="detail()">
+                                        <div class="desc">
+                                            <p>Fast and furious 6</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </ion-slide>
+                            <ion-slide>
+                                <div class="slide">
+                                    <a ng-click="detail()">
+                                        <div class="desc">
+                                            <p>Fast and furious 6</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </ion-slide>
+                        </ion-slide-box>
+                        <div class="top">
+                            <p>Энэ сарын топ 8</p>
+                        </div>
+                        <div class="secondtop">
+                            <div ng-click="detail()" class="top1" style="background-image: url('img/slide1.jpg');">
+                            </div>
+                        </div>
+                        <div class="thirdtop">
+                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide2.jpg');">
+                            </div>
+                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide3.jpg');">
+                            </div>
+                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide4.jpg');"> 
+                            </div> 
+                        </div>
+                        <div class="secondtop">
+                            <div ng-click="detail()" class="top1" style="background-image: url('img/slide1.jpg');">
+                            </div>
+                        </div>
+                        <div class="thirdtop">
+                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide2.jpg');">
+                            </div>
+                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide3.jpg');">
+                            </div>
+                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide4.jpg');"> 
+                            </div>
+                        </div>
+                        <div style="height: 4%;"></div>
+                    </ion-content>
+
+                </ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="КАТЕГОРИ">
+                <ion-nav-view>
+                    <ion-content class="animated fadeIn category" scroll="false">
+                        <div class="category-header">
+                            <button ng-click="search()">
+                                <img src="img/search.png"/>
+                            </button>
+                            <input type="text" id="searchinput" placeholder="КОНТЕНТ ХАЙХ">
+                        </div>
+                        <ion-scroll style="height: 100%;" has-bouncing="true">
+                            <ion-list>
+                                <div ng-repeat="group in groups">
+                                    <ion-item ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
+                                        <p class="name">Тулаант</p>
+                                        <p class="count">
+                                            4 контент <i class="icon" ng-class="isGroupShown(group) ? 'ion-android-arrow-dropdown' : 'ion-android-arrow-dropright'"></i>
+                                        </p>
+                                    </ion-item>
+                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-repeat="item in group.items" ng-show="isGroupShown(group)">
+                                        <img src="img/item.jpg">
+                                        <p>LOGAN</p>
+                                    </ion-item>
+                                </div>
+                            </ion-list>
+                            <div style="height:15%;"></div>
+                        </ion-scroll>
+                    </ion-content>
+
+                </ion-nav-view>
+            </ion-tab>
+
+        </ion-tabs>
+    </ion-content>
+</ion-view>
