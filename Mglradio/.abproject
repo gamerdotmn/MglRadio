@@ -1,0 +1,45 @@
+{
+  "ProjectName": "Mglradio",
+  "ProjectGuid": "365b4d09-1a2b-4376-b8e4-015af10019b6",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.Mglradio",
+  "DisplayName": "Mglradio",
+  "Author": "",
+  "Description": "Mglradio",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "6.4.0",
+  "AndroidPermissions": [
+    "android.permission.INTERNET"
+  ],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "true",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [
+    "ID_CAP_NETWORKING",
+    "ID_CAP_WEBBROWSERCOMPONENT"
+  ],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{7885949e-eb7f-49d7-9af6-de124027febb}",
+  "WP8ProductID": "{58dba806-a283-4ab6-b926-c5d7c3132b05}",
+  "WPSdk": "8.0",
+  "WP8PackageIdentityName": "1234Telerik.Mglradio",
+  "WP8WindowsPublisherName": "CN=Telerik",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ]
+}
