@@ -58,8 +58,8 @@
                             </div>
                             <div class="top2" ng-click="detail()" style="background-image: url('img/slide3.jpg');">
                             </div>
-                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide4.jpg');"> 
-                            </div> 
+                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide4.jpg');">
+                            </div>
                         </div>
                         <div class="secondtop">
                             <div ng-click="detail()" class="top1" style="background-image: url('img/slide1.jpg');">
@@ -70,7 +70,7 @@
                             </div>
                             <div class="top2" ng-click="detail()" style="background-image: url('img/slide3.jpg');">
                             </div>
-                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide4.jpg');"> 
+                            <div class="top2" ng-click="detail()" style="background-image: url('img/slide4.jpg');">
                             </div>
                         </div>
                         <div style="height: 4%;"></div>
@@ -90,20 +90,56 @@
                         </div>
                         <ion-scroll style="height: 100%;" has-bouncing="true">
                             <ion-list>
-                                <div ng-repeat="group in groups">
-                                    <ion-item ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
-                                        <p class="name">Тулаант</p>
+                                <div ng-repeat="type in types">
+                                    <ion-item ng-click="toggleGroup(type)" ng-class="{active: isGroupShown(type)}">
+                                        <p class="name">{{type.name}}</p>
                                         <p class="count">
-                                            4 контент <i class="icon" ng-class="isGroupShown(group) ? 'ion-android-arrow-dropdown' : 'ion-android-arrow-dropright'"></i>
+                                            4 контент <i class="icon" ng-class="isGroupShown(type) ? 'ion-android-arrow-dropdown' : 'ion-android-arrow-dropright'"></i>
                                         </p>
                                     </ion-item>
-                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-repeat="item in group.items" ng-show="isGroupShown(group)">
-                                        <img src="img/item.jpg">
+                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-show="isGroupShown(type)">
+                                        <div class="img" style="background-image:url('img/slide.jpg');">
+                                        </div>
+                                        <p>LOGAN</p>
+                                    </ion-item>
+                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-show="isGroupShown(type)">
+                                        <div class="img" style="background-image:url('img/slide.jpg');">
+                                        </div>
+                                        <p>LOGAN</p>
+                                    </ion-item>
+                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-show="isGroupShown(type)">
+                                        <div class="img" style="background-image:url('img/slide.jpg');">
+                                        </div>
+                                        <p>LOGAN</p>
+                                    </ion-item>
+                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-show="isGroupShown(type)">
+                                        <div class="img" style="background-image:url('img/slide.jpg');">
+                                        </div>
+                                        <p>LOGAN</p>
+                                    </ion-item>
+                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-show="isGroupShown(type)">
+                                        <div class="img" style="background-image:url('img/slide.jpg');">
+                                        </div>
+                                        <p>LOGAN</p>
+                                    </ion-item>
+                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-show="isGroupShown(type)">
+                                        <div class="img" style="background-image:url('img/slide.jpg');">
+                                        </div>
+                                        <p>LOGAN</p>
+                                    </ion-item>
+                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-show="isGroupShown(type)">
+                                        <div class="img" style="background-image:url('img/slide.jpg');">
+                                        </div>
+                                        <p>LOGAN</p>
+                                    </ion-item>
+                                    <ion-item class="item-accordion grid" ng-click="detail()" ng-show="isGroupShown(type)">
+                                        <div class="img" style="background-image:url('img/slide.jpg');">
+                                        </div>
                                         <p>LOGAN</p>
                                     </ion-item>
                                 </div>
                             </ion-list>
-                            <div style="height:15%;"></div>
+                            <div style="height: 16%; float: left; width: 100%;"></div>
                         </ion-scroll>
                     </ion-content>
 

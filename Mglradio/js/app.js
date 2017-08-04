@@ -122,7 +122,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                     $scope.rs = 2;
                 }
                 $scope.today = data.today;
-                $scope.contents = data.contents;
                 $ionicLoading.hide();
             }).error(function() {
                 $ionicLoading.hide();
@@ -379,7 +378,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             }
         };
     })
-    .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window) {
+    .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window,dataService) {
         $scope.toggleGroup = function(group) {
             group.show = !group.show;
         };
@@ -387,17 +386,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             return group.show;
         };
         
-        $scope.groups = [];
-        for (var i = 0; i < 10; i++) {
-            $scope.groups[i] = {
-                name: i,
-                items: [],
-                show: false
-            };
-            for (var j = 0; j < 7; j++) {
-                $scope.groups[i].items.push(i + '-' + j);
-            }
-        }
         $scope.search = function() {
             var search = document.getElementById("searchinput").value;
             alert(search);
@@ -415,6 +403,19 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             $scope.modal.hide();
             $window.location.href = '#/app/login';
         }
+        
+        $scope.loadcontent = function() {
+            $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
+            dataService.getContent().success(function(data) {
+                $scope.contents = data.contents;
+                $scope.types = data.types;
+                $ionicLoading.hide();
+            }).error(function() {
+                $ionicLoading.hide();
+            });
+        };
+        
+        $scope.loadcontent();
         
         document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -610,6 +611,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
         return {
             getInit: function() {
                 return $http.get(host + "/api/init.php", {timeout:30000});
+            },
+            getContent: function() {
+                return $http.get(host + "/api/content.php", {timeout:30000});
             }
         }
     });
