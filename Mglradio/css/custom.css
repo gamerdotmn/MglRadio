@@ -163,7 +163,7 @@
 {
     background-image: url('../img/tv.png') !important;
     background-size: contain;
-    background-position: center;
+    background-position: center; 
     background-repeat: no-repeat;
     width: 30px;
     height: 55px;
@@ -175,7 +175,7 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    width: 30px;
+    width: 30px; 
     height: 55px;
     content: "";
 }
@@ -612,11 +612,11 @@
 }
 .rent .category .list .item.item-accordion.grid
 {
-    width: 25% !important;
+    width: 24.7% !important;
     margin: 0;
     padding: 5px;
     background: transparent !important;
-    float: left;
+    display: inline-block;
 }
 .rent .category .list .item.item-accordion.grid .img
 {
@@ -653,7 +653,6 @@
 }
 .rent .most .slide
 {
-    background-image: url('../img/slide.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

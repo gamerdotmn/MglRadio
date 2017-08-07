@@ -2,28 +2,28 @@
     <ion-content class="detailcontent" scroll="false">
         <button class="button button-clear ion-android-close close" ng-click="modal.hide()"></button>
         <div class="info">
-            <div class="img" style="background-image:url('img/slide1.jpg');">
+            <div class="img" style="background-image:url({{contentdetail.img}});">
             </div> 
             <div class="other">
-                <h3>LOGAN</h3>
+                <h3>{{contentdetail.name}}</h3>
                 <table>
                     <tr>
                         <td>-Төрөл</td>
-                        <td>Адал явдал</td>
+                        <td ng-repeat="type in types" ng-if="type.id==contentdetail.type_id">{{type.name}}</td>
                     </tr> 
                     <tr>
                         <td>-Хугацаа</td>
-                        <td>1ц 50м</td>
+                        <td>{{contentdetail.time}}</td>
                     </tr>
                     <tr>
                         <td>-Он</td>
-                        <td>2017</td>
+                        <td>{{contentdetail.year}}</td>
                     </tr>
                 </table>
                 <button class="button btn" ng-click="checklogin()">Түрээслэх</button>
             </div>
             <p class="desc">Дэлгэрэнгүй:</p>
-            <p class="description">In the near future, a weary Logan cares for an ailing Professor X, somewhere on the Mexican border. However, Logan's attempts to hide from the world, and his legacy, are upended when a young mutant arrives, pursued by dark forces. </p>
+            <p class="description">{{contentdetail.description}}</p>
             
         </div>
     </ion-content>

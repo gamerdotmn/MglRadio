@@ -378,7 +378,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             }
         };
     })
-    .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window,dataService) {
+    .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService) {
         $scope.toggleGroup = function(group) {
             group.show = !group.show;
         };
@@ -395,7 +395,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                                     }).then(function(modal) {
                                         $scope.modal = modal;
                                     });
-        $scope.detail = function() {
+        $scope.detail = function(id) {
+            angular.forEach($scope.contents, function(value, key) {
+                if (value.id===id) {
+                    $scope.contentdetail = value;
+                }
+            });
             $scope.modal.show();
         }
         
@@ -409,6 +414,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             dataService.getContent().success(function(data) {
                 $scope.contents = data.contents;
                 $scope.types = data.types;
+                $scope.top = data.top;
                 $ionicLoading.hide();
             }).error(function() {
                 $ionicLoading.hide();
@@ -522,6 +528,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
         }
         $scope.forget = function() {
             $window.location.href = '#/app/forget';
+        }
+        $scope.login = function(user) {
+            alert(user.name);
+            //$window.location.href = '#/app/signup';
+        }
+        $scope.facebooklogin = function() {
+            alert("fb");
+            //$window.location.href = '#/app/signup';
         }
     })
     .controller('SignupCtrl', function($scope, $window) {
