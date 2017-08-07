@@ -11,7 +11,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                        controller: "IndexCtrl"
                    }) 
             .state('app.news', {
-                       url: "/news",
+                       url: "/news", 
                        views: {
                     'newsContent' :{
                                    templateUrl: "templates/news.html",
@@ -539,9 +539,17 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
         }
     })
     .controller('SignupCtrl', function($scope, $window) {
-        $scope.submit = function() {
-            $window.location.href = '#/app/content';
+        $scope.submit = function(user) {
+            console.log(user);
+            if(typeof user.name !== "undefined"){
+                
+            }
+            else{
+                navigator.notification.alert("Нэвтрэх нэрээ оруулна уу!", alertCallback, "Алдаа", "Хаах");
+            }
+            //$window.location.href = '#/app/content';
         }
+        function alertCallback(){}
     })
     .controller('ForgetCtrl', function($scope, $window) {
         $scope.submit = function() {
