@@ -91,8 +91,17 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                                    controller: "ForgetCtrl"
                                }
                 }
+                   })
+            .state('app.logout', {
+                       url: "/logout",
+                       views: {
+                    'contentContent' :{
+                                   templateUrl: "templates/logout.html",
+                                   controller: "LogoutCtrl"
+                               }
+                }
                    });
-        $urlRouterProvider.otherwise("/app/signup");
+        $urlRouterProvider.otherwise("/app/content");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -165,7 +174,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                   });
         }, 2500);
         
-        $scope.loginstatus = false;
+        if (!storage.getItem("username")) {
+            $scope.loginstatus = false;
+        } else {
+            $scope.loginstatus = true;
+        }
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading) {
         $scope.net = navigator.onLine;
@@ -525,7 +538,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             };
         }
     })
-    .controller('LoginCtrl', function($scope, $window) {
+    .controller('LoginCtrl', function($scope, $window, $http) {
+        function alertCallback() {
+        }
         $scope.signup = function() {
             $window.location.href = '#/app/signup';
         }
@@ -533,13 +548,49 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             $window.location.href = '#/app/forget';
         }
         $scope.login = function(user) {
-            alert(user.name);
-            //$window.location.href = '#/app/signup';
+            if (user) {
+                if (typeof user.name !== "undefined" && user.name !== "") {
+                    if (typeof user.pwd !== "undefined" && user.pwd !== "") {
+                        var data = {
+                            name:user.name,
+                            pwd:user.pwd
+                        };
+                        var loginresponse = $http.post(host + "/api/login.php", data, {});
+
+                        loginresponse.success(function(data, status, headers, config) {
+                            if (data === "1") {
+                                storage.setItem("username", user.name);
+                                storage.setItem("password", user.pwd);
+                                $scope.loginstatus = true;
+                                $window.location.href = '#/app/content';
+                            } else {
+                                navigator.notification.alert("Нэвтрэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
+                            }
+                        });
+
+                        loginresponse.error(function(data, status, headers, config) {
+                            navigator.notification.alert("Нэвтрэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
+                        });
+                    } else {
+                        navigator.notification.alert("Нууц үгээ оруулна уу!", alertCallback, "Алдаа", "Хаах");
+                    }    
+                } else {
+                    navigator.notification.alert("Нэвтрэх нэрээ оруулна уу!", alertCallback, "Алдаа", "Хаах");
+                }
+            } else {
+                navigator.notification.alert("Талбарыг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
+            }
         }
         $scope.facebooklogin = function() {
             alert("fb");
             //$window.location.href = '#/app/signup';
         }
+    })
+    .controller('LogoutCtrl', function($scope, $window) {
+        $scope.loginstatus = false; 
+        storage.removeItem("username");
+        storage.removeItem("password"); 
+        $window.location.href = '#/app/login';
     })
     .controller('SignupCtrl', function($scope, $window, $http) {
         $scope.submit = function(user) {
@@ -554,27 +605,27 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                                         email:user.email,
                                         pwd:user.pwd
                                     };
-                                    var responsePromise = $http.post(host + "/api/signup.php", data, {});
+                                    var signupresponse = $http.post(host + "/api/signup.php", data, {});
 
-                                    responsePromise.success(function(data, status, headers, config) {
+                                    signupresponse.success(function(data, status, headers, config) {
                                         if (data === "1") {
                                             storage.setItem("username", user.name);
                                             storage.setItem("password", user.pwd);
                                             $scope.loginstatus = true; 
                                             $window.location.href = '#/app/content';
                                         } else {
-                                            alert("error");
+                                            navigator.notification.alert("Бүртгэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
                                         }
                                     });
 
-                                    responsePromise.error(function(data, status, headers, config) {
-                                        alert("Submitting form failed!");
+                                    signupresponse.error(function(data, status, headers, config) {
+                                        navigator.notification.alert("Бүртгэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
                                     });
                                 } else {
                                     navigator.notification.alert("Нууц үг зөрж байна!", alertCallback, "Алдаа", "Хаах");
                                 }
                             } else {
-                                navigator.notification.alert("Нууц үгээ дахин оруулна уу!", alertCallback, "Алдаа", "Хаах");
+                                navigator.notification.alert("Нууц үгээ дахин оруулах хэсгийг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
                             }    
                         } else {
                             navigator.notification.alert("Нууц үгээ оруулна уу!", alertCallback, "Алдаа", "Хаах");
@@ -593,8 +644,19 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
         }
     })
     .controller('ForgetCtrl', function($scope, $window) {
-        $scope.submit = function() {
-            $window.location.href = '#/app/content';
+        $scope.submit = function(user) {
+            if (user) {
+                if (typeof user.email !== "undefined" && user.email !== "") {
+                    
+                } else {
+                    navigator.notification.alert("Цахим хаягаа оруулна уу!", alertCallback, "Алдаа", "Хаах");
+                }
+            } else {
+                navigator.notification.alert("Талбарыг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
+            }
+            //$window.location.href = '#/app/content';
+        }
+        function alertCallback() {
         }
     })
     .filter('trustAsHtml', function($sce) {

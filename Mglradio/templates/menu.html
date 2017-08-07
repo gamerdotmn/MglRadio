@@ -39,7 +39,7 @@
     <ion-side-menu side="right" class="leftsidemenu">
         <ion-content>
             <ion-list>
-                <ion-item menu-close href="#/app/login">
+                <ion-item ng-show="!loginstatus"  menu-close href="#/app/login">
                     Нэвтрэх
                 </ion-item>
                 <ion-item menu-close href="#/app/download">
@@ -47,6 +47,9 @@
                 </ion-item>
                 <ion-item menu-close href="#/app/downloading">
                     Татаж байгаа
+                </ion-item>
+                <ion-item ng-show="loginstatus"  menu-close href="#/app/logout">
+                    Гарах
                 </ion-item>
             </ion-list>
         </ion-content>
