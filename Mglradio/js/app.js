@@ -1,5 +1,6 @@
 var host = "http://app.mglradio.com";
 var height = 0;
+var storage = window.localStorage;
 
 angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
     .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -91,7 +92,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/content");
+        $urlRouterProvider.otherwise("/app/signup");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -163,6 +164,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                       $scope.status = 0;
                   });
         }, 2500);
+        
+        $scope.loginstatus = false;
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading) {
         $scope.net = navigator.onLine;
@@ -538,18 +541,56 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             //$window.location.href = '#/app/signup';
         }
     })
-    .controller('SignupCtrl', function($scope, $window) {
+    .controller('SignupCtrl', function($scope, $window, $http) {
         $scope.submit = function(user) {
-            console.log(user);
-            if(typeof user.name !== "undefined"){
-                
+            if (user) {
+                if (typeof user.name !== "undefined" && user.name !== "") {
+                    if (typeof user.email !== "undefined" && user.email !== "") {
+                        if (typeof user.pwd !== "undefined" && user.pwd !== "") {
+                            if (typeof user.confirm !== "undefined" && user.confirm !== "") {
+                                if (user.pwd === user.confirm) {
+                                    var data = {
+                                        name:user.name,
+                                        email:user.email,
+                                        pwd:user.pwd
+                                    };
+                                    var responsePromise = $http.post(host + "/api/signup.php", data, {});
+
+                                    responsePromise.success(function(data, status, headers, config) {
+                                        if (data === "1") {
+                                            storage.setItem("username", user.name);
+                                            storage.setItem("password", user.pwd);
+                                            $scope.loginstatus = true; 
+                                            $window.location.href = '#/app/content';
+                                        } else {
+                                            alert("error");
+                                        }
+                                    });
+
+                                    responsePromise.error(function(data, status, headers, config) {
+                                        alert("Submitting form failed!");
+                                    });
+                                } else {
+                                    navigator.notification.alert("Нууц үг зөрж байна!", alertCallback, "Алдаа", "Хаах");
+                                }
+                            } else {
+                                navigator.notification.alert("Нууц үгээ дахин оруулна уу!", alertCallback, "Алдаа", "Хаах");
+                            }    
+                        } else {
+                            navigator.notification.alert("Нууц үгээ оруулна уу!", alertCallback, "Алдаа", "Хаах");
+                        }
+                    } else {
+                        navigator.notification.alert("Цахим хаягаа оруулна уу!", alertCallback, "Алдаа", "Хаах");
+                    }    
+                } else {
+                    navigator.notification.alert("Нэвтрэх нэрээ оруулна уу!", alertCallback, "Алдаа", "Хаах");
+                }
+            } else {
+                navigator.notification.alert("Талбарыг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
             }
-            else{
-                navigator.notification.alert("Нэвтрэх нэрээ оруулна уу!", alertCallback, "Алдаа", "Хаах");
-            }
-            //$window.location.href = '#/app/content';
         }
-        function alertCallback(){}
+        function alertCallback() {
+        }
     })
     .controller('ForgetCtrl', function($scope, $window) {
         $scope.submit = function() {
