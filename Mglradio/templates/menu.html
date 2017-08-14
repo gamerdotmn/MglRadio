@@ -16,7 +16,7 @@
                 <ion-nav-view name="tvContent"></ion-nav-view>
             </ion-tab>
             
-            <ion-tab title="ВИДИО САН" icon-off="ion-camera" icon-on="ion-camera" href="#/app/content">
+            <ion-tab title="ВИДЕО САН" icon-off="ion-camera" icon-on="ion-camera" href="#/app/content">
                 <ion-nav-view name="contentContent"></ion-nav-view>
             </ion-tab>
 
@@ -26,11 +26,19 @@
 
     <ion-side-menu side="left" class="leftsidemenu">
         <ion-content>
-            <ion-list>
+            <ion-list ng-if="leftside">
                 <ion-item menu-close href="#/app/news">
                     Эхлэл
                 </ion-item>
                 <ion-item menu-close href="#/app/category/{{category.id }}" ng-repeat="category in categories">
+                    {{category.name}}
+                </ion-item>
+            </ion-list>
+            <ion-list ng-if="!leftside">
+                <ion-item menu-close href="#/app/content">
+                    Эхлэл
+                </ion-item>
+                <ion-item menu-close href="#/app/category/{{category.id }}" ng-repeat="category in types">
                     {{category.name}}
                 </ion-item>
             </ion-list>

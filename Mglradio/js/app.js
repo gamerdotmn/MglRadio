@@ -2,8 +2,8 @@ var host = "http://app.mglradio.com";
 var height = 0;
 var storage = window.localStorage;
 
-angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
-    .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+angular.module('mglradioapp', ['ionic','jett.ionic.filter.bar','ngAnimate','ngSanitize', 'ksSwiper'])
+    .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ionicFilterBarConfigProvider) {
         $stateProvider
             .state('app', {
                        url: "/app",
@@ -11,7 +11,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                        templateUrl: "templates/menu.html",
                        controller: "IndexCtrl"
                    }) 
-            .state('app.news', {
+            .state('app.news', { 
                        url: "/news", 
                        views: {
                     'newsContent' :{
@@ -100,10 +100,20 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                                    controller: "LogoutCtrl"
                                }
                 }
+                   })
+            .state('app.search', {
+                       url: "/search",
+                       views: {
+                    'contentContent' :{
+                                   templateUrl: "templates/search.html",
+                                   controller: "SearchCtrl"
+                               }
+                }
                    });
         $urlRouterProvider.otherwise("/app/content");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
+        $ionicFilterBarConfigProvider.placeholder('Хайлт');
     })
     .config(function($ionicConfigProvider) {
         $ionicConfigProvider.tabs.position('bottom');
@@ -136,6 +146,13 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             }).error(function() {
                 $ionicLoading.hide();
             });
+            
+            dataService.getContent().success(function(data) {
+                $scope.types = data.types;
+                $ionicLoading.hide();
+            }).error(function() {
+                $ionicLoading.hide();
+            });
         };
         
         $scope.load();
@@ -161,7 +178,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                           $timeout(function () {
                               var divs = document.getElementsByClassName('badge');
                               for (var i = 0;i < divs.length;i++) {
-                                  if (divs[i].innerHTML != "LIVE") {
+                                  if (divs[i].innerHTML !== "LIVE") {
                                       divs[i].innerHTML = "LIVE";
                                   }
                               }
@@ -182,6 +199,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading) {
         $scope.net = navigator.onLine;
+        $scope.leftside = true;
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams) {
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
@@ -325,7 +343,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                 navigator.notification.confirm(
                     c.time + ' ' + c.title + '-г сануулах уу?', 
                     function(b) {
-                        if (b == 1) {
+                        if (b === 1) {
                             var t = moment(c.date + "T" + c.time + $scope.today[0].tz);
                             var now = t.local().toDate();
                             cordova.plugins.notification.local.schedule({
@@ -349,7 +367,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                 navigator.notification.confirm(
                     c.time + ' ' + c.title + '-г санамж устгах уу?', 
                     function(b) {
-                        if (b == 1) {
+                        if (b === 1) {
                             cordova.plugins.notification.local.cancel(parseInt(c.id), function() {
                             });
                             window.localStorage.removeItem(c.id);
@@ -394,79 +412,82 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             }
         };
     })
-    .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService) {
-        $scope.toggleGroup = function(group) {
-            group.show = !group.show;
-        };
-        $scope.isGroupShown = function(group) {
-            return group.show;
-        };
-        
-        $scope.search = function() {
-            var search = document.getElementById("searchinput").value;
-            alert(search);
-        }
-        $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
-                                        scope: $scope
-                                    }).then(function(modal) {
-                                        $scope.modal = modal;
-                                    });
-        $scope.detail = function(id) {
-            angular.forEach($scope.contents, function(value, key) {
-                if (value.id===id) {
-                    $scope.contentdetail = value;
-                }
-            });
-            $scope.modal.show();
-        }
-        
-        $scope.checklogin = function() {
-            $scope.modal.hide();
-            $window.location.href = '#/app/login';
-        }
-        
-        $scope.loadcontent = function() {
-            $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
-            dataService.getContent().success(function(data) {
-                $scope.contents = data.contents;
-                $scope.types = data.types;
-                $scope.top = data.top;
-                $ionicLoading.hide();
-            }).error(function() {
-                $ionicLoading.hide();
-            });
-        };
-        
-        $scope.loadcontent();
-        
+    .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout, $ionicFilterBar) {
+        $scope.leftside = false;
+        $scope.swiper = {};
+ 
         document.addEventListener("deviceready", onDeviceReady, false);
 
         function onDeviceReady() {
-            var fileTransfer = new FileTransfer();
+            $scope.search = function() {
+                $window.location.href = '#/app/search';
+            }
+        
+            $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
+                                            scope: $scope
+                                        }).then(function(modal) {
+                                            $scope.modal = modal;
+                                        });
+            $scope.detail = function(id) {
+                angular.forEach($scope.contents, function(value, key) {
+                    if (value.id===id) {
+                        $scope.contentdetail = value;
+                    }
+                });
+                $scope.modal.show();
+            }
+        
+            $scope.checklogin = function() {
+                $scope.modal.hide();
+                $window.location.href = '#/app/login';
+            }
+            
+            $scope.loadcontent = function() {
+                $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
+                dataService.getContent().success(function(data) {
+                    $scope.contents = data.contents;
+                    //$scope.suggest = [];
+                    //angular.forEach($scope.contents, function(value, key) {
+                    //    console.log(value.highlight);
+                    //    if(value.highlight === 1){
+                    //        $scope.suggest.push(value);
+                    //    }
+                        
+                    //});
+                    
+                    
+                    $ionicLoading.hide();
+                }).error(function() {
+                    $ionicLoading.hide();
+                });
+            };
+        
+            $scope.loadcontent();
+            /*var fileTransfer = new FileTransfer();
             var db = window.sqlitePlugin.openDatabase({name: "my.db"});
             db.transaction(function(tx) {
-                //tx.executeSql('DROP TABLE IF EXISTS test_table');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, price integer, img text)');
+            //tx.executeSql('DROP TABLE IF EXISTS test_table');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, price integer, img text)');
 
-                // demonstrate PRAGMA:
-                db.executeSql("pragma table_info (content);", [], function(res) {
-                    console.log("PRAGMA res: " + JSON.stringify(res));
-                });
-
-                tx.executeSql("INSERT INTO content (name, description, path, price, img) VALUES (?,?,?,?,?)", ["test", "test","/local/Mglradio",100,"/mglradio/img"], function(tx, res) {
-                    console.log("insertId: " + res.insertId + " -- probably 1");
-                    console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
-
-                    db.transaction(function(tx) {
-                        tx.executeSql("select * from content;", [], function(tx, res) {
-                            console.log("res.rows.length: " + res.rows.length + " -- should be 1");
-                            console.log("res.rows.item(0): " + res.rows.item(0).path);
-                        });
-                    });
-                }, function(e) {
-                    console.log("ERROR: " + e.message);
-                });
+            // demonstrate PRAGMA:
+            db.executeSql("pragma table_info (content);", [], function(res) {
+            console.log("PRAGMA res: " + JSON.stringify(res));
             });
+
+            tx.executeSql("INSERT INTO content (name, description, path, price, img) VALUES (?,?,?,?,?)", ["test", "test","/local/Mglradio",100,"/mglradio/img"], function(tx, res) {
+            console.log("insertId: " + res.insertId + " -- probably 1");
+            console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+
+            db.transaction(function(tx) {
+            tx.executeSql("select * from content;", [], function(tx, res) {
+            console.log("res.rows.length: " + res.rows.length + " -- should be 1");
+            console.log("res.rows.item(0): " + res.rows.item(0).path);
+            });
+            });
+            }, function(e) {
+            console.log("ERROR: " + e.message);
+            });
+            });*/
             
             $scope.download = function() {
                 alert("download");
@@ -477,7 +498,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onError);
                 }
             }
-            function onError(e) {
+            function onError() {
                 navigator.notification.alert("Error : Downloading Failed");
             };
             function onFileSystemSuccess(fileSystem) {
@@ -505,7 +526,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             function errorHandler(err) {
                 console.log(err);
             };
-            function gotFileEntry(fileEntry) {
+            function gotFileEntry() {
                 var documentUrl = "http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_20mb.mp4";
                 var uri = encodeURI(documentUrl);
                 
@@ -515,7 +536,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                         var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
                         statusDom.innerHTML = perc + "% loaded...";
                     } else {
-                        if (statusDom.innerHTML == "") {
+                        if (statusDom.innerHTML === "") {
                             statusDom.innerHTML = "Loading";
                         } else {
                             statusDom.innerHTML += ".";
@@ -581,10 +602,17 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
                 navigator.notification.alert("Талбарыг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
             }
         }
-        $scope.facebooklogin = function() {
-            alert("fb");
-            //$window.location.href = '#/app/signup';
-        }
+    })
+    .controller('SearchCtrl', function($scope, $window, $ionicFilterBar) {
+        $ionicFilterBar.show({
+                                 items: $scope.contents,
+                                 update: function (filteredItems, filterText) {
+                                     $scope.filteredcontents = filteredItems;
+                                     if (filterText) {
+                                         console.log(filterText);
+                                     }
+                                 }
+                             });
     })
     .controller('LogoutCtrl', function($scope, $window) {
         $scope.loginstatus = false; 
@@ -647,14 +675,13 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
         $scope.submit = function(user) {
             if (user) {
                 if (typeof user.email !== "undefined" && user.email !== "") {
-                    
                 } else {
                     navigator.notification.alert("Цахим хаягаа оруулна уу!", alertCallback, "Алдаа", "Хаах");
                 }
             } else {
                 navigator.notification.alert("Талбарыг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
             }
-            //$window.location.href = '#/app/content';
+            //$window.location.href = '#/app/content'; 
         }
         function alertCallback() {
         }
@@ -699,39 +726,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize'])
             }
         }
     })
-    .directive('tabsSwipable', [
-                   '$ionicGesture', function($ionicGesture) {
-                       //
-                       // make ionTabs swipable. leftswipe -> nextTab, rightswipe -> prevTab
-                       // Usage: just add this as an attribute in the ionTabs tag
-                       // <ion-tabs tabs-swipable> ... </ion-tabs>
-                       //
-                       return {
-                           restrict: 'A',
-                           require: 'ionTabs',
-                           link: function(scope, elm, attrs, tabsCtrl) {
-                               var onSwipeLeft = function() {
-                                   var target = tabsCtrl.selectedIndex() + 1;
-                                   if (target < tabsCtrl.tabs.length) {
-                                       scope.$apply(tabsCtrl.select(target));
-                                   }
-                               };
-                               var onSwipeRight = function() {
-                                   var target = tabsCtrl.selectedIndex() - 1;
-                                   if (target >= 0) {
-                                       scope.$apply(tabsCtrl.select(target));
-                                   }
-                               };
-		    
-                               var swipeGesture = $ionicGesture.on('swipeleft', onSwipeLeft, elm).on('swiperight', onSwipeRight);
-                               scope.$on('$destroy', function() {
-                                   $ionicGesture.off(swipeGesture, 'swipeleft', onSwipeLeft);
-                                   $ionicGesture.off(swipeGesture, 'swiperight', onSwipeRight);
-                               });
-                           }
-                       };
-                   }
-               ])
     .factory('dataService', function($http) {
         return {
             getInit: function() {

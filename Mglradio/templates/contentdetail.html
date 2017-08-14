@@ -1,30 +1,30 @@
-<ion-modal-view class="detail">
+<ion-modal-view class="detail animated slideInRight" >
+    <ion-header-bar class="bar bar-stable" align-title="center">
+        <button class="button button-clear ion-android-arrow-back close" ng-click="modal.hide()"></button>
+        <h1 class="title">{{contentdetail.name}}</h1>
+    </ion-header-bar>
     <ion-content class="detailcontent" scroll="false">
-        <button class="button button-clear ion-android-close close" ng-click="modal.hide()"></button>
-        <div class="info">
-            <div class="img" style="background-image:url({{contentdetail.img}});">
-            </div> 
-            <div class="other">
-                <h3>{{contentdetail.name}}</h3>
-                <table>
-                    <tr>
-                        <td>-Төрөл</td>
-                        <td ng-repeat="type in types" ng-if="type.id==contentdetail.type_id">{{type.name}}</td>
-                    </tr> 
-                    <tr>
-                        <td>-Хугацаа</td>
-                        <td>{{contentdetail.time}}</td>
-                    </tr>
-                    <tr>
-                        <td>-Он</td>
-                        <td>{{contentdetail.year}}</td>
-                    </tr>
-                </table>
-                <button class="button btn" id="rent" ng-click="checklogin()">Түрээслэх</button>
-            </div>
-            <p class="desc">Дэлгэрэнгүй:</p>
+
+        <div class="img" style="background-image:url({{contentdetail.img}});">
+            <button class="button btn icon ion-play" id="rentbtn" ng-click="checklogin()"></button>
+        </div>
+        <div class="other">
+            <h3>{{contentdetail.name}}</h3>
+            <table>
+                <tr>
+                    <td>Төрөл:</td>
+                    <td ng-repeat="type in types" ng-if="type.id==contentdetail.type_id">{{type.name}}</td>
+                </tr>
+                <tr>
+                    <td>Хугацаа:</td>
+                    <td>{{contentdetail.time}}</td>
+                </tr>
+                <tr>
+                    <td>Он:</td>
+                    <td>{{contentdetail.year}}</td>
+                </tr>
+            </table>
             <p class="description">{{contentdetail.description}}</p>
-            
         </div>
     </ion-content>
 </ion-modal-view>
