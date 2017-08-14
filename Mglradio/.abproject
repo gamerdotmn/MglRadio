@@ -6,8 +6,8 @@
   "DisplayName": "Mgl Radio",
   "Author": "",
   "Description": "Mglradio",
-  "BundleVersion": "1.0",
-  "AndroidVersionCode": "1",
+  "BundleVersion": "1.1",
+  "AndroidVersionCode": "2",
   "iOSDeviceFamily": [
     "1"
   ],

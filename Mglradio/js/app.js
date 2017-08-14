@@ -2,8 +2,8 @@ var host = "http://app.mglradio.com";
 var height = 0;
 var storage = window.localStorage;
 
-angular.module('mglradioapp', ['ionic','jett.ionic.filter.bar','ngAnimate','ngSanitize', 'ksSwiper'])
-    .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ionicFilterBarConfigProvider) {
+angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
+    .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         $stateProvider
             .state('app', {
                        url: "/app",
@@ -113,7 +113,6 @@ angular.module('mglradioapp', ['ionic','jett.ionic.filter.bar','ngAnimate','ngSa
         $urlRouterProvider.otherwise("/app/content");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
-        $ionicFilterBarConfigProvider.placeholder('Хайлт');
     })
     .config(function($ionicConfigProvider) {
         $ionicConfigProvider.tabs.position('bottom');
@@ -123,7 +122,7 @@ angular.module('mglradioapp', ['ionic','jett.ionic.filter.bar','ngAnimate','ngSa
             StatusBar.styleDefault();
         }
     })
-    .controller('IndexCtrl', function($scope, $rootScope, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout) {
+    .controller('IndexCtrl', function($scope, $rootScope, $ionicModal, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout) {
         $scope.status = 0;
         $scope.rs = 1;
         $scope.logo = "<img src='img/logo.png' style='height: 100%;'>";
@@ -131,7 +130,6 @@ angular.module('mglradioapp', ['ionic','jett.ionic.filter.bar','ngAnimate','ngSa
         $scope.goBack = function() {
             $ionicHistory.goBack();
         }
-        
         $scope.load = function() {
             $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
             dataService.getInit().success(function(data) {
@@ -412,7 +410,7 @@ angular.module('mglradioapp', ['ionic','jett.ionic.filter.bar','ngAnimate','ngSa
             }
         };
     })
-    .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout, $ionicFilterBar) {
+    .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
         $scope.leftside = false;
         $scope.swiper = {};
  
@@ -422,7 +420,6 @@ angular.module('mglradioapp', ['ionic','jett.ionic.filter.bar','ngAnimate','ngSa
             $scope.search = function() {
                 $window.location.href = '#/app/search';
             }
-        
             $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
                                             scope: $scope
                                         }).then(function(modal) {
@@ -446,16 +443,6 @@ angular.module('mglradioapp', ['ionic','jett.ionic.filter.bar','ngAnimate','ngSa
                 $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
                 dataService.getContent().success(function(data) {
                     $scope.contents = data.contents;
-                    //$scope.suggest = [];
-                    //angular.forEach($scope.contents, function(value, key) {
-                    //    console.log(value.highlight);
-                    //    if(value.highlight === 1){
-                    //        $scope.suggest.push(value);
-                    //    }
-                        
-                    //});
-                    
-                    
                     $ionicLoading.hide();
                 }).error(function() {
                     $ionicLoading.hide();
@@ -603,16 +590,37 @@ angular.module('mglradioapp', ['ionic','jett.ionic.filter.bar','ngAnimate','ngSa
             }
         }
     })
-    .controller('SearchCtrl', function($scope, $window, $ionicFilterBar) {
-        $ionicFilterBar.show({
-                                 items: $scope.contents,
-                                 update: function (filteredItems, filterText) {
-                                     $scope.filteredcontents = filteredItems;
-                                     if (filterText) {
-                                         console.log(filterText);
-                                     }
-                                 }
-                             });
+    .controller('SearchCtrl', function($scope, $window, dataService, $ionicLoading, $ionicModal, $rootScope) {
+        $scope.input = "<input type='text' id='searchinput' ng-model='searchvalue' onkeyup='searchval(this.value)' placeholder='Хайлт' class='searchinput' >";
+        
+        var h = window.innerHeight;
+        var sh = (h * 30) / 100;
+        $scope.height = sh;
+        
+        $scope.loadcontent = function() {
+            $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
+            dataService.getContent().success(function(data) {
+                $scope.contents = data.contents;
+                $ionicLoading.hide();
+            }).error(function() {
+                $ionicLoading.hide();
+            });
+        };
+        
+        $scope.loadcontent();
+        $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
+                                        scope: $scope
+                                    }).then(function(modal) {
+                                        $scope.modal = modal;
+                                    });
+        $scope.detail = function(id) {
+            angular.forEach($scope.contents, function(value, key) {
+                if (value.id===id) {
+                    $scope.contentdetail = value;
+                }
+            });
+            $scope.modal.show();
+        }
     })
     .controller('LogoutCtrl', function($scope, $window) {
         $scope.loginstatus = false; 

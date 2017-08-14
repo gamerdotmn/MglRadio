@@ -104,7 +104,13 @@
                     MusicControls.listen();
                 }
             }, false);
-            
+            function searchval(val) {
+                var $body = angular.element(document.body);            
+                var $rootScope = $body.injector().get('$rootScope');   
+                $rootScope.$apply(function () {                        
+                    $rootScope.searchvalue = val;
+                });
+            }
         </script>
     </head>
     <body>
