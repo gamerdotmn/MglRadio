@@ -109,8 +109,17 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                    controller: "SearchCtrl"
                                }
                 }
+                   })
+            .state('app.download', {
+                       url: "/download",
+                       views: {
+                    'contentContent' :{
+                                   templateUrl: "templates/download.html",
+                                   controller: "DownloadCtrl"
+                               }
+                }
                    });
-        $urlRouterProvider.otherwise("/app/content");
+        $urlRouterProvider.otherwise("/app/download");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -421,7 +430,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 $window.location.href = '#/app/search';
             }
             $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
-                                            scope: $scope
+                                            scope: $scope,
+                                            animation: 'animated slideInRight'
                                         }).then(function(modal) {
                                             $scope.modal = modal;
                                         });
@@ -546,6 +556,45 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             };
         }
     })
+    
+    .controller('SearchCtrl', function($scope, $window, dataService, $ionicLoading, $ionicModal, $rootScope) {
+        $scope.input = "<input type='text' id='searchinput' ng-model='searchvalue' onkeyup='searchval(this.value)' placeholder='Хайлт' class='searchinput' >";
+        
+        var h = window.innerHeight;
+        var sh = (h * 30) / 100;
+        $scope.height = sh;
+        
+        $scope.loadcontent = function() {
+            $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
+            dataService.getContent().success(function(data) {
+                $scope.contents = data.contents;
+                $ionicLoading.hide();
+            }).error(function() {
+                $ionicLoading.hide();
+            });
+        };
+        
+        $scope.loadcontent();
+        $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
+                                        scope: $scope,
+                                        animation: 'animated slideInRight'
+                                    }).then(function(modal) {
+                                        $scope.modal = modal;
+                                    });
+        $scope.detail = function(id) {
+            angular.forEach($scope.contents, function(value, key) {
+                if (value.id===id) {
+                    $scope.contentdetail = value;
+                }
+            });
+            $scope.modal.show();
+        }
+    })
+    .controller('DownloadCtrl', function($scope, $window) {
+         $scope.watch = function(id){
+            alert(id);
+         }
+    })    
     .controller('LoginCtrl', function($scope, $window, $http) {
         function alertCallback() {
         }
@@ -588,38 +637,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             } else {
                 navigator.notification.alert("Талбарыг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
             }
-        }
-    })
-    .controller('SearchCtrl', function($scope, $window, dataService, $ionicLoading, $ionicModal, $rootScope) {
-        $scope.input = "<input type='text' id='searchinput' ng-model='searchvalue' onkeyup='searchval(this.value)' placeholder='Хайлт' class='searchinput' >";
-        
-        var h = window.innerHeight;
-        var sh = (h * 30) / 100;
-        $scope.height = sh;
-        
-        $scope.loadcontent = function() {
-            $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
-            dataService.getContent().success(function(data) {
-                $scope.contents = data.contents;
-                $ionicLoading.hide();
-            }).error(function() {
-                $ionicLoading.hide();
-            });
-        };
-        
-        $scope.loadcontent();
-        $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
-                                        scope: $scope
-                                    }).then(function(modal) {
-                                        $scope.modal = modal;
-                                    });
-        $scope.detail = function(id) {
-            angular.forEach($scope.contents, function(value, key) {
-                if (value.id===id) {
-                    $scope.contentdetail = value;
-                }
-            });
-            $scope.modal.show();
         }
     })
     .controller('LogoutCtrl', function($scope, $window) {
