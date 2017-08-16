@@ -1,11 +1,16 @@
 <ion-view title="{{logo}}">
+    <ion-nav-buttons side="left" >
+        <button class="button sidemenu" ng-click="changepage('content')">
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+    </ion-nav-buttons>
     <ion-content class="login" scroll="false">
         <center>
-            <input ng-model="user.name" type="text" placeholder="Нэвтрэх нэр">
-            <input ng-model="user.pwd" type="password" placeholder="Нууц үг">
+            <input ng-model="user.name" type="text" placeholder="НЭВТРЭХ НЭР">
+            <input ng-model="user.pwd" type="password" placeholder="НУУЦ ҮГ">
             <button class="button submit" ng-click="login(user)">НЭВТРЭХ</button>
-            <button class="button signup" ng-click="signup()">Бүртгүүлэх</button>
-            <button class="button forget" ng-click="forget()">Нууц үгээ мартсан уу?</button>
+            <button class="button signup" ng-click="changepage('signup')">Бүртгүүлэх</button>
+            <button class="button forget" ng-click="changepage('forget')">Нууц үгээ мартсан уу?</button>
         </center>
     </ion-content>
 </ion-view>

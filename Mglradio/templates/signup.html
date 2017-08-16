@@ -1,10 +1,15 @@
 <ion-view title="{{logo}}">
+    <ion-nav-buttons side="left" >
+        <button class="button sidemenu" ng-click="changepage('login')">
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+    </ion-nav-buttons>
     <ion-content class="signup" scroll="false">
         <center>
-            <input ng-model="newUser.name" type="text" placeholder="Нэвтрэх нэр" >
-            <input ng-model="newUser.email" type="email" placeholder="И-мейл" >
-            <input ng-model="newUser.pwd" type="password" placeholder="Нууц үг" >
-            <input ng-model="newUser.confirm" type="password" placeholder="Нууц үг давтах" >
+            <input ng-model="newUser.user_id" type="text" placeholder="НЭВТРЭХ НЭР" >
+            <input ng-model="newUser.email" type="email" placeholder="И-МЕЙЛ" >
+            <input ng-model="newUser.pwd" type="password" placeholder="НУУЦ ҮГ" >
+            <input ng-model="newUser.confirm" type="password" placeholder="НУУЦ ҮГ ДАВТАХ" >
             <button class="button submit" ng-click="submit(newUser)">БҮРТГҮҮЛЭХ</button>
         </center>
     </ion-content>

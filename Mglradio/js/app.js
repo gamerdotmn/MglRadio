@@ -14,9 +14,27 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             .state('app.news', { 
                        url: "/news", 
                        views: {
-                    'newsContent' :{
+                    'newsContent' :{ 
                                    templateUrl: "templates/news.html",
                                    controller: "NewsCtrl"
+                               }
+                }
+                   })
+            .state('app.category', {
+                       url: "/category/:id",
+                       views: {
+                    'newsContent' :{
+                                   templateUrl: "templates/category.html",
+                                   controller: "CategoryCtrl"
+                               }
+                }
+                   })
+            .state('app.detail', {
+                       url: "/detail/:id",
+                       views: {
+                    'newsContent' :{
+                                   templateUrl: "templates/detail.html",
+                                   controller: "DetailCtrl"
                                }
                 }
                    })
@@ -47,21 +65,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    })
-            .state('app.category', {
-                       url: "/category/:id",
+            .state('app.type', {
+                       url: "/type/:id",
                        views: {
-                    'newsContent' :{
-                                   templateUrl: "templates/category.html",
-                                   controller: "CategoryCtrl"
-                               }
-                }
-                   })
-            .state('app.detail', {
-                       url: "/detail/:id",
-                       views: {
-                    'newsContent' :{
-                                   templateUrl: "templates/detail.html",
-                                   controller: "DetailCtrl"
+                    'contentContent' :{
+                                   templateUrl: "templates/type.html",
+                                   controller: "TypeCtrl"
                                }
                 }
                    })
@@ -119,7 +128,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/download");
+        $urlRouterProvider.otherwise("/app/content");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -131,7 +140,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             StatusBar.styleDefault();
         }
     })
-    .controller('IndexCtrl', function($scope, $rootScope, $ionicModal, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout) {
+    .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
         $scope.status = 0;
         $scope.rs = 1;
         $scope.logo = "<img src='img/logo.png' style='height: 100%;'>";
@@ -149,6 +158,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     $scope.rs = 2;
                 }
                 $scope.today = data.today;
+                
                 $ionicLoading.hide();
             }).error(function() {
                 $ionicLoading.hide();
@@ -156,6 +166,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             
             dataService.getContent().success(function(data) {
                 $scope.types = data.types;
+                $rootScope.contents = [];
                 $ionicLoading.hide();
             }).error(function() {
                 $ionicLoading.hide();
@@ -198,15 +209,60 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                   });
         }, 2500);
         
-        if (!storage.getItem("username")) {
-            $scope.loginstatus = false;
-        } else {
-            $scope.loginstatus = true;
+        $ionicModal.fromTemplateUrl('templates/payment.html', {
+                                        scope: $scope
+                                    }).then(function(modal) {
+                                        $scope.paymentmodal = modal;
+                                    });
+            
+        $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
+                                        scope: $scope,
+                                        animation: 'animated slideInRight'
+                                    }).then(function(modal) {
+                                        $scope.modal = modal;
+                                    });
+        $scope.detail = function(id) {
+            angular.forEach($rootScope.contents, function(value, key) {
+                if (value.id===id) {
+                    $scope.contentdetail = value;
+                }
+            });
+            $scope.modal.show();
         }
+        
+        $scope.checklogin = function() {
+            if ($rootScope.loginstatus) {
+                $scope.paymentmodal.show();    
+            } else {
+                $scope.modal.hide();
+                $window.location.href = '#/app/login';
+            }
+        }
+        
+        if (!storage.getItem("username")) {
+            $rootScope.loginstatus = false;
+        } else {
+            $rootScope.loginstatus = true;
+            $rootScope.username = storage.getItem("username");
+        }
+        $scope.changepage = function(name) {
+            $window.location.href = '#/app/'+name;
+        }
+        
+        $scope.leftside = false;
+        
+        $rootScope.$on('$stateChangeSuccess', 
+                       function(event, toState, toParams, fromState, fromParams) { 
+                           if ($state.current.name === "app.news") {
+                               $scope.leftside = true;
+                           }
+                           if ($state.current.name === "app.content") {
+                               $scope.leftside = false;
+                           }
+                       });
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading) {
         $scope.net = navigator.onLine;
-        $scope.leftside = true;
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams) {
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
@@ -420,39 +476,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         };
     })
     .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
-        $scope.leftside = false;
-        $scope.swiper = {};
- 
+        
         document.addEventListener("deviceready", onDeviceReady, false);
 
         function onDeviceReady() {
-            $scope.search = function() {
-                $window.location.href = '#/app/search';
-            }
-            $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
-                                            scope: $scope,
-                                            animation: 'animated slideInRight'
-                                        }).then(function(modal) {
-                                            $scope.modal = modal;
-                                        });
-            $scope.detail = function(id) {
-                angular.forEach($scope.contents, function(value, key) {
-                    if (value.id===id) {
-                        $scope.contentdetail = value;
-                    }
-                });
-                $scope.modal.show();
-            }
-        
-            $scope.checklogin = function() {
-                $scope.modal.hide();
-                $window.location.href = '#/app/login';
-            }
-            
             $scope.loadcontent = function() {
                 $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
                 dataService.getContent().success(function(data) {
-                    $scope.contents = data.contents;
+                    $rootScope.contents = data.contents;
                     $ionicLoading.hide();
                 }).error(function() {
                     $ionicLoading.hide();
@@ -472,7 +503,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             });
 
             tx.executeSql("INSERT INTO content (name, description, path, price, img) VALUES (?,?,?,?,?)", ["test", "test","/local/Mglradio",100,"/mglradio/img"], function(tx, res) {
-            console.log("insertId: " + res.insertId + " -- probably 1");
+            console.log("insertId: " + res.insertId + " -- probably 1"); 
             console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
 
             db.transaction(function(tx) {
@@ -496,8 +527,10 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 }
             }
             function onError() {
-                navigator.notification.alert("Error : Downloading Failed");
+                navigator.notification.alert("Татахад алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
             };
+            function alertCallback() {
+            }
             function onFileSystemSuccess(fileSystem) {
                 var entry = "";
                 if (ionic.Platform.isAndroid()) {
@@ -505,7 +538,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 } else {
                     entry = fileSystem.root;
                 }
-                entry.getDirectory("Mglradio", {
+                entry.getDirectory("MglRadio", {
                                        create: true,
                                        exclusive: false
                                    }, onGetDirectorySuccess, onGetDirectoryFail);
@@ -556,53 +589,47 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             };
         }
     })
-    
-    .controller('SearchCtrl', function($scope, $window, dataService, $ionicLoading, $ionicModal, $rootScope) {
+    .controller('TypeCtrl', function($scope, $ionicLoading, $timeout, $stateParams, $rootScope) {
+        $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+        if ($stateParams !== 'undefined') {
+            var h = window.innerHeight;
+            var sh = (h * 30) / 100;
+            $scope.height = sh;
+            
+            $scope.type_content = [];
+            
+            angular.forEach($rootScope.contents, function(value, key) {
+                if (value.type_id===$stateParams.id) {
+                    $scope.type_content.push(value);
+                }
+            });
+        
+            $scope.type_id = $stateParams.id;
+            
+            angular.forEach($scope.types, function(value, key) {
+                if (value.id === $stateParams.id) {
+                    $scope.logo = value.name;
+                }
+            });
+        }
+        $timeout(function () {
+            $ionicLoading.hide();
+        }, 1000); 
+    })
+    .controller('SearchCtrl', function($scope) {
         $scope.input = "<input type='text' id='searchinput' ng-model='searchvalue' onkeyup='searchval(this.value)' placeholder='Хайлт' class='searchinput' >";
         
         var h = window.innerHeight;
         var sh = (h * 30) / 100;
         $scope.height = sh;
-        
-        $scope.loadcontent = function() {
-            $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
-            dataService.getContent().success(function(data) {
-                $scope.contents = data.contents;
-                $ionicLoading.hide();
-            }).error(function() {
-                $ionicLoading.hide();
-            });
-        };
-        
-        $scope.loadcontent();
-        $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
-                                        scope: $scope,
-                                        animation: 'animated slideInRight'
-                                    }).then(function(modal) {
-                                        $scope.modal = modal;
-                                    });
-        $scope.detail = function(id) {
-            angular.forEach($scope.contents, function(value, key) {
-                if (value.id===id) {
-                    $scope.contentdetail = value;
-                }
-            });
-            $scope.modal.show();
-        }
     })
     .controller('DownloadCtrl', function($scope, $window) {
-         $scope.watch = function(id){
+        $scope.watch = function(id) {
             alert(id);
-         }
+        }
     })    
-    .controller('LoginCtrl', function($scope, $window, $http) {
+    .controller('LoginCtrl', function($scope, $window, $http, $rootScope) {
         function alertCallback() {
-        }
-        $scope.signup = function() {
-            $window.location.href = '#/app/signup';
-        }
-        $scope.forget = function() {
-            $window.location.href = '#/app/forget';
         }
         $scope.login = function(user) {
             if (user) {
@@ -615,13 +642,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         var loginresponse = $http.post(host + "/api/login.php", data, {});
 
                         loginresponse.success(function(data, status, headers, config) {
+                            alert(data); 
                             if (data === "1") {
                                 storage.setItem("username", user.name);
                                 storage.setItem("password", user.pwd);
-                                $scope.loginstatus = true;
+                                $rootScope.loginstatus = true;
+                                $rootScope.username = user.name;
                                 $window.location.href = '#/app/content';
                             } else {
-                                navigator.notification.alert("Нэвтрэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
+                                navigator.notification.alert("Нууц үг болон нэвтрэх нэр алдаатай байна!", alertCallback, "Алдаа", "Хаах");
                             }
                         });
 
@@ -639,47 +668,66 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             }
         }
     })
-    .controller('LogoutCtrl', function($scope, $window) {
-        $scope.loginstatus = false; 
+    .controller('LogoutCtrl', function($scope, $window, $rootScope) {
+        $rootScope.loginstatus = false; 
+        $rootScope.username = "";
         storage.removeItem("username");
         storage.removeItem("password"); 
-        $window.location.href = '#/app/login';
+        $window.location.href = '#/app/content';
     })
-    .controller('SignupCtrl', function($scope, $window, $http) {
+    .controller('SignupCtrl', function($scope, $window, $http, $rootScope) {
+        function alphanumeric(inputtxt) {  
+            var letterNumber = /^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{6,50}$/;  
+            if (inputtxt.match(letterNumber)) {  
+                return true;  
+            } else {   
+                return false;   
+            }  
+        }  
         $scope.submit = function(user) {
             if (user) {
-                if (typeof user.name !== "undefined" && user.name !== "") {
+                if (typeof user.user_id !== "undefined" && user.user_id !== "") {
                     if (typeof user.email !== "undefined" && user.email !== "") {
                         if (typeof user.pwd !== "undefined" && user.pwd !== "") {
-                            if (typeof user.confirm !== "undefined" && user.confirm !== "") {
-                                if (user.pwd === user.confirm) {
-                                    var data = {
-                                        name:user.name,
-                                        email:user.email,
-                                        pwd:user.pwd
-                                    };
-                                    var signupresponse = $http.post(host + "/api/signup.php", data, {});
+                            if (alphanumeric(user.pwd)) {
+                                if (typeof user.confirm !== "undefined" && user.confirm !== "") {
+                                    if (user.pwd === user.confirm) {
+                                        var data = {
+                                            user_id:user.user_id,
+                                            email:user.email,
+                                            pwd:user.pwd
+                                        };
+                                        var signupresponse = $http.post(host + "/api/signup.php", data, {});
 
-                                    signupresponse.success(function(data, status, headers, config) {
-                                        if (data === "1") {
-                                            storage.setItem("username", user.name);
-                                            storage.setItem("password", user.pwd);
-                                            $scope.loginstatus = true; 
-                                            $window.location.href = '#/app/content';
-                                        } else {
+                                        signupresponse.success(function(data, status, headers, config) {
+                                            console.log(data);
+                                            if (data === "2") {
+                                                storage.setItem("username", user.user_id);
+                                                storage.setItem("password", user.pwd);
+                                                $rootScope.loginstatus = true; 
+                                                $rootScope.username = user.user_id;
+                                                $window.location.href = '#/app/content';
+                                            } else if (data === "0") {
+                                                navigator.notification.alert("Нэвтрэх нэр давхардаж байна!", alertCallback, "Алдаа", "Хаах");
+                                            } else if (data === "1") {
+                                                navigator.notification.alert("И-мейл хаяг давхардаж байна!", alertCallback, "Алдаа", "Хаах");
+                                            } else {
+                                                navigator.notification.alert("Бүртгэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
+                                            }
+                                        });
+
+                                        signupresponse.error(function(data, status, headers, config) {
                                             navigator.notification.alert("Бүртгэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
-                                        }
-                                    });
-
-                                    signupresponse.error(function(data, status, headers, config) {
-                                        navigator.notification.alert("Бүртгэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
-                                    });
+                                        });
+                                    } else {
+                                        navigator.notification.alert("Нууц үг зөрж байна!", alertCallback, "Алдаа", "Хаах");
+                                    }
                                 } else {
-                                    navigator.notification.alert("Нууц үг зөрж байна!", alertCallback, "Алдаа", "Хаах");
-                                }
+                                    navigator.notification.alert("Нууц үгээ дахин оруулах хэсгийг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
+                                }   
                             } else {
-                                navigator.notification.alert("Нууц үгээ дахин оруулах хэсгийг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
-                            }    
+                                navigator.notification.alert("Нууц үг 6 ба түүнээс дээш тэмдэгт байх ёстой бөгөөд Латин үсэг, тоогоор бичигдэнэ!", alertCallback, "Алдаа", "Хаах");
+                            } 
                         } else {
                             navigator.notification.alert("Нууц үгээ оруулна уу!", alertCallback, "Алдаа", "Хаах");
                         }
@@ -696,17 +744,41 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         function alertCallback() {
         }
     })
-    .controller('ForgetCtrl', function($scope, $window) {
+    .controller('ForgetCtrl', function($scope, $window, $http,$rootScope) {
         $scope.submit = function(user) {
             if (user) {
                 if (typeof user.email !== "undefined" && user.email !== "") {
+                    var data = {
+                        email:user.email
+                    };
+                    var forgetresponse = $http.post(host + "/api/forget.php", data, {});
+
+                    forgetresponse.success(function(data, status, headers, config) { 
+                        if (data !== "0") {
+                            var str = data;
+                            var res = str.split("=");
+                            storage.setItem("username", res[0]);
+                            storage.setItem("password", res[1]);
+                            $rootScope.loginstatus = true;
+                            $rootScope.username = res[0];
+                            navigator.notification.alert("Таны и-мейл хаягруу шинэ нууц үгийг илгээлээ. И-мейл хаягаа шалган шинэ нууц үгээрээ нэвтэрнэ үү.!", alertCallback, "Амжилттай", "Хаах");
+                            $window.location.href = '#/app/content';
+                        } else if (data === "0") {
+                            navigator.notification.alert("И-мейл хаяг бүртгэлгүй байна!", alertCallback, "Алдаа", "Хаах");
+                        } else {
+                            navigator.notification.alert("Нууц үг сэргээхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
+                        }
+                    });
+
+                    forgetresponse.error(function(data, status, headers, config) {
+                        navigator.notification.alert("Бүртгэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
+                    });
                 } else {
                     navigator.notification.alert("Цахим хаягаа оруулна уу!", alertCallback, "Алдаа", "Хаах");
                 }
             } else {
                 navigator.notification.alert("Талбарыг бөглөнө үү!", alertCallback, "Алдаа", "Хаах");
             }
-            //$window.location.href = '#/app/content'; 
         }
         function alertCallback() {
         }

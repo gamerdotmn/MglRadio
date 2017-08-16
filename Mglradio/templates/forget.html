@@ -1,7 +1,12 @@
 <ion-view title="{{logo}}">
+    <ion-nav-buttons side="left" >
+        <button class="button sidemenu" ng-click="changepage('login')">
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+    </ion-nav-buttons>
     <ion-content class="forget" scroll="false">
         <center>
-            <input ng-model="newUser.email" type="email" placeholder="И-мейл">
+            <input ng-model="newUser.email" type="email" placeholder="БҮРТГЭЛТЭЙ И-МЕЙЛ">
             <button class="button submit" ng-click="submit(newUser)">СЭРГЭЭХ</button>
         </center>
     </ion-content>

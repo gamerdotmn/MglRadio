@@ -1,11 +1,11 @@
-<ion-view title="{{input}}">
+<ion-view title="{{logo}}">
     <ion-nav-buttons side="left" >
-        <button class="button sidemenu close" ng-click="changepage('content')">
-            <i class="icon ion-android-arrow-back "></i>
+        <button class="button sidemenu" menu-toggle="left">
+            <i class="icon fa fa-bars"></i>
         </button>
     </ion-nav-buttons>
     <ion-content class="search animated fadeIn" has-bouncing="true">
-        <ion-item style="height:{{height}}" class="searchitem" ng-if="searchvalue.length > 0" ng-repeat="content in contents | filter : searchvalue"  ng-click="detail(content.id)">
+        <ion-item style="height:{{height}}" class="searchitem" ng-repeat="content in type_content"  ng-click="detail(content.id)">
             <div class="img" style="background-image:url({{content.img}});">
             </div>
             <p class="slide-caption">{{content.name|limitTo:20}}</p>

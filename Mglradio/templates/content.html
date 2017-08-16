@@ -1,16 +1,16 @@
-<ion-view title="{{logo}}">
+<ion-view title="{{logo}}" class="rent">
     <ion-nav-buttons side="left" >
         <button class="button sidemenu" menu-toggle="left">
             <i class="icon fa fa-bars"></i>
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right" >
-        <button class="button sidemenu" ng-click="search()">
+        <button class="button sidemenu" ng-click="changepage('search')">
             <i class="icon fa fa-search"></i>
         </button>
     </ion-nav-buttons>
-    <ion-content  id="rent" class="rent animated fadeIn" has-bouncing="true">
-        <ion-list ng-if="!searchstatus">
+    <ion-content class=" animated fadeIn" has-bouncing="true">
+        <ion-list>
             <ion-item>
                 <p class="name">Санал болгох</p>
             </ion-item>
@@ -38,12 +38,13 @@
 
                     </ks-swiper-container>
                 </div>
-
             </div>
-
         </ion-list>
-        <ion-list ng-if="searchstatus">
-            s
-        </ion-list>
+        <div style="height:40px;"></div>
     </ion-content>
+    <div class="mylist">
+        <button ng-click="changepage('download')">
+            2 татагдаж байгаа<i class="ion-chevron-right "></i>
+        </button>
+    </div>
 </ion-view>

@@ -138,6 +138,33 @@
     color: #fff;
     padding: 14px;
 }
+.leftsidemenu .user
+{
+    padding: 14px;
+}
+.leftsidemenu .user .img
+{
+    padding: 10px;
+    border: 3px solid #fff;
+    width: 25%;
+    border-radius: 40px;
+}
+.leftsidemenu .user img
+{
+    width: 100%;
+}
+.leftsidemenu .user h4
+{
+    color: #fff;
+    margin-bottom: 0;
+    margin-top: 10px;
+} 
+.leftsidemenu .user p
+{
+    color: #ba0035;
+    font-family: "Ubuntu Regular";
+    font-size: 12px;
+}
 
 .ion-android-menu:before
 {
@@ -466,12 +493,12 @@
 .tv .playbtn
 {
     position: relative;
-    top: 45%;
+    top: 50%;
     color: #fff;
     background: transparent;
 }
 .tv .playbtn img
-{
+{ 
     width: 50px;
 }
 @-webkit-keyframes blinker {  
@@ -740,7 +767,6 @@ align-items: center;
 {
     width: 70%;
     border-radius: 10px;
-    text-transform: uppercase;
     text-align: center;
     padding: 0 20px;
     margin: 10px;
@@ -824,7 +850,6 @@ align-items: center;
 {
     width: 70%;
     border-radius: 10px;
-    text-transform: uppercase;
     text-align: center;
     padding: 0 20px;
     margin: 10px;
@@ -834,7 +859,7 @@ align-items: center;
 }
 .signup input:first-child
 {
-    margin-top: 30%;
+    margin-top: 20%;
 }
 .signup .submit
 {
@@ -865,7 +890,6 @@ align-items: center;
 {
     width: 70%;
     border-radius: 10px;
-    text-transform: uppercase;
     text-align: center;
     padding: 0 20px;
     margin: 10px;
@@ -964,7 +988,7 @@ align-items: center;
     background-size: cover;
     background-repeat: no-repeat;
     width: 48%;
-    height: 30%;
+    height: 21%;
     display: inline-block;
 }
 .download .other
@@ -978,6 +1002,11 @@ align-items: center;
 {
     color: #fff;
     font-size: 17px;
+    margin-bottom: 5px;
+}
+.download .other table tr
+{
+    line-height: 13px;
 }
 .download .other table tr td
 {
@@ -996,4 +1025,114 @@ align-items: center;
 .download .other .description
 {
     color: #ba0035;
+}
+.modal-backdrop-bg
+{
+    background: rgba(0, 0, 0, .7);
+}
+.payment
+{
+    background-color: #fff;
+    text-align: center;
+    width: 90%;
+    min-height: 70%;
+    position: absolute;
+    left: 5%;
+    top: 15%;
+    border-radius: 15px;
+}
+.payment .header
+{
+    border-bottom: 1px solid #000;
+    padding-bottom: 10px;
+}
+.payment .header h4
+{
+    font-size: 15px;
+    font-family: 'Ubuntu Bold';
+}
+.payment .header p
+{
+    font-family: 'Ubuntu Regular';
+    color: #666666;
+    margin: 0 auto;
+    width: 80%;
+}
+.payment .header b
+{
+    color: #000;
+}
+
+.payment .body .bank
+{
+    border-bottom: 1px solid #e8e8e8;
+    padding: 5px;
+}
+.payment .body .bank img
+{
+    width: 15%;
+    display: inline-block;
+}
+.payment .body .bank p
+{
+    width: 38%;
+    display: inline-block;
+    font-family: 'Ubuntu Regular';
+    text-align: left;
+    vertical-align: top;
+    margin: 0;
+    margin-top: 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding-left: 10px;
+    letter-spacing: -1;
+}
+.payment .body .bank p:last-child
+{
+    font-family: 'Ubuntu Bold';
+    color: #666;
+    text-align: right;
+    padding-right: 10px;
+}
+.payment .bar-footer
+{
+    background-color: #f93430;
+    -webkit-box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
+    -moz-box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
+    box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
+}
+.payment .bar-footer .close
+{
+    width: 100%;
+    color: #fff;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+}
+.mylist
+{
+    position: fixed;
+    bottom: 70px;
+    width: 100%;
+    height: 40px;
+    z-index: 100;
+}
+.mylist button
+{
+    width: 100%;
+    text-align: left;
+    height: 100%;
+    color: #fff;
+    background: #2e2e33;
+    border: 1px solid #18181c;
+    border-left: none;
+    border-right: none;
+    -webkit-box-shadow: inset 0px 3px 0px 0px rgba(72, 72, 77, 1);
+    -moz-box-shadow: inset 0px 3px 0px 0px rgba(72, 72, 77, 1);
+    box-shadow: inset 0px 3px 0px 0px rgba(72, 72, 77, 1);
+}
+.mylist button i
+{
+    float: right;
+    margin-top: 4px;
 }

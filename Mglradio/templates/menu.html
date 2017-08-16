@@ -15,7 +15,7 @@
             <ion-tab title="ТЕЛЕВИЗ" badge="status" icon-off="ion-ios-play-outline" icon-on="ion-ios-play-outline" href="#/app/tv">
                 <ion-nav-view name="tvContent"></ion-nav-view>
             </ion-tab>
-            
+
             <ion-tab title="ВИДЕО САН" icon-off="ion-camera" icon-on="ion-camera" href="#/app/content">
                 <ion-nav-view name="contentContent"></ion-nav-view>
             </ion-tab>
@@ -25,7 +25,20 @@
     </ion-pane>
 
     <ion-side-menu side="left" class="leftsidemenu">
-        <ion-content>
+        <ion-content has-bouncing="true">
+            <ion-header class="user" ng-show="loginstatus">
+                <center>
+                    <div class="img"><img src="img/user.png"></div>
+                    <h4>{{username}}</h4>
+                    <p menu-close ng-click="changepage('logout')">Гарах</p>
+                </center>
+            </ion-header>
+            <ion-header class="user" ng-show="!loginstatus">
+                <center>
+                    <div class="img"><img src="img/user.png"></div>
+                    <p menu-close ng-click="changepage('login')">Нэвтрэх</p>
+                </center>
+            </ion-header>
             <ion-list ng-if="leftside">
                 <ion-item menu-close href="#/app/news">
                     Эхлэл
@@ -38,26 +51,8 @@
                 <ion-item menu-close href="#/app/content">
                     Эхлэл
                 </ion-item>
-                <ion-item menu-close href="#/app/category/{{category.id }}" ng-repeat="category in types">
+                <ion-item menu-close href="#/app/type/{{category.id }}" ng-repeat="category in types">
                     {{category.name}}
-                </ion-item>
-            </ion-list>
-        </ion-content>
-    </ion-side-menu>
-    <ion-side-menu side="right" class="leftsidemenu">
-        <ion-content>
-            <ion-list>
-                <ion-item ng-show="!loginstatus"  menu-close href="#/app/login">
-                    Нэвтрэх
-                </ion-item>
-                <ion-item menu-close href="#/app/download">
-                    Татагдсан
-                </ion-item>
-                <ion-item menu-close href="#/app/downloading">
-                    Татаж байгаа
-                </ion-item>
-                <ion-item ng-show="loginstatus"  menu-close href="#/app/logout">
-                    Гарах
                 </ion-item>
             </ion-list>
         </ion-content>
