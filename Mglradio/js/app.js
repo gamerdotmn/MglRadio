@@ -246,7 +246,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $rootScope.username = storage.getItem("username");
         }
         $scope.changepage = function(name) {
-            $window.location.href = '#/app/'+name;
+            $window.location.href = '#/app/' + name;
         }
         
         $scope.leftside = false;
@@ -476,7 +476,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         };
     })
     .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
-        
         document.addEventListener("deviceready", onDeviceReady, false);
 
         function onDeviceReady() {
@@ -640,9 +639,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                             pwd:user.pwd
                         };
                         var loginresponse = $http.post(host + "/api/login.php", data, {});
-
+                        console.log(loginresponse);
                         loginresponse.success(function(data, status, headers, config) {
-                            alert(data); 
                             if (data === "1") {
                                 storage.setItem("username", user.name);
                                 storage.setItem("password", user.pwd);
@@ -653,7 +651,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                 navigator.notification.alert("Нууц үг болон нэвтрэх нэр алдаатай байна!", alertCallback, "Алдаа", "Хаах");
                             }
                         });
-
                         loginresponse.error(function(data, status, headers, config) {
                             navigator.notification.alert("Нэвтрэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
                         });
@@ -744,7 +741,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         function alertCallback() {
         }
     })
-    .controller('ForgetCtrl', function($scope, $window, $http,$rootScope) {
+    .controller('ForgetCtrl', function($scope, $window, $http, $rootScope) {
         $scope.submit = function(user) {
             if (user) {
                 if (typeof user.email !== "undefined" && user.email !== "") {
@@ -771,7 +768,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     });
 
                     forgetresponse.error(function(data, status, headers, config) {
-                        navigator.notification.alert("Бүртгэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
+                        navigator.notification.alert("Нууц үг сэргээхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
                     });
                 } else {
                     navigator.notification.alert("Цахим хаягаа оруулна уу!", alertCallback, "Алдаа", "Хаах");

@@ -26,19 +26,6 @@
 
     <ion-side-menu side="left" class="leftsidemenu">
         <ion-content has-bouncing="true">
-            <ion-header class="user" ng-show="loginstatus">
-                <center>
-                    <div class="img"><img src="img/user.png"></div>
-                    <h4>{{username}}</h4>
-                    <p menu-close ng-click="changepage('logout')">Гарах</p>
-                </center>
-            </ion-header>
-            <ion-header class="user" ng-show="!loginstatus">
-                <center>
-                    <div class="img"><img src="img/user.png"></div>
-                    <p menu-close ng-click="changepage('login')">Нэвтрэх</p>
-                </center>
-            </ion-header>
             <ion-list ng-if="leftside">
                 <ion-item menu-close href="#/app/news">
                     Эхлэл
@@ -48,7 +35,24 @@
                 </ion-item>
             </ion-list>
             <ion-list ng-if="!leftside">
-                <ion-item menu-close href="#/app/content">
+                <ion-header class="user" ng-show="loginstatus">
+                    <center>
+                        <div class="img">
+                            <img src="img/user.png">
+                        </div>
+                        <h4>{{username}}</h4>
+                        <p menu-close ng-click="changepage('logout')">Гарах</p>
+                    </center>
+                </ion-header>
+                <ion-header class="user" ng-show="!loginstatus">
+                    <center>
+                        <div class="img">
+                            <img src="img/user.png">
+                        </div>
+                        <p menu-close ng-click="changepage('login')">Нэвтрэх</p>
+                    </center>
+                </ion-header>
+                 <ion-item menu-close href="#/app/content">
                     Эхлэл
                 </ion-item>
                 <ion-item menu-close href="#/app/type/{{category.id }}" ng-repeat="category in types">
