@@ -203,6 +203,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                     }).then(function(modal) {
                                         $scope.modal = modal;
                                     });
+        $rootScope.$on("CallDetail", function(event, data) {
+            var id = data.data;
+            $scope.detail(id);
+        });
+        
         $scope.detail = function(id) {
             angular.forEach($rootScope.contents, function(value, key) {
                 if (value.id===id) {
@@ -371,7 +376,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.play = function() {
             if (!navigator.onLine) {
                 navigator.notification.alert(
-                    'Та интернет холболтоо шалгаад дахин үзээрэй.',
+                    'Та интернет холболтоо шалгаад дахин үзнэ үү.',
                     function() {
                     }, 
                     'Уучлаарай, холболт амжилтгүй.', 
@@ -406,11 +411,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                             cordova.plugins.notification.local.schedule({
                                                                             id: parseInt(c.id),
                                                                             title: "FM 102.1",
-                                                                            message: c.time + ' ' + c.title + " хөтөлбөр эхэллээ.",
-                                                                            firstAt: now, // firstAt and at properties must be an IETF-compliant RFC 2822 timestamp
+                                                                            text: c.time + ' ' + c.title + " хөтөлбөр эхэллээ.",
+                                                                            at: now, // firstAt and at properties must be an IETF-compliant RFC 2822 timestamp
                                                                             //every: "week", // this also could be minutes i.e. 25 (int)
                                                                             //sound: "file://sounds/reminder.mp3",
-                                                                            //icon: "http://icons.com/?cal_id=1",
+                                                                            //icon: "http://app.mglradio.com/build/images/logo/logo.png",
                                                                             data: { id:c.id }
                                                                         });
                             window.localStorage.setItem(c.id, true);
@@ -483,6 +488,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         function onDeviceReady() {
             var fileTransfer = new FileTransfer();
             var db = window.sqlitePlugin.openDatabase({name: "my.db"});
+            
             $rootScope.$on("CallDownload", function() {
                 $scope.download();
             });
@@ -544,7 +550,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             };
             function onGetDirectorySuccess(dir) {
                 cdr = dir;
-                dir.getFile("big_buck_bunny_480p_20mb.mp4", {
+                var filename = $rootScope.contentdetail.path.substring($rootScope.contentdetail.path.lastIndexOf('/') + 1);
+                dir.getFile(filename, {
                                 create: true,
                                 exclusive: false
                             }, gotFileEntry, errorHandler);
@@ -556,20 +563,39 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 console.log(err);
             };
             function gotFileEntry() {
-                var documentUrl = "http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_20mb.mp4";
+                var filename = $rootScope.contentdetail.path.substring($rootScope.contentdetail.path.lastIndexOf('/') + 1);
+                var documentUrl = $rootScope.contentdetail.path;
                 var uri = encodeURI(documentUrl);
                 
                 fileTransfer.onprogress = function(progressEvent) {
                     if (progressEvent.lengthComputable) {
                         var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
-                        $scope.downloadstatus = perc + "% ТАТСАН";
+                        $scope.downloadstatus = perc + "% татсан";
                     }
                 };
                 
-                fileTransfer.download(uri, cdr.nativeURL + "big_buck_bunny_480p_20mb.mp4",
+                fileTransfer.download(uri, cdr.nativeURL + filename,
                                       function(entry) {
                                           $scope.downloadanimate = "slideOutDown";
-                                          $scope.downloadstatus = "";
+                                          $timeout(function () {
+                                              $scope.downloadstatus = "";
+                                          }, 1000);
+                                          var t = moment();
+                                          var now = t.local().toDate();
+                                          var date = new Date();
+                                          cordova.plugins.notification.local.schedule({
+                                                                                          id: parseInt($rootScope.contentdetail.id),
+                                                                                          title: "FM 102.1",
+                                                                                          text: "Контент амжилттай татагдлаа.",
+                                                                                          at: date, 
+                                                                                          autoClear:  true, 
+                                                                                          data: { contentid : $rootScope.contentdetail.id }
+                                                                                      });
+                                          cordova.plugins.notification.local.on("click", function (notification) {
+                                              //joinMeeting(notification.data.meetingId);
+                                              //alert(notification.data.id);
+                                              $rootScope.$emit("CallDetail", {data: notification.id});
+                                          });
                                           //console.log("download complete: " + entry.toURL());
                                           //statusDom.innerHTML = "<video height='240' controls><source src='" + entry.toURL() + "' type='video/mp4'>";
                                       },
