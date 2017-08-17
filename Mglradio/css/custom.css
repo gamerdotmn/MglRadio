@@ -659,24 +659,6 @@ line-height: 12px;
     line-height: 15px; 
     width: 100%; 
 }
-
-/*.main-gallery
-{
-height: 40%;
-width: 100%;
-}
-.gallery-cell
-{
-width: 33%;
-counter-increment: gallery-cell;
-padding: 5px;
-background: transparent;
-height: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-}*/
-
 .detail.modal
 {
     
@@ -693,13 +675,17 @@ align-items: center;
     color: #fff;
     border-color: transparent;
     background-color: transparent;
-    font-size: 21px;
-    margin-left: 10px;
+    font-size: 25px;
+    width: 60px;
+    text-align: left;
+    padding-left: 10px;
+    margin-top: 5px !important;
 }
 .detail .bar.bar-stable .title
 {
     color: #fff;
     text-transform: uppercase;
+    margin-top: 5px !important;
 }
 .detail .detailcontent .img
 {
@@ -747,14 +733,16 @@ align-items: center;
 .detail .detailcontent .btn
 {
     background: transparent;
-    border: 4px solid #e9e9e9;
     color: #fff;
-    border-radius: 30px;
-    min-width: 60px;
-    min-height: 60px;
-    position: absolute;
-    left: 40%;
-    top: 14%;
+    min-width: 100%;
+    min-height: 100%;
+}
+.detail .detailcontent .btn:before
+{
+    padding: 15px 20px;
+    border: 4px solid #e9e9e9;
+    border-radius: 35px;
+    line-height: 25px;
 }
 .login
 {
@@ -774,10 +762,6 @@ align-items: center;
     color: #fff;
     font-size: 13px;
 }
-.login input:first-child
-{
-    margin-top: 15%;
-}
 .login .submit
 {
     background-color: #f93430;
@@ -795,19 +779,6 @@ align-items: center;
     -webkit-box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
     -moz-box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
     box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
-}
-.login .facebook
-{
-    background-color: #416fd5;
-    color: #fff;
-    width: 50%;
-    display: block;
-    border-radius: 20px;
-    min-height: 35px;
-    line-height: 15px;
-    margin: 10px;
-    font-family: 'Ubuntu Regular';
-    font-size: 11px;
 }
 .login .signup
 {
@@ -839,85 +810,10 @@ align-items: center;
     line-height: 15px;
     font-family: 'Ubuntu Regular';
 }
-.signup
+.login center
 {
-    background-image: url('../img/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.signup input
-{
-    width: 70%;
-    border-radius: 10px;
-    text-align: center;
-    padding: 0 20px;
-    margin: 10px;
-    background: #212127;
-    color: #fff;
-    font-size: 13px;
-}
-.signup input:first-child
-{
-    margin-top: 20%;
-}
-.signup .submit
-{
-    background-color: #f93430;
-    color: #fff;
-    width: 50%;
-    display: block;
-    border-radius: 10px;
-    min-height: 35px;
-    line-height: 15px;
-    margin: 10px;
-    font-family: 'Ubuntu Regular';
-    font-size: 11px;
-    margin-top: 15%;
-    border: 1px solid #821512;
-    -webkit-box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
-    -moz-box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
-    box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
-}
-.forget
-{
-    background-image: url('../img/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.forget input
-{
-    width: 70%;
-    border-radius: 10px;
-    text-align: center;
-    padding: 0 20px;
-    margin: 10px;
-    background: #212127;
-    color: #fff;
-    font-size: 13px;
-}
-.forget input:first-child
-{
-    margin-top: 40%;
-}
-.forget .submit
-{
-    background-color: #f93430;
-    color: #fff;
-    width: 50%;
-    display: block;
-    border-radius: 10px;
-    min-height: 35px;
-    line-height: 15px;
-    margin: 10px;
-    font-family: 'Ubuntu Regular';
-    font-size: 11px;
-    margin-top: 15%;
-    border: 1px solid #821512;
-    -webkit-box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
-    -moz-box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
-    box-shadow: inset 0px 67px 6px -66px rgba(255, 255, 255, 1);
+    height: 100%;
+    padding-top: 20%;
 }
 .search
 {

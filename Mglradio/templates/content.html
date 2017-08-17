@@ -42,9 +42,9 @@
         </ion-list>
         <div style="height:40px;"></div>
     </ion-content>
-    <div class="mylist">
-        <button ng-click="changepage('download')">
-            2 татагдаж байгаа<i class="ion-chevron-right "></i>
+    <div class="mylist animated {{downloadanimate}}" id="mylist">
+        <button ng-click="changepage('download')" ng-show="downloadstatus!=''">
+            {{downloadstatus}}<i class="ion-chevron-right "></i>
         </button>
     </div>
 </ion-view>

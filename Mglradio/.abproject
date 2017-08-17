@@ -11,7 +11,9 @@
   "iOSDeviceFamily": [
     "1"
   ],
-  "iOSBackgroundMode": [],
+  "iOSBackgroundMode": [
+    "audio"
+  ],
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
   "FrameworkVersion": "6.4.0",
   "AndroidPermissions": [
@@ -21,7 +23,7 @@
     "Portrait"
   ],
   "AndroidHardwareAcceleration": "true",
-  "iOSStatusBarStyle": "Default",
+  "iOSStatusBarStyle": "BlackTranslucent",
   "Framework": "Cordova",
   "WP8TileTitle": "",
   "WP8Publisher": "",

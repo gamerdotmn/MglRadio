@@ -1,16 +1,26 @@
 <ion-view title="{{logo}}">
     <ion-nav-buttons side="left" >
-        <button class="button sidemenu" ng-click="goBack()">
-            <i class="icon ion-android-arrow-back"></i>
+        <button class="button button-clear ion-android-arrow-back close" ng-click="back()">
         </button>
     </ion-nav-buttons>
-    <ion-content class="login" scroll="false">
-        <center>
+    <ion-content class="login" has-bouncing="false">
+        <center ng-show="loginpage" class="animated fadeIn">
             <input ng-model="user.name" type="text" placeholder="НЭВТРЭХ НЭР">
             <input ng-model="user.pwd" type="password" placeholder="НУУЦ ҮГ">
             <button class="button submit" ng-click="login(user)">НЭВТРЭХ</button>
-            <button class="button signup" ng-click="changepage('signup')">Бүртгүүлэх</button>
-            <button class="button forget" ng-click="changepage('forget')">Нууц үгээ мартсан уу?</button>
+            <button class="button signup" ng-click="signuppageshow()">Бүртгүүлэх</button>
+            <button class="button forget" ng-click="forgetpageshow()">Нууц үгээ мартсан уу?</button>
+        </center>
+        <center ng-show="signuppage" class="animated fadeIn">
+            <input ng-model="newUser.user_id" type="text" placeholder="НЭВТРЭХ НЭР" >
+            <input ng-model="newUser.email" type="email" placeholder="И-МЕЙЛ" >
+            <input ng-model="newUser.pwd" type="password" placeholder="НУУЦ ҮГ" >
+            <input ng-model="newUser.confirm" type="password" placeholder="НУУЦ ҮГ ДАВТАХ" >
+            <button class="button submit" ng-click="signup(newUser)">БҮРТГҮҮЛЭХ</button>
+        </center>
+        <center ng-show="forgetpage" class="animated fadeIn">
+            <input ng-model="forget.email" type="email" placeholder="БҮРТГЭЛТЭЙ И-МЕЙЛ"> 
+            <button class="button submit" ng-click="forget(forget)">СЭРГЭЭХ</button>
         </center>
     </ion-content>
 </ion-view>
