@@ -5,7 +5,7 @@
   "AppIdentifier": "com.hureedesign.MglRadio",
   "DisplayName": "Mgl Radio",
   "Author": "",
-  "Description": "Mglradio",
+  "Description": "Mgl Radio",
   "BundleVersion": "1.1",
   "AndroidVersionCode": "2",
   "iOSDeviceFamily": [
@@ -22,7 +22,7 @@
   "DeviceOrientations": [
     "Portrait"
   ],
-  "AndroidHardwareAcceleration": "true",
+  "AndroidHardwareAcceleration": "false",
   "iOSStatusBarStyle": "BlackTranslucent",
   "Framework": "Cordova",
   "WP8TileTitle": "",
@@ -57,8 +57,7 @@
     "cordova-plugin-vibration",
     "cordova-plugin-whitelist",
     "cordova-plugin-wkwebview-engine@1.1.1",
-    "de.appplant.cordova.plugin.local-notification@0.8.4.1",
     "nl.x-services.plugins.socialsharing@5.1.1"
   ],
-  "iOSDeploymentTarget": "6.0"
+  "iOSDeploymentTarget": "8.0"
 }
