@@ -133,6 +133,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.load = function() {
             $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
             dataService.getInit().success(function(data) {
+                console.log(data);
                 $scope.categories = data.categories;
                 $scope.news = data.news;
                 $scope.timetables = data.timetables;
