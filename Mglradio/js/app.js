@@ -159,23 +159,21 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
         
         $scope.loadmore=function(){
-             
              if($scope.news!=null&&$scope.news.length>0)
              {
-                 console.log('more');
-                 $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
                  $http.get("http://app.mglradio.com/api/news.php?p="+$scope.page)
                  .then(function(response) {
-                    
+                    $scope.page=$scope.page+1;
                     for(var i=0;i<response.data.news.length;i++)
                     {
                         $scope.news.push(response.data.news[i]);
                     }
-                    $scope.page=$scope.page+1;
-                    $ionicLoading.hide();
+                    
+                    $timeout(function () {
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    },2000);
                  });
              }
-             $scope.$broadcast('scroll.infiniteScrollComplete');
              
         };
         
@@ -192,7 +190,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 $scope.today = data.today;
                 $timeout(function () {
                 $ionicLoading.hide();
+                    $ionicLoading.hide();
                 },2000);
+                
+                $timeout(function () {
+                    $scope.moredata=true;
+                },6000);
             }).error(function() {
                 $ionicLoading.hide();
             });
