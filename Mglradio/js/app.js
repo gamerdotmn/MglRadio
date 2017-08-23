@@ -114,6 +114,21 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
+    .directive('imageonload', function() {
+        return {
+            link: function(scope, element, attrs) {
+                element.on('load', function() {
+                    element.removeClass('spinner-hide');
+                    element.addClass('spinner-show');
+                    element.parent().find('center').remove();
+                });
+                scope.$watch('ngSrc', function() {
+                    element.addClass('spinner-hide');
+                    element.parent().prepend('<center><img src="img\\loading.gif" style="max-width:50%"/></center>');
+                });    
+            }
+        }
+    })
     .config(function($ionicConfigProvider) {
         $ionicConfigProvider.tabs.position('bottom');
     })
