@@ -149,22 +149,31 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
         $scope.status = 0;
+        
         $scope.rs = 1;
         $scope.logo = "<img src='img/logo.png' style='height: 100%;'>";
         $scope.rtitle = 'MGL RADIO';
-        $scope.page=1;
+        $scope.page=0;
         $scope.goBack = function() {
             $ionicHistory.goBack();
         }
         
         $scope.loadmore=function(){
-             $scope.items.push({ id: $scope.items.length});
+             if($scope.page>0)
+             {
+             console.log('more');
              $http.get("http://app.mglradio.com/api/news.php?p="+$scope.page)
             .then(function(response) {
-                console.log(response);
+                
+                for(var i=0;i<response.data.news.length;i++)
+                {
+                    $scope.news.push(response.data.news[i]);
+                }
                 $scope.page=$scope.page+1;
-            });
+             });
              $scope.$broadcast('scroll.infiniteScrollComplete');
+             }
+             
         };
         
         $scope.load = function() {
@@ -178,6 +187,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     $scope.rs = 2;
                 }
                 $scope.today = data.today;
+                $scope.page=1;
                 $timeout(function () {
                 $ionicLoading.hide();
                 },2000);
