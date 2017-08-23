@@ -163,7 +163,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
              {
                  $http.get("http://app.mglradio.com/api/news.php?p="+$scope.page)
                  .then(function(response) {
-                    $scope.page=$scope.page+1;
+                   
                     for(var i=0;i<response.data.news.length;i++)
                     {
                         $scope.news.push(response.data.news[i]);
@@ -171,6 +171,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     
                     $timeout(function () {
                         $scope.$broadcast('scroll.infiniteScrollComplete');
+                         $scope.page=$scope.page+1;
                     },2000);
                  });
              }
@@ -211,8 +212,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         };
         $rootScope.contents = [];
         
+        
+        
         $scope.load();
         $scope.doRefresh = function() {
+            $scope.page=1;
             $scope.load();
             $scope.$broadcast('scroll.refreshComplete');
         };
@@ -406,7 +410,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                             d = true;
                             $timeout(function () {
                                 var h = document.querySelector('.hutulburdiv .list .item').offsetHeight;
-                                console.log(h);
+                               
                                 $ionicScrollDelegate.scrollTo(0, i * h, true);
                             }, 1000);
                         }
@@ -810,7 +814,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                         var signupresponse = $http.post(host + "/api/signup.php", data, {});
 
                                         signupresponse.success(function(data, status, headers, config) {
-                                            console.log(data);
+                                            
                                             if (data === "2") {
                                                 storage.setItem("username", user.user_id);
                                                 storage.setItem("password", user.pwd);
