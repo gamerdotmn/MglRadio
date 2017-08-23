@@ -18,7 +18,7 @@
         <ion-list ng-repeat="n in news">
             <a ng-href="#/app/detail/{{n.id}}">
                 <ion-item>
-                    <div ng-if="$index>0" class="left" style="position: absolute;top:0px;bottom:0px;background:white center center no-repeat;background-size:cover;background-image:url({{n.img}});">
+                    <div ng-if="$index>0" class="left" style="position: absolute;top:0px;bottom:0px;background:white center center no-repeat;background-size:cover;background-image:url(img\\loading.gif);" bimg="{{n.img}}" >
                     </div>
                     <div ng-if="$index==0" class="left" >
                         <img imageonload src="{{n.img}}">
@@ -30,5 +30,6 @@
                 </ion-item>
             </a>
         </ion-list>
+        <ion-infinite-scroll on-infinite="loadmore()" distance="10%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

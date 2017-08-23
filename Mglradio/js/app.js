@@ -118,14 +118,24 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         return {
             link: function(scope, element, attrs) {
                 element.on('load', function() {
-                    element.removeClass('spinner-hide');
-                    element.addClass('spinner-show');
                     element.parent().find('center').remove();
                 });
                 scope.$watch('ngSrc', function() {
-                    element.addClass('spinner-hide');
-                    element.parent().prepend('<center><img src="img\\loading.gif" style="max-width:50%"/></center>');
+                    element.parent().prepend('<center><img src="img\\loading.gif" style="width:100px;height:100px;"/></center>');
                 });    
+            }
+        }
+    })
+    .directive('bimg', function() {
+        return {
+            link: function(scope, element, attrs) {
+                var image = new Image();
+                image.src=attrs.bimg;
+                image.onload = function () {
+                    element.css({
+                        'background-image':'url('+attrs.bimg+')'
+                    });
+                };
             }
         }
     })
@@ -142,9 +152,21 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.rs = 1;
         $scope.logo = "<img src='img/logo.png' style='height: 100%;'>";
         $scope.rtitle = 'MGL RADIO';
+        $scope.page=1;
         $scope.goBack = function() {
             $ionicHistory.goBack();
         }
+        
+        $scope.loadmore=function(){
+             $scope.items.push({ id: $scope.items.length});
+             $http.get("http://app.mglradio.com/api/news.php?p="+$scope.page)
+            .then(function(response) {
+                console.log(response);
+                $scope.page=$scope.page+1;
+            });
+             $scope.$broadcast('scroll.infiniteScrollComplete');
+        };
+        
         $scope.load = function() {
             $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
             dataService.getInit().success(function(data) {
@@ -156,15 +178,18 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     $scope.rs = 2;
                 }
                 $scope.today = data.today;
-                
+                $timeout(function () {
                 $ionicLoading.hide();
+                },2000);
             }).error(function() {
                 $ionicLoading.hide();
             });
             
             dataService.getContent().success(function(data) {
                 $scope.types = data.types;
+                $timeout(function () {
                 $ionicLoading.hide();
+                },2000);
             }).error(function() {
                 $ionicLoading.hide();
             });
