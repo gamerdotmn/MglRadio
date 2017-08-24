@@ -152,7 +152,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.rs = 1;
         $scope.logo = "<img src='img/logo.png' style='height: 100%;'>";
         $scope.rtitle = 'MGL RADIO';
-        $scope.page=1;
+        $scope.page=0;
         $scope.moredata=false;
         $scope.goBack = function() {
             $ionicHistory.goBack();
@@ -216,7 +216,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.load();
         $scope.doRefresh = function() {
-            $scope.page=1;
+            $scope.page=0;
             $scope.load();
             $scope.$broadcast('scroll.refreshComplete');
         };
@@ -305,17 +305,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $window.location.href = '#/app/' + name;
         }
         
-        $scope.leftside = false;
-        
-        $rootScope.$on('$stateChangeSuccess', 
-                       function(event, toState, toParams, fromState, fromParams) { 
-                           if ($state.current.name === "app.news") {
-                               $scope.leftside = true;
-                           }
-                           if ($state.current.name === "app.content") {
-                               $scope.leftside = false;
-                           }
-                       });
+
         
         $scope.downloadstatus = "";
         $scope.downloadanimate = "slideInUp";

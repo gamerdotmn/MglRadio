@@ -26,15 +26,7 @@
 
     <ion-side-menu side="left" class="leftsidemenu">
         <ion-content has-bouncing="true">
-            <ion-list ng-if="leftside">
-                <ion-item menu-close href="#/app/news">
-                    Эхлэл
-                </ion-item>
-                <ion-item menu-close href="#/app/category/{{category.id }}" ng-repeat="category in categories">
-                    {{category.name}}
-                </ion-item>
-            </ion-list>
-            <ion-list ng-if="!leftside">
+            <ion-list>
                 <ion-header class="user" ng-show="loginstatus">
                     <center>
                         <div class="img">
