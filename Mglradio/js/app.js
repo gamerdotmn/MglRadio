@@ -383,11 +383,10 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         if (d===false) {
                             $scope.timetables[i].isactive = true;
                             d = true;
-                            console.log('r'+$scope.timetables[i].id);
                             $location.hash('r'+$scope.timetables[i].id);
                             $timeout(function () {
                                 $ionicScrollDelegate.anchorScroll(true);
-                            },1000);
+                            },500);
                         }
                     }
                 }
@@ -398,7 +397,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $http.get("http://app.mglradio.com/api/ts.php")
                  .then(function(response) 
                     {
-                        console.log(response);
                         $scope.today=response.data.today;
                         $scope.timetables=response.data.timetables;
                         if ($scope.timetables.length > 0) 
