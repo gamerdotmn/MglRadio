@@ -43,14 +43,20 @@
                 my_media.play();
                 MusicControls.updateIsPlaying(true);
                 isplaying = true;
+                try {
                 document.getElementById("radiodiv").style.backgroundImage = "url(img/bar.gif)";
+                }
+                catch(err) {}
             }
             
             function pause() {
                 my_media.pause();
                 MusicControls.updateIsPlaying(false);
                 isplaying = false;
+                try {
                 document.getElementById("radiodiv").style.backgroundImage = "";
+                }
+                catch(err) {}
             }
             
             function create_success() {
