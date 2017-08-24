@@ -395,14 +395,18 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
         
         $scope.playstatus = false;
-        $http.get("http://app.mglradio.com/api/news.php?p="+$scope.page)
-                 .then(function(response) {
-                    if ($scope.timetables.length > 0) 
+        $http.get("http://app.mglradio.com/api/ts.php")
+                 .then(function(response) 
                     {
-                        scope.rs = 2;
-                    }
-                    $scope.active();
-        });
+                        console.log(response);
+                        $scope.today=response.data.today;
+                        $scope.timetables=response.data.timetables;
+                        if ($scope.timetables.length > 0) 
+                        {
+                            $scope.rs = 2;
+                        }
+                        $scope.active();
+                    });
         setInterval(function() { 
             $scope.$apply(function () {
                 $scope.playstatus = isplaying;
