@@ -76,12 +76,7 @@
                         break;
                 }
             }
-            function jwinit(e){
-                console.log(e);
-            }
-            function jwerror(e){
-                console.log(e);
-            }
+            
             document.addEventListener('deviceready', function () {
                 
                 cordova.plugins.notification.local.on('click', function (notification) {
@@ -114,19 +109,20 @@
                     MusicControls.listen();
                 }
                 
-                jwplayerSdk.init({
-                    file:        'https://www.w3schools.com/html/mov_bbb.ogg',
-                    title: 'Video title',
-                    description: 'Video description',
-                    width:       '100%',
-                    aspectratio: '16:9'
-                },jwinit,jwerror);
+                var videoUrl = 'https://www.w3schools.com/html/mov_bbb.mp4';
                 
-                setTimeout(function(){
-                   
-                jwplayerSdk.play();
-                    
-                }, 2000);
+                var options = {
+                    successCallback: function() {
+                      console.log("Video was closed without error.");
+                    },
+                    errorCallback: function(errMsg) {
+                      console.log("Error! " + errMsg);
+                    },
+                    orientation: 'landscape',
+                    shouldAutoClose: true,  
+                    controls: true
+                  };
+                  window.plugins.streamingMedia.playVideo(videoUrl, options);
                 
             }, false);
             
