@@ -369,6 +369,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate) {
+        
         $scope.getbyid = function(id) {
             var r = null;
             for (var i = $scope.timetables.length - 1;i >= 0;i--) {
@@ -400,7 +401,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                             d = true;
                             $timeout(function () {
                                 var h = document.querySelector('.hutulburdiv .list .item').offsetHeight;
-                               
                                 $ionicScrollDelegate.scrollTo(0, i * h, true);
                             }, 1000);
                         }
@@ -411,10 +411,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.playstatus = false;
         $scope.active();
-        
-        setInterval(function() { 
-            $scope.active();
-        }, 30000);
         
         setInterval(function() { 
             $scope.$apply(function () {
@@ -491,29 +487,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     );
             }
         }
-        //$scope.scroll = function() {
-        //    var now = moment();
-        //    var d = false;
-        //    if (typeof($scope.timetables)!=="undefined") {
-        //        alert();
-        //        for (var i = $scope.timetables.length - 1;i >= 0;i--) {
-        //            var t = moment($scope.timetables[i].date + "T" + $scope.timetables[i].time + $scope.today[0].tz);
-        //            if (now.isAfter(t)) {
-        //                if (d===false) {
-        //                    d = true;
-        //                    //var h = angular.element(document.querySelector('.list'))[0].offsetHeight;
-        //                    //$ionicScrollDelegate.scrollTo(0, i * h, true);
-        //                    $timeout(function () {
-        //                        var h = document.querySelector('.hutulburdiv .list .item').offsetHeight;
-        //                        console.log(h);
-        //                        $ionicScrollDelegate.scrollTo(0, i * h, true);
-        //                    }, 5000);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-        //$scope.scroll();
+       
     })
     .controller('TvCtrl', function($rootScope, $scope, $ionicLoading, $http, $timeout) {
         $scope.playVideo = function() {
