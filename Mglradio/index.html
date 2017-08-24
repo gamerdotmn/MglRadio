@@ -80,7 +80,7 @@
             document.addEventListener('deviceready', function () {
                 
                 cordova.plugins.notification.local.on('click', function (notification) {
-                    setTimeout(function(){document.location='#/app/radio';}, 1000);
+                    setTimeout(function(){document.location='#/app/radio';}, 2000);
                 });
                 
                 if (navigator.onLine) {
@@ -108,7 +108,18 @@
                     MusicControls.subscribe(events);
                     MusicControls.listen();
                 }
+                
+                jwplayerSdk.init({
+                    file:        'https://www.w3schools.com/html/mov_bbb.mp4',
+                    title: 'Video title',
+                    description: 'Video description'
+                });
+                jwplayerSdk.bringToFront();
+                jwplayerSdk.setForceFullScreenOnLandscape(true);
+                jwplayerSdk.play();
+                
             }, false);
+            
             function searchval(val) {
                 var $body = angular.element(document.body);            
                 var $rootScope = $body.injector().get('$rootScope');   

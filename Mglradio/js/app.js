@@ -500,6 +500,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
             $rootScope.contents = data.contents;
+            $rootScope.types=data.types;
             $ionicLoading.hide();
         }).error(function() {
             $ionicLoading.hide();
