@@ -196,15 +196,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             }).error(function() {
                 $ionicLoading.hide();
             });
-            
-            dataService.getContent().success(function(data) {
-                $scope.types = data.types;
-                $timeout(function () {
-                $ionicLoading.hide();
-                },2000);
-            }).error(function() {
-                $ionicLoading.hide();
-            });
         };
         $rootScope.contents = [];
         
