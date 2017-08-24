@@ -77,13 +77,12 @@
                 }
             }
             
-            cordova.plugins.notification.local.on("click", function (notification) 
-            {
-                alert(1);
-                setTimeout(function(){document.location='#/radio'}, 1500);
-            });
-            
             document.addEventListener('deviceready', function () {
+                
+                cordova.plugins.notification.local.on('click', function (notification) {
+                    setTimeout(function(){document.location='#/app/radio';}, 1000);
+                });
+                
                 if (navigator.onLine) {
                     net = true;
                 }
