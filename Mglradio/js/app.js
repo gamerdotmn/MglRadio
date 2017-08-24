@@ -110,7 +110,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/news");
+        $urlRouterProvider.otherwise("/app/radio");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -368,7 +368,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
         }
     })
-    .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate) {
+    .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location) {
         
         $scope.getbyid = function(id) {
             var r = null;
@@ -400,8 +400,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                             $scope.timetables[i].isactive = true;
                             d = true;
                             $timeout(function () {
-                                var h = document.querySelector('.hutulburdiv .list .item').offsetHeight;
-                                $ionicScrollDelegate.scrollTo(0, i * h, true);
+                                $location.hash('r'+id);
+     $ionicScrollDelegate.anchorScroll();
                             }, 1000);
                         }
                     }
