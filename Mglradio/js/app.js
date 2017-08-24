@@ -383,6 +383,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.active = function() {
             var now = moment();
+            var d = false;
             if (typeof($scope.timetables)!=="undefined") {
                 for (var i = $scope.timetables.length - 1;i >= 0;i--) {
                     $scope.timetables[i].isactive = false;
@@ -396,8 +397,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     if (now.isAfter(t)) {
                         if (d===false) {
                             $scope.timetables[i].isactive = true;
+                            d = true;
+                            console.log('r'+$scope.timetables[i].id);
                             $location.hash('r'+$scope.timetables[i].id);
-                            $ionicScrollDelegate.anchorScroll();
+                            $timeout(function () {
+                                $ionicScrollDelegate.anchorScroll(true);
+                            },1000);
                         }
                     }
                 }
@@ -412,6 +417,10 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 $scope.playstatus = isplaying;
             });
         }, 100);
+        
+        setInterval(function() { 
+            $scope.active();
+        }, 300000);
         
         $scope.playstatus = true;
         $scope.play = function() {
