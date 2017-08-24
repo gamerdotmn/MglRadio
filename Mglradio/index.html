@@ -63,9 +63,7 @@
             }
             function create_error() {
             }            
-            function setupErrorEventHandler(){
-                
-            }
+            
             function events(action) {
                 switch (action) {
                     case 'music-controls-pause':
@@ -78,7 +76,12 @@
                         break;
                 }
             }
-            
+            function jwinit(e){
+                console.log(e);
+            }
+            function jwerror(e){
+                console.log(e);
+            }
             document.addEventListener('deviceready', function () {
                 
                 cordova.plugins.notification.local.on('click', function (notification) {
@@ -112,14 +115,18 @@
                 }
                 
                 jwplayerSdk.init({
-                    file:        'https://www.w3schools.com/html/mov_bbb.mp4',
+                    file:        'https://www.w3schools.com/html/mov_bbb.ogg',
                     title: 'Video title',
-                    description: 'Video description'
-                });
-                jwplayerSdk.on('setupError', setupErrorEventHandler);
-                jwplayerSdk.bringToFront();
-                jwplayerSdk.setForceFullScreenOnLandscape(true);
+                    description: 'Video description',
+                    width:       '100%',
+                    aspectratio: '16:9'
+                },jwinit,jwerror);
+                
+                setTimeout(function(){
+                   
                 jwplayerSdk.play();
+                    
+                }, 2000);
                 
             }, false);
             
