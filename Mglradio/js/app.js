@@ -184,11 +184,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 
                 $scope.categories = data.categories;
                 $scope.news = data.news;
-                $scope.timetables = data.timetables;
-                if ($scope.timetables.length > 0) {
-                    $scope.rs = 2;
-                }
-                $scope.today = data.today;
+                
                 $timeout(function () {
                 $ionicLoading.hide();
                     $ionicLoading.hide();
@@ -211,8 +207,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             });
         };
         $rootScope.contents = [];
-        
-        
         
         $scope.load();
         $scope.doRefresh = function() {
@@ -368,7 +362,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
         }
     })
-    .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location) {
+    .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http) {
         
         $scope.getbyid = function(id) {
             var r = null;
@@ -410,8 +404,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
         
         $scope.playstatus = false;
-        $scope.active();
-        
+        $http.get("http://app.mglradio.com/api/news.php?p="+$scope.page)
+                 .then(function(response) {
+                    if ($scope.timetables.length > 0) 
+                    {
+                        scope.rs = 2;
+                    }
+                    $scope.active();
+        });
         setInterval(function() { 
             $scope.$apply(function () {
                 $scope.playstatus = isplaying;
