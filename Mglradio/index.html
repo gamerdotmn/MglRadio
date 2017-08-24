@@ -63,7 +63,9 @@
             }
             function create_error() {
             }            
-            
+            function setupErrorEventHandler(){
+                
+            }
             function events(action) {
                 switch (action) {
                     case 'music-controls-pause':
@@ -114,6 +116,7 @@
                     title: 'Video title',
                     description: 'Video description'
                 });
+                jwplayerSdk.on('setupError', setupErrorEventHandler);
                 jwplayerSdk.bringToFront();
                 jwplayerSdk.setForceFullScreenOnLandscape(true);
                 jwplayerSdk.play();
