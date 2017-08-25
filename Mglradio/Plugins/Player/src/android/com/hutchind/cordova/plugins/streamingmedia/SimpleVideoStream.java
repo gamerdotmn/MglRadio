@@ -77,7 +77,7 @@ public class SimpleVideoStream extends Activity implements
 			mVideoView.setOnPreparedListener(this);
 			mVideoView.setOnErrorListener(this);
 			mVideoView.setVideoURI(videoUri);
-			mMediaController = new MediaController(this);
+			mMediaController = new MediaController(this,false);
 			mMediaController.setAnchorView(mVideoView);
 			mMediaController.setMediaPlayer(mVideoView);
 			mVideoView.setMediaController(mMediaController);
