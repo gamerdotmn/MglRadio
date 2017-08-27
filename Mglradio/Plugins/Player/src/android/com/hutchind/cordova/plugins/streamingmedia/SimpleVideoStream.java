@@ -40,7 +40,7 @@ public class SimpleVideoStream extends Activity implements
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        mFullscreenButton = (ImageButton)
+        mFullscreenButton = (ImageButton)mVideoView.findViewById(R.id.fullscreen);
         
 		Bundle b = getIntent().getExtras();
 		mVideoUrl = b.getString("mediaUrl");
