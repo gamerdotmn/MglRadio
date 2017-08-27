@@ -59,6 +59,6 @@
 		<source-file src="src/android/com/hutchind/cordova/plugins/streamingmedia/SimpleVideoStream.java" target-dir="src/com/hutchind/cordova/plugins/streamingmedia" />
 		<source-file src="src/android/com/hutchind/cordova/plugins/streamingmedia/StreamingMedia.java" target-dir="src/com/hutchind/cordova/plugins/streamingmedia" />
 		<source-file src="src/android/com/hutchind/cordova/plugins/streamingmedia/ImageLoadTask.java" target-dir="src/com/hutchind/cordova/plugins/streamingmedia" />
-        <resource-file src="src/android/res/drawable-xhdpi/ic_media_fullscreen_shrink.png" target="res/drawable-xhdpi/ic_media_fullscreen_shrink.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/video_top_back.png" target="res/drawable-xhdpi/video_top_back_shrink.png" />
 	</platform>
 </plugin>
