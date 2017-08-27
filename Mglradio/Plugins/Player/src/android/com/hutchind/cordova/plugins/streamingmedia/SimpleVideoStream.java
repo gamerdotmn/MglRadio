@@ -90,7 +90,7 @@ public class SimpleVideoStream extends Activity implements
                 }
                 close.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        
+                        wrapItUp(RESULT_OK, null);
                     }
                 });
                 relLayout.addView(close);
