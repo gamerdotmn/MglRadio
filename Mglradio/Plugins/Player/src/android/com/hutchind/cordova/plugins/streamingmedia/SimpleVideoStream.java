@@ -40,7 +40,29 @@ public class SimpleVideoStream extends Activity implements
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        mFullscreenButton = (ImageButton)mVideoView.findViewById(R.id.fullscreen);
+        Resources activityRes = cordova.getActivity().getResources();
+        
+        Button close = new Button(cordova.getActivity());
+                RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+                closeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                close.setLayoutParams(closeLayoutParams);
+                forward.setContentDescription("Close Button");
+                close.setId(5);
+                int closeResId = activityRes.getIdentifier("ic_media_fullscreen_shrink", "drawable", cordova.getActivity().getPackageName());
+                Drawable closeIcon = activityRes.getDrawable(closeResId);
+                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+                {
+                    close.setBackgroundDrawable(closeIcon);
+                }
+                else
+                {
+                    close.setBackground(closeIcon);
+                }
+                close.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        
+                    }
+                });
         
 		Bundle b = getIntent().getExtras();
 		mVideoUrl = b.getString("mediaUrl");
