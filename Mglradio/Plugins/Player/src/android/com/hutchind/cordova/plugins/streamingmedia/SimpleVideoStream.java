@@ -20,6 +20,7 @@ import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
+import android.widget.ImageButton;
 
 public class SimpleVideoStream extends Activity implements
 	MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener,
@@ -31,13 +32,27 @@ public class SimpleVideoStream extends Activity implements
 	private ProgressBar mProgressBar = null;
 	private String mVideoUrl;
 	private Boolean mShouldAutoClose = true;
-
+    private ImageButton mFullscreenButton;
+    
+    private View.OnClickListener mFullscreenListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            mMediaController.toggleFullScreen();
+        }
+    };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        
+        mFullscreenButton = (ImageButton) mRootView.findViewById(R.id.bottom_fullscreen);
+        if (mFullscreenButton != null) {
+            mFullscreenButton.requestFocus();
+            mFullscreenButton.setOnClickListener(mFullscreenListener);
+        }
+        
+        
+        
 		Bundle b = getIntent().getExtras();
 		mVideoUrl = b.getString("mediaUrl");
 		mShouldAutoClose = b.getBoolean("shouldAutoClose");
