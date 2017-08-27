@@ -20,10 +20,14 @@ import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
-import android.widget.ImageButton;
 import android.content.res.Resources;
+import android.widget.Button;
+import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
+import android.graphics.drawable.Drawable;
 
 public class SimpleVideoStream extends Activity implements
+
 	MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener,
 	MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener {
 	private String TAG = getClass().getSimpleName();
@@ -33,7 +37,6 @@ public class SimpleVideoStream extends Activity implements
 	private ProgressBar mProgressBar = null;
 	private String mVideoUrl;
 	private Boolean mShouldAutoClose = true;
-    private ImageButton mFullscreenButton;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,29 +44,7 @@ public class SimpleVideoStream extends Activity implements
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        Resources activityRes = cordova.getActivity().getResources();
         
-        Button close = new Button(cordova.getActivity());
-                RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-                closeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                close.setLayoutParams(closeLayoutParams);
-                forward.setContentDescription("Close Button");
-                close.setId(5);
-                int closeResId = activityRes.getIdentifier("ic_media_fullscreen_shrink", "drawable", cordova.getActivity().getPackageName());
-                Drawable closeIcon = activityRes.getDrawable(closeResId);
-                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-                {
-                    close.setBackgroundDrawable(closeIcon);
-                }
-                else
-                {
-                    close.setBackground(closeIcon);
-                }
-                close.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        
-                    }
-                });
         
 		Bundle b = getIntent().getExtras();
 		mVideoUrl = b.getString("mediaUrl");
@@ -88,7 +69,32 @@ public class SimpleVideoStream extends Activity implements
 		// Add progress throbber to view
 		relLayout.addView(mProgressBar);
 		mProgressBar.bringToFront();
-
+        
+        Resources activityRes = this.getResources();
+        
+        Button close = new Button(this);
+                RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                closeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT,RelativeLayout.TRUE);
+                close.setLayoutParams(closeLayoutParams);
+                
+                close.setId(5);
+                int closeResId = activityRes.getIdentifier("ic_media_fullscreen_shrink", "drawable", this.getPackageName());
+                Drawable closeIcon = activityRes.getDrawable(closeResId);
+                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+                {
+                    close.setBackgroundDrawable(closeIcon);
+                }
+                else
+                {
+                    close.setBackground(closeIcon);
+                }
+                close.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        
+                    }
+                });
+                relLayout.addView(close);
+    
 		setOrientation(b.getString("orientation"));
 
 		setContentView(relLayout, relLayoutParam);
