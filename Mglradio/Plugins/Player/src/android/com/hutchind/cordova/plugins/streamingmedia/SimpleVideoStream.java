@@ -73,8 +73,8 @@ public class SimpleVideoStream extends Activity implements
         Resources activityRes = this.getResources();
         
         Button close = new Button(this);
-         button.setWidth(60);
-         button.setHeight(60);
+         close.setWidth(60);
+         close.setHeight(60);
                 RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 closeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
                 close.setLayoutParams(closeLayoutParams);
