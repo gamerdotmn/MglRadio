@@ -73,6 +73,7 @@ public class SimpleVideoStream extends Activity implements
         Resources activityRes = this.getResources();
         
         Button close = new Button(this);
+        close.setVisibility(View.INVISIBLE);
          //close.setWidth(60);
          //close.setHeight(60);
                 RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -229,7 +230,10 @@ public class SimpleVideoStream extends Activity implements
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (mMediaController != null)
+        {
 			mMediaController.show();
+            close.setVisibility(View.VISIBLE);
+        }
 		return false;
 	}
 }
