@@ -235,7 +235,7 @@ public class SimpleVideoStream extends Activity implements
             close.setVisibility(View.VISIBLE);
             close.postDelayed(new Runnable() {
                     public void run() {
-                        continuebutton.setVisibility(View.INVISIBLE);
+                        close.setVisibility(View.INVISIBLE);
                     }
                 }, 5000);
         }
