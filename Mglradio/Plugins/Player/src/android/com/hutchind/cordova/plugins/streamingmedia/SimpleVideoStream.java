@@ -232,12 +232,54 @@ public class SimpleVideoStream extends Activity implements
 		if (mMediaController != null)
         {
 			mMediaController.show();
-            close.setVisibility(View.VISIBLE);
+            if(mMediaController.isShowing())
+                        {
+                            close.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            close.setVisibility(View.INVISIBLE);
+                        }
+
             close.postDelayed(new Runnable() {
                     public void run() {
-                        close.setVisibility(View.INVISIBLE);
+                        if(mMediaController.isShowing())
+                        {
+                            close.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            close.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }, 3000);
+
+            close.postDelayed(new Runnable() {
+                    public void run() {
+                        if(mMediaController.isShowing())
+                        {
+                            close.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            close.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }, 4000);
+
+            close.postDelayed(new Runnable() {
+                    public void run() {
+                        if(mMediaController.isShowing())
+                        {
+                            close.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            close.setVisibility(View.INVISIBLE);
+                        }
                     }
                 }, 5000);
+
         }
 		return false;
 	}
