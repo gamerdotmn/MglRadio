@@ -280,6 +280,19 @@ public class SimpleVideoStream extends Activity implements
                     }
                 }, 5000);
 
+            close.postDelayed(new Runnable() {
+                    public void run() {
+                        if(mMediaController.isShowing())
+                        {
+                            close.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            close.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }, 8000);
+
         }
 		return false;
 	}
