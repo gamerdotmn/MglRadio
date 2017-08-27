@@ -37,7 +37,7 @@ public class SimpleVideoStream extends Activity implements
 	private ProgressBar mProgressBar = null;
 	private String mVideoUrl;
 	private Boolean mShouldAutoClose = true;
-    
+    private Button close=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,7 +72,7 @@ public class SimpleVideoStream extends Activity implements
         
         Resources activityRes = this.getResources();
         
-        Button close = new Button(this);
+        close = new Button(this);
         close.setVisibility(View.INVISIBLE);
          //close.setWidth(60);
          //close.setHeight(60);
