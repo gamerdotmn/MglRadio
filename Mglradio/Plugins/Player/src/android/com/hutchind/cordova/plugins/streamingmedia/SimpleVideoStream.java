@@ -74,7 +74,7 @@ public class SimpleVideoStream extends Activity implements
         
         Button close = new Button(this);
                 RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                closeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT,, RelativeLayout.TRUE);
+                closeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
                 close.setLayoutParams(closeLayoutParams);
                 
                 int closeResId = activityRes.getIdentifier("video_top_back", "drawable", this.getPackageName());
