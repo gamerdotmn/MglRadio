@@ -188,7 +188,7 @@
 }
 .ion-ios-play-outline:before
 {
-    background-image: url('../img/tv.png') !important;
+    background-image: url('../img/camera.png') !important;
     background-size: contain;
     background-position: center; 
     background-repeat: no-repeat;
@@ -198,7 +198,7 @@
 } 
 .ion-camera:before
 {
-    background-image: url('../img/camera.png') !important;
+    background-image: url('../img/tv.png') !important;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

@@ -79,7 +79,7 @@
             }
             
             document.addEventListener('deviceready', function () {
-                
+                console.log(navigator.onLine);
                 cordova.plugins.notification.local.on('click', function (notification) {
                     setTimeout(function(){document.location='#/app/radio';}, 2000);
                 });
@@ -109,7 +109,7 @@
                     MusicControls.subscribe(events);
                     MusicControls.listen();
                 }
-                
+                /*
                 var videoUrl = 'https://www.w3schools.com/html/mov_bbb.mp4';
                 
                 var options = {
@@ -124,7 +124,7 @@
                     controls: true
                   };
                   window.plugins.streamingMedia.playVideo(videoUrl, options);
-                
+                */
             }, false);
             
             function searchval(val) {

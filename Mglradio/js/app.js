@@ -296,7 +296,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.downloadanimate = "slideInUp";
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading) {
-        $scope.net = navigator.onLine;
+        $scope.net = net;
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams) {
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
@@ -497,6 +497,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         };
     })
     .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
+        $scope.net = net;
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
             $rootScope.contents = data.contents;
