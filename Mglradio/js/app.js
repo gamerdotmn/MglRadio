@@ -295,8 +295,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.downloadstatus = "";
         $scope.downloadanimate = "slideInUp";
     })
-    .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading) {
-        $scope.net = net;
+    .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading,$timeout,$window) {
+        $timeout(function () {
+            $scope.net=window.net;
+            if($scope.net===false)
+            {
+                $window.location.href = '#/app/download';
+            }
+        }, 1000); 
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams) {
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
@@ -497,7 +503,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         };
     })
     .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
-        $scope.net = net;
+        $scope.net=true;
+        $timeout(function () {
+            $scope.net=window.net;
+            if($scope.net===false)
+            {
+                $window.location.href = '#/app/download';
+            }
+        }, 1000); 
+        
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
             $rootScope.contents = data.contents;
@@ -665,10 +679,17 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         var sh = (h * 30) / 100;
         $scope.height = sh;
     })
-    .controller('DownloadCtrl', function($scope, $window) {
+    .controller('DownloadCtrl', function($scope, $window, $timeout) {
+        $timeout(function () {
+            $scope.net=window.net;
+            if($scope.net===false)
+            {
+                $window.location.href = '#/app/download';
+            }
+        }, 1000); 
         $scope.watch = function(id) {
-            alert(id);
-        }
+            
+        };
     })    
     .controller('LoginCtrl', function($scope, $window, $http, $rootScope, $timeout, $ionicLoading) {
         $scope.loginpage = true;
