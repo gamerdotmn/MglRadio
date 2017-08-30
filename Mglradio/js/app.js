@@ -287,12 +287,25 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.download=function()
         {
-            download=$rootScope.contentdetail;
-            dodownload();
+            angular.forEach($rootScope.contents, function(value, key) {
+                if (value.id===$rootScope.contentdetail.id) {
+                    value.download=true;
+                    $rootScope.contentdetail = value;
+                }
+            });
+            
         };
         
-        $scope.downloadstatus = "";
+        $scope.downloadstatus= "";
         $scope.downloadanimate = "slideInUp";
+        
+        setInterval(function() { 
+            $scope.$apply(function () {
+                //$scope.downloadstatus=downloadstatus;
+                //$scope.downloadanimate=downloadanimate;
+            });
+        }, 500);
+        
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading,$timeout,$window) {
         $timeout(function () {
@@ -516,17 +529,17 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         dataService.getContent().success(function(data) {
             $rootScope.contents = data.contents;
             $rootScope.types=data.types;
-            console.log(db);
+            
             db.transaction(function(tx) {
               tx.executeSql("select * from content", [], function(tx, res) {
                 console.log("res.rows: " + res.rows.length);
               }, function(error) {
-                console.log('SELECT error: ' + error.message);
+                console.log(error.message);
               });
             }, function(error) {
-              console.log('transaction error: ' + error.message);
+              console.log(error.message);
             }, function() {
-              console.log('transaction ok');
+              //transaction ok
             });
             $ionicLoading.hide();
         }).error(function() {

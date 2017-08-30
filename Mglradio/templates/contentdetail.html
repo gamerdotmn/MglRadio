@@ -19,7 +19,7 @@
                     <td>{{contentdetail.time}}</td>
                 </tr>
             </table>
-            <button class="button download button-block" ng-click="download()">Татах</button>
+            <button ng-if="!contentdetail.download" class="button download button-block" ng-click="download()">Татах</button>
             <p class="description" >{{contentdetail.description}}</p>
         </div>
     </ion-content>
