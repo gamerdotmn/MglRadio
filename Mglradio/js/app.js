@@ -117,11 +117,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     .directive('imageonload', function() {
         return {
             link: function(scope, element, attrs) {
+                element.src='./img/logo.png';
                 element.on('load', function() {
-                    element.parent().find('center').remove();
+                    //element.parent().find('center').remove();
+                });
+                element.on('error', function() {
+                    
                 });
                 scope.$watch('ngSrc', function() {
-                    element.parent().prepend('<center><img src="img\\loading.gif" style="width:100px;height:100px;"/></center>');
+                    //element.parent().prepend('<center><img src="img\\loading.gif" style="width:100px;height:100px;"/></center>');
                 });    
             }
         }
@@ -131,6 +135,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             link: function(scope, element, attrs) {
                 var image = new Image();
                 image.src=attrs.bimg;
+                image.onerror=function(){
+                    element.css({
+                        'background-image':'url(../img/logo.png)'
+                    }); 
+                };
                 image.onload = function () {
                     element.css({
                         'background-image':'url('+attrs.bimg+')'
