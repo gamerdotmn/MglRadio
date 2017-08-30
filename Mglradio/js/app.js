@@ -117,15 +117,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     .directive('imageonload', function() {
         return {
             link: function(scope, element, attrs) {
-                element.src='./img/logo.png';
+                
                 element.on('load', function() {
-                    //element.parent().find('center').remove();
+                    element.parent().find('center').remove();
                 });
                 element.on('error', function() {
-                    
+                    document.getElementById("bigimg").src='img/logo.png';
                 });
                 scope.$watch('ngSrc', function() {
-                    //element.parent().prepend('<center><img src="img\\loading.gif" style="width:100px;height:100px;"/></center>');
+                    element.parent().prepend('<center><img src="img\\loading.gif" style="width:100px;height:100px;"/></center>');
                 });    
             }
         }
@@ -137,7 +137,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 image.src=attrs.bimg;
                 image.onerror=function(){
                     element.css({
-                        'background-image':'url(../img/logo.png)'
+                        'background-image':'url(img/logo.png)'
                     }); 
                 };
                 image.onload = function () {
@@ -244,7 +244,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                       $scope.status = 0;
                   });
         }, 2500);
-        // content hesgiin code
+        
         $ionicModal.fromTemplateUrl('templates/payment.html', {
                                         scope: $scope
                                     }).then(function(modal) {
@@ -257,10 +257,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                     }).then(function(modal) {
                                         $scope.modal = modal;
                                     });
-        $rootScope.$on("CallDetail", function(event, data) {
-            var id = data.data;
-            $scope.detail(id);
-        });
+        
+        
         
         $scope.detail = function(id) {
             angular.forEach($rootScope.contents, function(value, key) {
@@ -269,37 +267,29 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 }
             });
             $scope.modal.show();
-        }
-        $rootScope.paymentstatus = true;
+        };
         
-        $scope.checklogin = function() {
-            if ($rootScope.loginstatus) {
-                if ($rootScope.paymentstatus) {
-                    $scope.modal.hide();
-                    $timeout(function () {
-                        $rootScope.$emit("CallDownload", {});
-                    }, 500);
-                } else {
-                    $scope.paymentmodal.show();     
-                }
-            } else {
-                $scope.modal.hide();
-                $window.location.href = '#/app/login';
-            }
-        }
+        $scope.play=function()
+        {
+            var options = {
+                    successCallback: function() {
+                      
+                    },
+                    errorCallback: function(errMsg) {
+                      
+                    },
+                    orientation: 'landscape',
+                    shouldAutoClose: true,  
+                    controls: true
+                  };
+                  window.plugins.streamingMedia.playVideo($rootScope.contentdetail.path, options);  
+        };
         
-        if (!storage.getItem("username")) {
-            $rootScope.loginstatus = false;
-        } else {
-            $rootScope.loginstatus = true;
-            $rootScope.username = storage.getItem("username");
-        }
-        
-        $scope.changepage = function(name) {
-            $window.location.href = '#/app/' + name;
-        }
-        
-
+        $scope.download=function()
+        {
+            download=$rootScope.contentdetail;
+            dodownload();
+        };
         
         $scope.downloadstatus = "";
         $scope.downloadanimate = "slideInUp";
@@ -311,7 +301,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             {
                 $window.location.href = '#/app/download';
             }
-        }, 1000); 
+        }, 2000); 
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams) {
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
@@ -518,6 +508,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             if($scope.net===false)
             {
                 $window.location.href = '#/app/download';
+                $window.location.href = '#/app/download';
             }
         }, 1000); 
         
@@ -525,134 +516,25 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         dataService.getContent().success(function(data) {
             $rootScope.contents = data.contents;
             $rootScope.types=data.types;
+            console.log(db);
+            db.transaction(function(tx) {
+              tx.executeSql("select * from content", [], function(tx, res) {
+                console.log("res.rows: " + res.rows.length);
+              }, function(error) {
+                console.log('SELECT error: ' + error.message);
+              });
+            }, function(error) {
+              console.log('transaction error: ' + error.message);
+            }, function() {
+              console.log('transaction ok');
+            });
             $ionicLoading.hide();
         }).error(function() {
             $ionicLoading.hide();
         });
         
-        document.addEventListener("deviceready", onDeviceReady, false);
+        
 
-        function onDeviceReady() {
-            var fileTransfer = new FileTransfer();
-            var db = window.sqlitePlugin.openDatabase({name: "my.db"});
-            
-            $rootScope.$on("CallDownload", function() {
-                $scope.download();
-            });
-            
-            $scope.download = function() {
-                //alert("download" + $rootScope.contentdetail.id);
-                if (ionic.Platform.isAndroid()) {
-                    window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, onFileSystemSuccess, onError);
-                } else {
-                    // for iOS
-                    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onError);
-                }
-            }
-            
-            /*db.transaction(function(tx) {
-            //tx.executeSql('DROP TABLE IF EXISTS content');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, type_id integer, time text, year integer)');
-                
-            tx.executeSql('DELETE * FROM content');
-            db.transaction(function(tx) {
-            tx.executeSql("select * from content;", [], function(tx, res) {
-            console.log("res.rows.length: " + res.rows.length);
-            console.log("res.rows.item(0): " + res.rows.item(0).path);
-            });
-            });
-            db.executeSql("pragma table_info (content);", [], function(res) {
-            console.log("PRAGMA res: " + JSON.stringify(res));
-            });
-            tx.executeSql("INSERT INTO content (name, description, path, price, img) VALUES (?,?,?,?,?)", ["test", "test","/local/Mglradio",100,"/mglradio/img"], function(tx, res) {
-            console.log("insertId: " + res.insertId + " -- probably 1"); 
-            console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
-            db.transaction(function(tx) {
-            tx.executeSql("select * from content;", [], function(tx, res) {
-            console.log("res.rows.length: " + res.rows.length + " -- should be 1");
-            console.log("res.rows.item(0): " + res.rows.item(0).path);
-            });
-            });
-            }, function(e) {
-            console.log("ERROR: " + e.message);
-            });
-            });*/
-            
-            function onError() {
-                navigator.notification.alert("Татахад алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
-            };
-            function alertCallback() {
-            }
-            function onFileSystemSuccess(fileSystem) {
-                var entry = "";
-                if (ionic.Platform.isAndroid()) {
-                    entry = fileSystem;
-                } else {
-                    entry = fileSystem.root;
-                }
-                entry.getDirectory("MglRadio", {
-                                       create: true,
-                                       exclusive: false
-                                   }, onGetDirectorySuccess, onGetDirectoryFail);
-            };
-            function onGetDirectorySuccess(dir) {
-                cdr = dir;
-                var filename = $rootScope.contentdetail.path.substring($rootScope.contentdetail.path.lastIndexOf('/') + 1);
-                dir.getFile(filename, {
-                                create: true,
-                                exclusive: false
-                            }, gotFileEntry, errorHandler);
-            };
-            function onGetDirectoryFail(err) {
-                console.log(err);
-            };
-            function errorHandler(err) {
-                console.log(err);
-            };
-            function gotFileEntry() {
-                var filename = $rootScope.contentdetail.path.substring($rootScope.contentdetail.path.lastIndexOf('/') + 1);
-                var documentUrl = $rootScope.contentdetail.path;
-                var uri = encodeURI(documentUrl);
-                
-                fileTransfer.onprogress = function(progressEvent) {
-                    if (progressEvent.lengthComputable) {
-                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
-                        $scope.downloadstatus = perc + "% татсан";
-                    }
-                };
-                
-                fileTransfer.download(uri, cdr.nativeURL + filename,
-                                      function(entry) {
-                                          $scope.downloadanimate = "slideOutDown";
-                                          $timeout(function () {
-                                              $scope.downloadstatus = "";
-                                          }, 1000);
-                                          var t = moment();
-                                          var now = t.local().toDate();
-                                          var date = new Date();
-                                          cordova.plugins.notification.local.schedule({
-                                                                                          id: parseInt($rootScope.contentdetail.id),
-                                                                                          title: "FM 102.1",
-                                                                                          text: "Контент амжилттай татагдлаа.",
-                                                                                          at: date, 
-                                                                                          autoClear:  true, 
-                                                                                          data: { contentid : $rootScope.contentdetail.id }
-                                                                                      });
-                                          cordova.plugins.notification.local.on("click", function (notification) {
-                                              //joinMeeting(notification.data.meetingId);
-                                              //alert(notification.data.id);
-                                              $rootScope.$emit("CallDetail", {data: notification.id});
-                                          });
-                                          //console.log("download complete: " + entry.toURL());
-                                          //statusDom.innerHTML = "<video height='240' controls><source src='" + entry.toURL() + "' type='video/mp4'>";
-                                      },
-                                      function(error) {
-                                          navigator.notification.alert("Контент татахад алдаа гарлаа. Интернет холболтоо шалган дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
-                                      },
-                                      false
-                    );
-            };
-        }
     })
     .controller('TypeCtrl', function($scope, $ionicLoading, $timeout, $stateParams, $rootScope) {
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});

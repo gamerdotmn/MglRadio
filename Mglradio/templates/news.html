@@ -16,8 +16,8 @@
                 <ion-item>
                     <div ng-if="$index>0" class="left" style="position: absolute;top:0px;bottom:0px;background:white center center no-repeat;background-size:cover;background-image:url(img\\loading.gif);" bimg="{{n.img}}" >
                     </div>
-                    <div ng-if="$index==0" class="left" >
-                        <img imageonload src="{{n.img}}">
+                    <div  ng-if="$index==0" class="left" >
+                        <img id="bigimg" imageonload src="{{n.img}}">
                     </div>
                     <div class="right">
                         <h3>{{n.title| limitTo:55 }}...</h3>

@@ -4,9 +4,8 @@
         <h1 class="title">Дэлгэрэнгүй</h1>
     </ion-header-bar>
     <ion-content class="detailcontent" scroll="false">
-
         <div class="img" style="background-image:url({{contentdetail.img}});">
-            <button class="button btn icon ion-play" id="rentbtn" ng-click="checklogin()"></button>
+            <button class="button btn icon ion-play" id="rentbtn" ng-click="play()"></button>
         </div>
         <div class="other">
             <h3>{{contentdetail.name}}</h3>
@@ -19,12 +18,9 @@
                     <td>Хугацаа:</td>
                     <td>{{contentdetail.time}}</td>
                 </tr>
-                <tr>
-                    <td>Он:</td>
-                    <td>{{contentdetail.year}}</td>
-                </tr>
             </table>
-            <p class="description">{{contentdetail.description}}</p>
+            <button class="button download button-block" ng-click="download()">Татах</button>
+            <p class="description" >{{contentdetail.description}}</p>
         </div>
     </ion-content>
 </ion-modal-view>

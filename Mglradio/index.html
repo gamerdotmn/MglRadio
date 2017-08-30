@@ -61,8 +61,13 @@
             
             function create_success() {
             }
+            
             function create_error() {
             }            
+            
+            function onError() {
+                navigator.notification.alert("Татахад алдаа гарлаа дахин оролдоно уу!", function(err){}, "Алдаа", "Хаах");
+            }
             
             function events(action) {
                 switch (action) {
@@ -75,6 +80,73 @@
                     default:
                         break;
                 }
+            }
+            var db;
+            var fileTransfer;
+            var cdr;
+            var download;
+            var downloadstatus;
+            var downloadanimate;
+            
+            function onFileSystemSuccess(fileSystem) {
+                var entry = "";
+                if (ionic.Platform.isAndroid()) {
+                    entry = fileSystem;
+                } else {
+                    entry = fileSystem.root;
+                }
+                entry.getDirectory("MglRadio", {
+                                       create: true,
+                                       exclusive: false
+                                   }, onGetDirectorySuccess, onError);
+            }
+            
+            function onGetDirectorySuccess(dir) {
+                cdr=dir;
+                var filename = $rootScope.contentdetail.path.substring(download.path.lastIndexOf('/') + 1);
+                dir.getFile(filename, {
+                                create: true,
+                                exclusive: false
+                            }, gotFileEntry, onError);
+                
+            };
+            
+            function gotFileEntry() {
+                var filename = download.path.substring(download.path.lastIndexOf('/') + 1);
+                var documentUrl = download.path;
+                var uri = encodeURI(documentUrl);
+                
+                fileTransfer.onprogress = function(progressEvent) {
+                    if (progressEvent.lengthComputable) {
+                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
+                        downloadstatus = perc + "% татсан";
+                    }
+                };
+                
+                fileTransfer.download(uri, cdr.nativeURL + filename,
+                                      function(entry) {
+                                          downloadanimate = "slideOutDown";
+                                          setTimeout(function(){downloadstatus="";}, 1000);
+                                          cordova.plugins.notification.local.schedule({
+                                                                                          title: "FM 102.1",
+                                                                                          text: "Контент амжилттай татагдлаа.",
+                                                                                          autoClear:  true
+                                                                                      });
+                                         
+                                      },
+                                      onError,
+                                      false
+                    );
+            };
+            
+            function dodownload()
+            {
+                if (ionic.Platform.isAndroid()) {
+                    window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, onFileSystemSuccess, onError);
+                } else {
+                    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onError);
+                }     
+                
             }
             
             document.addEventListener('deviceready', function () {
@@ -108,22 +180,11 @@
                     MusicControls.subscribe(events);
                     MusicControls.listen();
                 }
-                /*
-                var videoUrl = 'https://www.w3schools.com/html/mov_bbb.mp4';
                 
-                var options = {
-                    successCallback: function() {
-                      
-                    },
-                    errorCallback: function(errMsg) {
-                      
-                    },
-                    orientation: 'landscape',
-                    shouldAutoClose: true,  
-                    controls: true
-                  };
-                  window.plugins.streamingMedia.playVideo(videoUrl, options);
-                */
+                db = window.sqlitePlugin.openDatabase({name: "mglradio.db"});
+                db.executeSql('DROP TABLE IF EXISTS content');
+                db.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, type_id integer, time text)');
+                fileTransfer = new FileTransfer();
             }, false);
             
             function searchval(val) {

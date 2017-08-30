@@ -24,21 +24,21 @@
             <div class="myslides">
                 <ks-swiper-container initial-slide="0" loop="false" show-nav-buttons="false" slides-per-view="3" pagination-clickable="false">
                     <ks-swiper-slide class="swiper-slide" ng-repeat="content in contents"  ng-show="content.highlight == 1" ng-click="detail(content.id)">
-                        <div class="img" style="background-image:url({{content.img}});">
+                        <div class="img" bimg="{{content.img}}" style="background-color:#343436;background-image:url(img\\loading2.gif);">
                         </div>
                         <p class="slide-caption">{{content.name|limitTo:35}}</p>
                     </ks-swiper-slide>
 
                 </ks-swiper-container>
             </div>
-            <div ng-repeat="type in types">
+            <div ng-repeat="type in types" ng-if="type.cnt>0">
                 <ion-item>
                     <p class="name">{{type.name}}</p>
                 </ion-item>
                 <div class="myslides">
                     <ks-swiper-container initial-slide="0" loop="false" show-nav-buttons="false" slides-per-view="3" pagination-clickable="false">
                         <ks-swiper-slide class="swiper-slide" ng-repeat="content in contents" ng-show="content.type_id == type.id" ng-click="detail(content.id)">
-                            <div class="img" style="background-image:url({{content.img}});">
+                            <div class="img" bimg="{{content.img}}" style="background-color:#343436;background-image:url(img\\loading2.gif);">
                             </div>
                             <p class="slide-caption">{{content.name|limitTo:35}}</p>
                         </ks-swiper-slide>
@@ -49,6 +49,7 @@
         </ion-list>
         <div style="height:40px;"></div>
     </ion-content>
+    
     <div class="mylist animated {{downloadanimate}}" id="mylist">
         <button ng-click="changepage('download')" ng-show="downloadstatus!=''">
             {{downloadstatus}}<i class="ion-chevron-right "></i>
