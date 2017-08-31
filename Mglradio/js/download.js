@@ -104,7 +104,7 @@ var download = {
         download.imgName=download.d_img.substring(download.d_img.lastIndexOf('/') + 1);
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
             fileSystem.root.getFile(download.videoName, { create: true }, function (newFile) {
-                download.d_video=newFile.toURL()+"/"+download.videoName;
+                download.d_video=newFile.toURL();
                 download.downloadFile(download.d_path, newFile);
             });
         });
