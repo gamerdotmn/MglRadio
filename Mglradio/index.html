@@ -28,7 +28,7 @@
             var my_media = null;
             var net = false;
             var isplaying = false;
-            var down=new download();
+            
             function play() {
                 if (my_media===null) {
                     my_media = new Media("http://50.7.76.251:8080/;steam.mp3", 
@@ -84,7 +84,7 @@
             
             document.addEventListener('deviceready', function () {
                 
-                console.log(down);
+                console.log(download);
                 
                 cordova.plugins.notification.local.on('click', function (notification) {
                     setTimeout(function(){document.location='#/app/radio';}, 2000);

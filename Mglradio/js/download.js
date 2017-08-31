@@ -14,8 +14,8 @@ var download = {
         var progress = function(progress) {
            var p=100 * progress.bytesReceived / progress.totalBytesToReceive + '%';
            console.log(p);
+           return p;
         };
-        
         try {
 
             var downloader = new BackgroundTransfer.BackgroundDownloader();
