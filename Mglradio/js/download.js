@@ -86,7 +86,7 @@ var download = {
             console.log('Error: ' + err);
         };
         var progress = function(progress) {
-           window.downloadstatus=parseInt(100 * progress.bytesReceived / progress.totalBytesToReceive) + ' %';
+           window.downloadstatus=parseInt(100 * progress.bytesReceived / progress.totalBytesToReceive) + '% ТАТАЖ БАЙНА';
         };
         try {
             

@@ -280,8 +280,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     shouldAutoClose: true,  
                     controls: true
                   };
-                  console.log(JSON.stringify($rootScope.contentdetail));
-            
                   window.plugins.streamingMedia.playVideo($rootScope.contentdetail.path, options);  
         };
         
@@ -568,7 +566,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     {
                         if (parseInt(contents[j].id)===parseInt(results.rows.item(i).id))
                         {
-                            console.log(JSON.stringify(results.rows.item(i)));
+                            //console.log(JSON.stringify(results.rows.item(i)));
                             contents[j].img=results.rows.item(i).img;
                             contents[j].path=results.rows.item(i).path;
                             contents[j].downloaded=2;
