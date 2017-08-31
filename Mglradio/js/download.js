@@ -5,7 +5,8 @@ var download = {
     d_name: "",
     d_path:"",
     d_img:"",
-    
+    d_image:"",
+    d_video:"",
     downloadFile: function(uriString, targetFile) {
     
         var complete = function() {
@@ -13,7 +14,7 @@ var download = {
              {
                  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                     fileSystem.root.getFile(download.imgName, { create: true }, function (filePath) {
-                           
+                        download.d_image=filePath.toURL()+"/"+download.imgName;
                         fileTransfer.download(
                             download.d_img,
                             filePath.toURL()+"/"+download.imgName,
@@ -26,7 +27,7 @@ var download = {
                                  
                                  db.transaction(function(tx) {
                       
-                                  tx.executeSql('INSERT INTO content (name,description,path,img,typen,time) VALUES (?,?,?,?,?,?)', [d_name,d_description,download.d_path,download.d_img,d_typen,d_time], function(tx, res) {
+                                  tx.executeSql('INSERT INTO content (name,description,path,img,typen,time) VALUES (?,?,?,?,?,?)', [d_name,d_description,download.d_video,download.d_image,d_typen,d_time], function(tx, res) {
                                         
                                         window.localStorage.removeItem("d_is");
                                         window.localStorage.removeItem("d_name");
@@ -85,6 +86,7 @@ var download = {
         download.imgName=download.d_img.substring(download.d_img.lastIndexOf('/') + 1);
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
             fileSystem.root.getFile(download.videoName, { create: true }, function (newFile) {
+                download.d_video=newFile.toURL()+"/"+download.videoName;
                 download.downloadFile(download.d_path, newFile);
             });
         });
