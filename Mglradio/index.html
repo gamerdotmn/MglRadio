@@ -80,7 +80,10 @@
             }
             var db;
             
+            
             document.addEventListener('deviceready', function () {
+                
+                
                 
                 cordova.plugins.notification.local.on('click', function (notification) {
                     setTimeout(function(){document.location='#/app/radio';}, 2000);
