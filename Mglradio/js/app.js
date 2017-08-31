@@ -285,6 +285,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.downloadvideo=function()
         {
+                                        window.localStorage.removeItem("d_is");
+                                        window.localStorage.removeItem("d_name");
+                                        window.localStorage.removeItem("d_description");
+                                        window.localStorage.removeItem("d_path");
+                                        window.localStorage.removeItem("d_img");
+                                        window.localStorage.removeItem("d_typen");
+                                        window.localStorage.removeItem("d_time");
+            
             if(window.localStorage.getItem("d_is")===null)
             {
                 angular.forEach($rootScope.contents, function(value, key) {
@@ -293,6 +301,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         $rootScope.contentdetail = value;
                     }
                 });
+                
                 window.localStorage.setItem("d_is", true);
                 window.localStorage.setItem("d_name",$rootScope.contentdetail.name);
                 window.localStorage.setItem("d_description",$rootScope.contentdetail.description);

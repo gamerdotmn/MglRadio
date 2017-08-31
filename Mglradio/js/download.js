@@ -17,7 +17,7 @@ var download = {
                         download.d_image=filePath.toURL()+"/"+download.imgName;
                         fileTransfer.download(
                             download.d_img,
-                            filePath.toURL()+"/"+download.imgName,
+                            download.d_image,
                             function(entry) {
                                 
                                  var d_name=window.localStorage.getItem("d_name");
