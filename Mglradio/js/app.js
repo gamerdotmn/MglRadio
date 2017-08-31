@@ -267,7 +267,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.modal.show();
         };
         
-        $scope.play=function()
+        $scope.playvideo=function()
         {
             var options = {
                     successCallback: function() {
@@ -280,6 +280,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     shouldAutoClose: true,  
                     controls: true
                   };
+                  console.log(JSON.stringify($rootScope.contentdetail));
+            
                   window.plugins.streamingMedia.playVideo($rootScope.contentdetail.path, options);  
         };
         
@@ -297,12 +299,13 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             {
                 angular.forEach($rootScope.contents, function(value, key) {
                     if (value.id===$rootScope.contentdetail.id) {
-                        value.download=true;
+                        value.downloaded=1;
                         $rootScope.contentdetail = value;
                     }
                 });
                 
                 window.localStorage.setItem("d_is", true);
+                window.localStorage.setItem("d_id",$rootScope.contentdetail.id);
                 window.localStorage.setItem("d_name",$rootScope.contentdetail.name);
                 window.localStorage.setItem("d_description",$rootScope.contentdetail.description);
                 window.localStorage.setItem("d_path",$rootScope.contentdetail.path);
@@ -557,22 +560,31 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
-            $rootScope.contents = data.contents;
+            var contents=data.contents;
+            
             $rootScope.types=data.types;
             
             db.transaction(function(tx) {
-              tx.executeSql("select * from content", [], function(tx, res) {
+              tx.executeSql("select * from content", [], function(tx, results) {
+                
+                
                 for(var i=0;i<results.rows.length;i++)
                 {
-                    for(var j=0;j<$rootScope.contents.length;j++)
+                    
+                    
+                    for(var j=0;j<contents.length;j++)
                     {
-                        if ($rootScope.contents[j].id===results.rows.item(i).id)
+                        if (parseInt(contents[j].id)===parseInt(results.rows.item(i).id))
                         {
-                            $rootScope.contents[j].download=true;
+                            console.log(JSON.stringify(results.rows.item(i)));
+                            contents[j].img=results.rows.item(i).img;
+                            contents[j].path=results.rows.item(i).path;
+                            contents[j].downloaded=2;
                             break;
                         }
                     }
                 }
+                $rootScope.contents = contents;
               }, function(error) {
                 console.log(error.message);
               });

@@ -5,7 +5,7 @@
     </ion-header-bar>
     <ion-content class="detailcontent" scroll="false">
         <div class="img" style="background-image:url({{contentdetail.img}});">
-            <button class="button btn icon ion-play" id="rentbtn" ng-click="play()"></button>
+            <button class="button btn icon ion-play" id="rentbtn" ng-click="playvideo()"></button>
         </div>
         <div class="other">
             <h3>{{contentdetail.name}}</h3>
@@ -19,7 +19,8 @@
                     <td>{{contentdetail.time}}</td>
                 </tr>
             </table>
-            <button ng-if="!contentdetail.download" class="button download button-block" ng-click="downloadvideo()">Татах</button>
+            <button ng-if="contentdetail.downloaded==0" class="button download button-block" ng-click="downloadvideo()">Татах</button>
+            <button ng-if="contentdetail.downloaded==1" class="button download button-block" disabled>Татаж байна</button>
             <p class="description" >{{contentdetail.description}}</p>
         </div>
     </ion-content>

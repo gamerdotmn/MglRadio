@@ -63,7 +63,7 @@ public class StreamingMedia extends CordovaPlugin {
 				final Intent streamIntent = new Intent(cordovaObj.getActivity().getApplicationContext(), activityClass);
 				Bundle extras = new Bundle();
 				extras.putString("mediaUrl", url);
-
+                Log.d(TAG, url);
 				if (options != null) {
 					Iterator<String> optKeys = options.keys();
 					while (optKeys.hasNext()) {

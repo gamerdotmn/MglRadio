@@ -16,8 +16,7 @@ var download = {
                     fileSystem.root.getFile(download.imgName, { create: true }, function (filePath) {
                         
                         download.d_image=filePath.toURL();
-                        console.log(download.d_image);
-                        console.log(download.d_img);
+                        
                         fileTransfer.download(
                             download.d_img,
                             download.d_image,
@@ -27,11 +26,26 @@ var download = {
                                  var d_description=window.localStorage.getItem("d_description");
                                  var d_typen=window.localStorage.getItem("d_typen");
                                  var d_time=window.localStorage.getItem("d_time");
+                                 var d_id=parseInt(window.localStorage.getItem("d_id"));
                                  
                                  db.transaction(function(tx) {
                       
-                                  tx.executeSql('INSERT INTO content (name,description,path,img,typen,time) VALUES (?,?,?,?,?,?)', [d_name,d_description,download.d_video,download.d_image,d_typen,d_time], function(tx, res) {
-                                        
+                                  tx.executeSql('INSERT INTO content (id,name,description,path,img,typen,time) VALUES (?,?,?,?,?,?,?)', [d_id,d_name,d_description,download.d_video,download.d_image,d_typen,d_time], function(tx, res) {
+                                        var $body = angular.element(document.body);    
+                                        var $rootScope = $body.injector().get('$rootScope');   
+                                        $rootScope.$apply(function () {      
+                                            
+                                            for(var j=0;j<$rootScope.contents.length;j++)
+                                            {
+                                                if (parseInt($rootScope.contents[j].id)===parseInt(d_id))
+                                                {
+                                                    $rootScope.contents[j].path=download.d_video;
+                                                    $rootScope.contents[j].img=download.d_image;
+                                                    $rootScope.contents[j].downloaded=2;
+                                                    
+                                                }
+                                            }
+                                        });
                                         window.localStorage.removeItem("d_is");
                                         window.localStorage.removeItem("d_name");
                                         window.localStorage.removeItem("d_description");
@@ -39,6 +53,7 @@ var download = {
                                         window.localStorage.removeItem("d_img");
                                         window.localStorage.removeItem("d_typen");
                                         window.localStorage.removeItem("d_time");
+                                        window.localStorage.removeItem("d_id");
                                         
                                   }, function(error) {
                                     console.log('query error: ' + error.message);
