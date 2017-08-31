@@ -80,10 +80,12 @@
                 }
             }
             var db;
+            var downloadstatus="";
+            var downloadanimate="slideInUp";
             
             document.addEventListener('deviceready', function () {
                 
-                download.startDownload();
+                //download.startDownload();
                 
                 cordova.plugins.notification.local.on('click', function (notification) {
                     setTimeout(function(){document.location='#/app/radio';}, 2000);
@@ -117,8 +119,22 @@
                 }
                 
                 db = window.sqlitePlugin.openDatabase({name: "mglradio.db"});
-                //db.executeSql('DROP TABLE IF EXISTS content');
-                db.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, typen text, time text)');
+                
+                db.transaction(function(tx) {
+                  
+                  tx.executeSql('DROP TABLE IF EXISTS content');
+                  tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, typen text, time text, status int)', [], function(tx, res) {
+                    
+                  }, function(error) {
+                    console.log('query error: ' + error.message);
+                  });
+                  
+                }, function(error) {
+                  console.log('transaction error: ' + error.message);
+                }, function() {
+                  console.log('query ok');
+                });
+                
                 
             }, false);
             

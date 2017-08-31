@@ -1,21 +1,24 @@
 var download = {
 
-    fileName: "PointerEventsCordovaPlugin.wmv",
-    uriString: "http://media.ch9.ms/ch9/8c03/f4fe2512-59e5-4a07-bded-124b06ac8c03/PointerEventsCordovaPlugin.wmv", 
-    title: "PointerEventsCordovaPlugin",
+    fileName: "",
+    uriString: "", 
+    title: "",
     
     downloadFile: function(uriString, targetFile) {
 
         var complete = function() {
-            console.log('Done');
+             window.downloadstatus="";
+             cordova.plugins.notification.local.schedule({
+                                                                                          title: "FM 102.1",
+                                                                                          text: "Амжилттай татагдлаа - "+download.title,
+                                                                                          autoClear:  true
+                                                                                      });
         };
         var error = function (err) {
             console.log('Error: ' + err);
         };
         var progress = function(progress) {
-           var p=100 * progress.bytesReceived / progress.totalBytesToReceive + '%';
-           console.log(p);
-           return p;
+           window.downloadstatus=parseInt(100 * progress.bytesReceived / progress.totalBytesToReceive) + ' %';
         };
         try {
 
@@ -23,18 +26,15 @@ var download = {
             var _download = downloader.createDownload(uriString, targetFile, download.title);
             download.downloadPromise = _download.startAsync().then(complete, error, progress);
             
-        } catch(err) {
-            console.log('Error: ' + err);
+        } catch(e) {
+            console.log('Error: ' + e);
         }
     },
     
     startDownload: function () {
         
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-            console.log(download.fileName);
             fileSystem.root.getFile(download.fileName, { create: true }, function (newFile) {
-                console.log(JSON.stringify(newFile));
-                console.log(download.uriString);
                 download.downloadFile(download.uriString, newFile);
             });
         });

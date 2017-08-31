@@ -1,6 +1,4 @@
 var host = "http://app.mglradio.com";
-var height = 0;
-var storage = window.localStorage;
 
 angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -285,15 +283,38 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                   window.plugins.streamingMedia.playVideo($rootScope.contentdetail.path, options);  
         };
         
-        $scope.download=function()
+        $scope.downloadvideo=function()
         {
-            angular.forEach($rootScope.contents, function(value, key) {
-                if (value.id===$rootScope.contentdetail.id) {
-                    value.download=true;
-                    $rootScope.contentdetail = value;
-                }
-            });
-            
+            if(window.localStorage.getItem("d_is")!==null)
+            {
+                angular.forEach($rootScope.contents, function(value, key) {
+                    if (value.id===$rootScope.contentdetail.id) {
+                        value.download=true;
+                        $rootScope.contentdetail = value;
+                    }
+                });
+                window.localStorage.setItem("d_is", true);
+                window.localStorage.setItem("d_name",$rootScope.contentdetail.name);
+                window.localStorage.setItem("d_description",$rootScope.contentdetail.description);
+                window.localStorage.setItem("d_path",$rootScope.contentdetail.path);
+                window.localStorage.setItem("d_img",$rootScope.contentdetail.img);
+                window.localStorage.setItem("d_typen",$rootScope.contentdetail.typen);
+                window.localStorage.setItem("d_time",$rootScope.contentdetail.time);
+                window.download.uriString=$rootScope.contentdetail.path;
+                window.download.title=$rootScope.contentdetail.name;
+                window.download.fileName=$rootScope.contentdetail.path.substring($rootScope.contentdetail.path.lastIndexOf('/') + 1)
+                window.download.startDownload();
+            }
+            else
+            {
+                navigator.notification.alert(
+                    'Давхар таталт хийх боломжгүй байна.',
+                    function() {
+                    }, 
+                    'Уучлаарай.', 
+                    'OK'                  
+                    );
+            }
         };
         
         $scope.downloadstatus= "";
@@ -301,8 +322,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         setInterval(function() { 
             $scope.$apply(function () {
-                //$scope.downloadstatus=downloadstatus;
-                //$scope.downloadanimate=downloadanimate;
+                $scope.downloadstatus=downloadstatus;
+                $scope.downloadanimate=downloadanimate;
             });
         }, 500);
         
@@ -657,8 +678,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         var loginresponse = $http.post(host + "/api/login.php", data, {});
                         loginresponse.success(function(data, status, headers, config) {
                             if (data === "1") {
-                                storage.setItem("username", user.name);
-                                storage.setItem("password", user.pwd);
+                                window.localStorage.setItem("username", user.name);
+                                window.localStorage.setItem("password", user.pwd);
                                 $rootScope.loginstatus = true;
                                 $rootScope.username = user.name;
                                 $window.location.href = '#/app/content';
@@ -705,8 +726,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                         signupresponse.success(function(data, status, headers, config) {
                                             
                                             if (data === "2") {
-                                                storage.setItem("username", user.user_id);
-                                                storage.setItem("password", user.pwd);
+                                                window.localStorage.setItem("username", user.user_id);
+                                                window.localStorage.setItem("password", user.pwd);
                                                 $rootScope.loginstatus = true; 
                                                 $rootScope.username = user.user_id;
                                                 $window.location.href = '#/app/content';
@@ -756,8 +777,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         if (data !== "0") {
                             var str = data;
                             var res = str.split("=");
-                            storage.setItem("username", res[0]);
-                            storage.setItem("password", res[1]);
+                            window.localStorage.setItem("username", res[0]);
+                            window.localStorage.setItem("password", res[1]);
                             $rootScope.loginstatus = true;
                             $rootScope.username = res[0];
                             navigator.notification.alert("Таны и-мейл хаягруу шинэ нууц үгийг илгээлээ. И-мейл хаягаа шалган шинэ нууц үгээрээ нэвтэрнэ үү.!", alertCallback, "Амжилттай", "Хаах");
@@ -783,8 +804,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     .controller('LogoutCtrl', function($scope, $window, $rootScope) {
         $rootScope.loginstatus = false; 
         $rootScope.username = "";
-        storage.removeItem("username");
-        storage.removeItem("password"); 
+        window.localStorage.removeItem("username");
+        window.localStorage.removeItem("password"); 
         $window.location.href = '#/app/content';
     })
     .filter('trustAsHtml', function($sce) {
