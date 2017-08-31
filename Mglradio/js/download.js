@@ -2,6 +2,7 @@ var download = {
 
     fileName: "PointerEventsCordovaPlugin.wmv",
     uriString: "http://media.ch9.ms/ch9/8c03/f4fe2512-59e5-4a07-bded-124b06ac8c03/PointerEventsCordovaPlugin.wmv", 
+    title: "PointerEventsCordovaPlugin",
     
     downloadFile: function(uriString, targetFile) {
 
@@ -19,7 +20,7 @@ var download = {
         try {
 
             var downloader = new BackgroundTransfer.BackgroundDownloader();
-            var _download = downloader.createDownload(uriString, targetFile);
+            var _download = downloader.createDownload(uriString, targetFile, download.title);
             download.downloadPromise = _download.startAsync().then(complete, error, progress);
             
         } catch(err) {
