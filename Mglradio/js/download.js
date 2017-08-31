@@ -19,9 +19,9 @@ var download = {
         try {
 
             var downloader = new BackgroundTransfer.BackgroundDownloader();
-            var download = downloader.createDownload(uriString, targetFile);
-            download.downloadPromise = download.startAsync().then(complete, error, progress);
-
+            var _download = downloader.createDownload(uriString, targetFile);
+            download.downloadPromise = _download.startAsync().then(complete, error, progress);
+            
         } catch(err) {
             console.log('Error: ' + err);
         }
@@ -32,6 +32,8 @@ var download = {
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
             console.log(download.fileName);
             fileSystem.root.getFile(download.fileName, { create: true }, function (newFile) {
+                console.log(JSON.stringify(newFile));
+                console.log(download.uriString);
                 download.downloadFile(download.uriString, newFile);
             });
         });
@@ -39,17 +41,5 @@ var download = {
     
     stopDownload: function () {
         download.downloadPromise && download.downloadPromise.cancel();
-    },
-    
-    getFileInfo: function () {
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
-            fileSystem.root.getFile(download.fileName, { create: true }, function (fileEntry) {
-                fileEntry.file(function (meta) {
-                    console.log("Modified: " + meta.lastModifiedDate + "<br/>" + "size: " + meta.size);
-                });
-            }, function(error) {
-                console.log(error);
-            });
-        });
     }
 };
