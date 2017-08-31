@@ -14,7 +14,10 @@ var download = {
              {
                  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                     fileSystem.root.getFile(download.imgName, { create: true }, function (filePath) {
-                        download.d_image=filePath.toURL()+"/"+download.imgName;
+                        
+                        download.d_image=filePath.toURL();
+                        console.log(download.d_image);
+                        console.log(download.d_img);
                         fileTransfer.download(
                             download.d_img,
                             download.d_image,
@@ -49,7 +52,7 @@ var download = {
                                 
                                 cordova.plugins.notification.local.schedule({
                                                                                           title: "FM 102.1",
-                                                                                          text: "Амжилттай татагдлаа - "+download.title,
+                                                                                          text: "Амжилттай татагдлаа - "+download.d_name,
                                                                                           autoClear:  true
                                                                                       });
                                 window.downloadstatus="";
