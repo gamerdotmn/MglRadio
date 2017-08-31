@@ -20,7 +20,7 @@ var download = {
 
             var downloader = new BackgroundTransfer.BackgroundDownloader();
             var download = downloader.createDownload(uriString, targetFile);
-            app.downloadPromise = download.startAsync().then(complete, error, progress);
+            download.downloadPromise = download.startAsync().then(complete, error, progress);
 
         } catch(err) {
             console.log('Error: ' + err);
@@ -30,19 +30,20 @@ var download = {
     startDownload: function () {
         
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-            fileSystem.root.getFile(app.fileName, { create: true }, function (newFile) {
-                downloadFile(app.uriString, newFile);
+            console.log(download.fileName);
+            fileSystem.root.getFile(download.fileName, { create: true }, function (newFile) {
+                download.downloadFile(download.uriString, newFile);
             });
         });
     },
     
     stopDownload: function () {
-        app.downloadPromise && app.downloadPromise.cancel();
+        download.downloadPromise && download.downloadPromise.cancel();
     },
     
     getFileInfo: function () {
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
-            fileSystem.root.getFile(app.fileName, { create: true }, function (fileEntry) {
+            fileSystem.root.getFile(download.fileName, { create: true }, function (fileEntry) {
                 fileEntry.file(function (meta) {
                     console.log("Modified: " + meta.lastModifiedDate + "<br/>" + "size: " + meta.size);
                 });
