@@ -82,10 +82,12 @@
             var db;
             var downloadstatus="";
             var downloadanimate="slideInUp";
+            var fileTransfer;
             
             document.addEventListener('deviceready', function () {
-                
+                fileTransfer = new FileTransfer();
                 //download.startDownload();
+                
                 
                 cordova.plugins.notification.local.on('click', function (notification) {
                     setTimeout(function(){document.location='#/app/radio';}, 2000);

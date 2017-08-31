@@ -1,49 +1,66 @@
 var download = {
 
-    fileName: "",
-    uriString: "", 
-    title: "",
+    videoName: "",
+    imgName:"",
+    d_name: "",
     d_path:"",
     d_img:"",
+    
     downloadFile: function(uriString, targetFile) {
-
+    
         var complete = function() {
              if(window.localStorage.getItem("d_is")!==null)
              {
-                 var d_name=window.localStorage.getItem("d_name");
-                 var d_description=window.localStorage.getItem("d_description");
-                 var d_typen=window.localStorage.getItem("d_typen");
-                 var d_time=window.localStorage.getItem("d_time");
-                 
-                 window.downloadstatus="";
-                 
-                 db.transaction(function(tx) {
+                 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+                    fileSystem.root.getFile(download.imgName, { create: true }, function (filePath) {
+                           
+                        fileTransfer.download(
+                            download.d_img,
+                            filePath.toURL()+"/"+download.imgName,
+                            function(entry) {
+                                
+                                 var d_name=window.localStorage.getItem("d_name");
+                                 var d_description=window.localStorage.getItem("d_description");
+                                 var d_typen=window.localStorage.getItem("d_typen");
+                                 var d_time=window.localStorage.getItem("d_time");
+                                 
+                                 db.transaction(function(tx) {
                       
-                      tx.executeSql('INSERT INTO content (name,description,path,img,typen,time) VALUES (?,?,?,?,?,?)', [d_name,d_description,download.d_path,download.d_img,d_typen,d_time], function(tx, res) {
-                            
-                            window.localStorage.removeItem("d_is");
-                            window.localStorage.removeItem("d_name");
-                            window.localStorage.removeItem("d_description");
-                            window.localStorage.removeItem("d_path");
-                            window.localStorage.removeItem("d_img");
-                            window.localStorage.removeItem("d_typen");
-                            window.localStorage.removeItem("d_time");
-                            
-                      }, function(error) {
-                        console.log('query error: ' + error.message);
-                      });
-                      
-                    }, function(error) {
-                      console.log('transaction error: ' + error.message);
-                    }, function() {
-                      //console.log('query ok');
-                    });
-                
-                 cordova.plugins.notification.local.schedule({
+                                  tx.executeSql('INSERT INTO content (name,description,path,img,typen,time) VALUES (?,?,?,?,?,?)', [d_name,d_description,download.d_path,download.d_img,d_typen,d_time], function(tx, res) {
+                                        
+                                        window.localStorage.removeItem("d_is");
+                                        window.localStorage.removeItem("d_name");
+                                        window.localStorage.removeItem("d_description");
+                                        window.localStorage.removeItem("d_path");
+                                        window.localStorage.removeItem("d_img");
+                                        window.localStorage.removeItem("d_typen");
+                                        window.localStorage.removeItem("d_time");
+                                        
+                                  }, function(error) {
+                                    console.log('query error: ' + error.message);
+                                  });
+                                  
+                                }, function(error) {
+                                  console.log('transaction error: ' + error.message);
+                                }, function() {
+                                  //console.log('query ok');
+                                });
+                                
+                                cordova.plugins.notification.local.schedule({
                                                                                           title: "FM 102.1",
                                                                                           text: "Амжилттай татагдлаа - "+download.title,
                                                                                           autoClear:  true
                                                                                       });
+                                window.downloadstatus="";
+                                
+                            },
+                            function(error) {  
+                                console.log(error.message); 
+                            }  
+                        );
+                    });
+                });
+                 
             }
         };
         var error = function (err) {
@@ -53,9 +70,9 @@ var download = {
            window.downloadstatus=parseInt(100 * progress.bytesReceived / progress.totalBytesToReceive) + ' %';
         };
         try {
-            download.d_path=targetFile;
+            
             var downloader = new BackgroundTransfer.BackgroundDownloader();
-            var _download = downloader.createDownload(uriString, targetFile, download.title);
+            var _download = downloader.createDownload(uriString, targetFile, download.d_name);
             download.downloadPromise = _download.startAsync().then(complete, error, progress);
             
         } catch(e) {
@@ -64,10 +81,11 @@ var download = {
     },
     
     startDownload: function () {
-        
+        download.videoName=download.d_path.substring(download.d_path.lastIndexOf('/') + 1);
+        download.imgName=download.d_img.substring(download.d_img.lastIndexOf('/') + 1);
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-            fileSystem.root.getFile(download.fileName, { create: true }, function (newFile) {
-                download.downloadFile(download.uriString, newFile);
+            fileSystem.root.getFile(download.videoName, { create: true }, function (newFile) {
+                download.downloadFile(download.d_path, newFile);
             });
         });
     },
