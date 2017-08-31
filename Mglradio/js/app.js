@@ -285,7 +285,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.downloadvideo=function()
         {
-            if(window.localStorage.getItem("d_is")!==null)
+            if(window.localStorage.getItem("d_is")===null)
             {
                 angular.forEach($rootScope.contents, function(value, key) {
                     if (value.id===$rootScope.contentdetail.id) {

@@ -123,7 +123,7 @@
                 db.transaction(function(tx) {
                   
                   tx.executeSql('DROP TABLE IF EXISTS content');
-                  tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, typen text, time text, status int)', [], function(tx, res) {
+                  tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, typen text, time text)', [], function(tx, res) {
                     
                   }, function(error) {
                     console.log('query error: ' + error.message);
@@ -132,7 +132,7 @@
                 }, function(error) {
                   console.log('transaction error: ' + error.message);
                 }, function() {
-                  console.log('query ok');
+                  //console.log('query ok');
                 });
                 
                 
