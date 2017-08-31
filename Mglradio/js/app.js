@@ -625,17 +625,20 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         var sh = (h * 30) / 100;
         $scope.height = sh;
     })
-    .controller('DownloadCtrl', function($scope, $window, $timeout) {
-        $timeout(function () {
-            $scope.net=window.net;
-            if($scope.net===false)
-            {
-                $window.location.href = '#/app/download';
-            }
-        }, 1000); 
-        $scope.watch = function(id) {
-            
-        };
+    .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope) {
+        $scope.downloadstatus="";
+        
+        angular.forEach($rootScope.contents, function(value, key) {
+                if (value.downloaded===1) {
+                    $scope.downloadname=value.name;
+                    $scope.downloadtypen=value.typen;
+                    $scope.downloadtime=value.time;
+                    $scope.downloadimg=value.img;
+                }
+            });
+        $interval(function () {
+            $scope.downloadstatus=window.downloadstatus;
+        }, 1000);
     })    
     .controller('LoginCtrl', function($scope, $window, $http, $rootScope, $timeout, $ionicLoading) {
         $scope.loginpage = true;
