@@ -548,6 +548,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             }
         }, 1000); 
         
+        $scope.todownloading=function()
+        {
+            $window.location.href = '#/app/download';  
+        };
+        
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
             var contents=data.contents;
@@ -627,7 +632,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope) {
         $scope.downloadstatus="";
-        
+        $scope.dc=[];
         angular.forEach($rootScope.contents, function(value, key) {
                 if (value.downloaded===1) {
                     $scope.downloadname=value.name;
@@ -639,6 +644,28 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $interval(function () {
             $scope.downloadstatus=window.downloadstatus;
         }, 1000);
+        
+        $scope.refresh=function()
+        {
+            
+              db.transaction(function(tx) {
+              tx.executeSql("select * from content", [], function(tx, results) {
+                
+                for(var i=0;i<results.rows.length;i++)
+                {
+                    $scope.dc.push({id:results.rows.item(i).id,name:results.rows.item(i).name,description:results.rows.item(i).description,path:results.rows.item(i).path,img:results.rows.item(i).img,typen:results.rows.item(i).typen,time:results.rows.item(i).time});
+                }
+                
+              }, function(error) {
+                console.log(error.message);
+              });
+            }, function(error) {
+              console.log(error.message);
+            }, function() {
+              //transaction ok
+            });
+        };
+        $scope.refresh();
     })    
     .controller('LoginCtrl', function($scope, $window, $http, $rootScope, $timeout, $ionicLoading) {
         $scope.loginpage = true;

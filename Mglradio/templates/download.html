@@ -4,7 +4,14 @@
         </button>
     </ion-nav-buttons>
     <ion-content class="download" has-bouncing="true">
-        <div ng-if="downloadstatus!==''" class="download-list" ng-click="watch(1)">
+        <div ng-if="dc.length==0" style="padding-top:20%;">
+            <br/>
+            <center>
+                <span class="fa fa-download" style="font-size:50px;color:white;"></span><br/><b style="color:white;">Татагдсан видео байхгүй байна.</b>
+                <p style="color:white;margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Та хүссэн видеогоо татаж интернетгүй орчинд ч үзэх боломжтой.</p>
+            </center>
+        </div>
+        <div ng-if="downloadstatus!==''" class="download-list" >
             <div class="img" style="background-image:url(img\\loading.gif);" bimg="{{downloadimg}}">
             </div>
             <div class="other">
@@ -20,6 +27,24 @@
                     </tr>
                 </table>
                 <p class="description">{{downloadstatus}}</p>
+            </div>
+        </div>
+        <div class="download-list" ng-repeat="d in dc">
+            <div class="img" style="background-image:url(img\\loading.gif);" bimg="{{d.img}}">
+            </div>
+            <div class="other">
+                <h3>{{d.name}}</h3>
+                <table>
+                    <tr>
+                        <td>Төрөл:</td>
+                        <td>{{d.typen}}</td>
+                    </tr>
+                    <tr>
+                        <td>Хугацаа:</td>
+                        <td>{{d.time}}</td>
+                    </tr>
+                </table>
+                <p class="description">{{d.description}}</p>
             </div>
         </div>
     </ion-content>
