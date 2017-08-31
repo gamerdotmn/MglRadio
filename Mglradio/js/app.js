@@ -562,7 +562,17 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             
             db.transaction(function(tx) {
               tx.executeSql("select * from content", [], function(tx, res) {
-                console.log("res.rows: " + res.rows.length);
+                for(var i=0;i<results.rows.length;i++)
+                {
+                    for(var j=0;j<$rootScope.contents.length;j++)
+                    {
+                        if ($rootScope.contents[j].id===results.rows.item(i).id)
+                        {
+                            $rootScope.contents[j].download=true;
+                            break;
+                        }
+                    }
+                }
               }, function(error) {
                 console.log(error.message);
               });
