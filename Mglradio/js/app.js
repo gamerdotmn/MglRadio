@@ -169,6 +169,16 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $rootScope.loginstatus=true;
         }
         
+        $scope.tologin=function()
+        {
+            $window.location.href = '#/app/login';
+        };
+        
+        $scope.tologout=function()
+        {
+            $window.location.href = '#/app/logout'; 
+        };
+        
         $scope.goBack = function() {
             $ionicHistory.goBack();
         }
@@ -566,15 +576,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             }
         }, 1000); 
         
-        $scope.tologin=function()
-        {
-            $window.location.href = '#/app/login';
-        };
         
-        $scope.tologout=function()
-        {
-            $window.location.href = '#/app/logout'; 
-        };
         
         $scope.todownloading=function()
         {
