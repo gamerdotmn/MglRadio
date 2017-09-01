@@ -154,13 +154,21 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             StatusBar.styleDefault();
         }
     })
-    .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
+    .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
         $scope.status = 0;
         $scope.rs = 1;
         $scope.logo = "<img src='img/logo.png' style='height: 100%;'>";
         $scope.rtitle = 'MGL RADIO';
         $scope.page=0;
         $scope.moredata=false;
+        $rootScope.loginstatus=false;
+        
+        if(window.localStorage.getItem("username")!==null)
+        {
+            $rootScope.username=window.localStorage.getItem("username");
+            $rootScope.loginstatus=true;
+        }
+        
         $scope.goBack = function() {
             $ionicHistory.goBack();
         }
@@ -259,17 +267,27 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         
         $scope.detail = function(id) {
-            angular.forEach($rootScope.contents, function(value, key) {
+            if($rootScope.loginstatus===false&&window.net===true)
+            {
+                $window.location.href = '#/app/login';    
+            }
+            else
+            {
+                angular.forEach($rootScope.contents, function(value, key) {
                 if (value.id===id) {
                     $rootScope.contentdetail = value;
                 }
-            });
-            $scope.modal.show();
+                });
+                $scope.modal.show();
+            }
+            
+            
         };
         
         $scope.playvideo=function()
         {
-            var options = {
+            
+                var options = {
                     successCallback: function() {
                       
                     },
@@ -280,7 +298,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     shouldAutoClose: true,  
                     controls: true
                   };
-                  window.plugins.streamingMedia.playVideo($rootScope.contentdetail.path, options);  
+                  window.plugins.streamingMedia.playVideo($rootScope.contentdetail.path, options); 
+            
         };
         
         $scope.downloadvideo=function()
@@ -544,13 +563,28 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             if($scope.net===false)
             {
                 $window.location.href = '#/app/download';
-                $window.location.href = '#/app/download';
             }
         }, 1000); 
+        
+        $scope.tologin=function()
+        {
+            $window.location.href = '#/app/login';
+        };
+        
+        $scope.tologout=function()
+        {
+            $window.location.href = '#/app/logout'; 
+        };
         
         $scope.todownloading=function()
         {
             $window.location.href = '#/app/download';  
+        };
+        
+        
+        $scope.search=function()
+        {
+            $window.location.href = '#/app/search';
         };
         
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
@@ -623,12 +657,17 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $ionicLoading.hide();
         }, 1000); 
     })
-    .controller('SearchCtrl', function($scope) {
+    .controller('SearchCtrl', function($scope,$window) {
         $scope.input = "<input type='text' id='searchinput' ng-model='searchvalue' onkeyup='searchval(this.value)' placeholder='Хайлт' class='searchinput' >";
         
         var h = window.innerHeight;
         var sh = (h * 30) / 100;
         $scope.height = sh;
+        
+        $scope.back=function()
+        {
+            $window.location.href = '#/app/content';      
+        };
     })
     .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope) {
         $scope.downloadstatus="";
@@ -645,17 +684,40 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.downloadstatus=window.downloadstatus;
         }, 1000);
         
+        
+        $scope.detailo = function(id) {
+            for(var i=0;i<$scope.dc.length;i++)
+            {
+                if($scope.dc[i].id===id)
+                {
+                    $rootScope.contentdetail={
+                            id:id,
+                            name:$scope.dc[i].name,
+                            description:$scope.dc[i].description,
+                            typen:$scope.dc[i].typen,
+                            img:$scope.dc[i].img,
+                            path:$scope.dc[i].path,
+                            time:$scope.dc[i].time
+                        };
+                    break;
+                }
+            }
+            
+            $scope.modal.show();
+        };
+        
         $scope.refresh=function()
         {
-            
               db.transaction(function(tx) {
               tx.executeSql("select * from content", [], function(tx, results) {
-                
+                $scope.$apply(function () {
+                    
                 for(var i=0;i<results.rows.length;i++)
                 {
                     $scope.dc.push({id:results.rows.item(i).id,name:results.rows.item(i).name,description:results.rows.item(i).description,path:results.rows.item(i).path,img:results.rows.item(i).img,typen:results.rows.item(i).typen,time:results.rows.item(i).time});
                 }
                 
+                });
               }, function(error) {
                 console.log(error.message);
               });
@@ -668,6 +730,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.refresh();
     })    
     .controller('LoginCtrl', function($scope, $window, $http, $rootScope, $timeout, $ionicLoading) {
+        console.log('login');
         $scope.loginpage = true;
         $scope.signuppage = false;
         $scope.forgetpage = false;
@@ -730,7 +793,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         loginresponse.success(function(data, status, headers, config) {
                             if (data === "1") {
                                 window.localStorage.setItem("username", user.name);
-                                window.localStorage.setItem("password", user.pwd);
                                 $rootScope.loginstatus = true;
                                 $rootScope.username = user.name;
                                 $window.location.href = '#/app/content';
@@ -778,7 +840,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                             
                                             if (data === "2") {
                                                 window.localStorage.setItem("username", user.user_id);
-                                                window.localStorage.setItem("password", user.pwd);
                                                 $rootScope.loginstatus = true; 
                                                 $rootScope.username = user.user_id;
                                                 $window.location.href = '#/app/content';
@@ -829,7 +890,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                             var str = data;
                             var res = str.split("=");
                             window.localStorage.setItem("username", res[0]);
-                            window.localStorage.setItem("password", res[1]);
                             $rootScope.loginstatus = true;
                             $rootScope.username = res[0];
                             navigator.notification.alert("Таны и-мейл хаягруу шинэ нууц үгийг илгээлээ. И-мейл хаягаа шалган шинэ нууц үгээрээ нэвтэрнэ үү.!", alertCallback, "Амжилттай", "Хаах");
@@ -856,7 +916,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $rootScope.loginstatus = false; 
         $rootScope.username = "";
         window.localStorage.removeItem("username");
-        window.localStorage.removeItem("password"); 
         $window.location.href = '#/app/content';
     })
     .filter('trustAsHtml', function($sce) {

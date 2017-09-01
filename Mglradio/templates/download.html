@@ -1,6 +1,7 @@
 <ion-view title="ТАТСАН">
     <ion-nav-buttons side="left" >
-        <button ng-if="net" class="button button-clear ion-android-arrow-back close" ng-click="changepage('content')">
+        <button class="button sidemenu" menu-toggle="left">
+            <i class="icon fa fa-bars"></i>
         </button>
     </ion-nav-buttons>
     <ion-content class="download" has-bouncing="true">
@@ -29,7 +30,7 @@
                 <p class="description">{{downloadstatus}}</p>
             </div>
         </div>
-        <div class="download-list" ng-repeat="d in dc">
+        <div class="download-list" ng-repeat="d in dc" ng-click="detailo(d.id)">
             <div class="img" style="background-image:url(img\\loading.gif);" bimg="{{d.img}}">
             </div>
             <div class="other">
@@ -44,7 +45,7 @@
                         <td>{{d.time}}</td>
                     </tr>
                 </table>
-                <p class="description">{{d.description}}</p>
+                <div style="font-family: 'Ubuntu Regular';color:white;font-weight:normal;font-size:10px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{d.description}}</div>
             </div>
         </div>
     </ion-content>
