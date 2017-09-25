@@ -390,6 +390,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                      $ionicLoading.hide();
                  });
         
+        
+        
         $scope.share = function() {
             // this is the complete list of currently supported params you can pass to the plugin (all optional)
             var options = {
