@@ -4,19 +4,19 @@
         </ion-nav-bar>
         <ion-tabs class="bottom-tab">
 
-            <ion-tab title="МЭДЭЭ" icon-off="ion-android-menu" icon-on="ion-android-menu" href="#/app/news">
+            <ion-tab title="УНШИХ" icon-off="ion-android-menu" icon-on="ion-android-menu" href="#/app/news">
                 <ion-nav-view name="newsContent"></ion-nav-view>
             </ion-tab>
 
-            <ion-tab title="РАДИО" icon-off="ion-radio-waves" icon-on="ion-radio-waves" href="#/app/radio">
+            <ion-tab title="СОНСОХ" icon-off="ion-radio-waves" icon-on="ion-radio-waves" href="#/app/radio">
                 <ion-nav-view name="radioContent"></ion-nav-view>
             </ion-tab>
 
-            <ion-tab title="ТВ" badge="status" icon-off="ion-ios-play-outline" icon-on="ion-ios-play-outline" href="#/app/tv">
+            <ion-tab title="ҮЗЭХ" badge="status" icon-off="ion-ios-play-outline" icon-on="ion-ios-play-outline" href="#/app/tv">
                 <ion-nav-view name="tvContent"></ion-nav-view>
             </ion-tab>
 
-            <ion-tab title="ВИДЕО САН" icon-off="ion-camera" icon-on="ion-camera" href="#/app/content">
+            <ion-tab title="ТАТАХ" icon-off="ion-camera" icon-on="ion-camera" href="#/app/content">
                 <ion-nav-view name="contentContent"></ion-nav-view>
             </ion-tab>
 
@@ -44,14 +44,8 @@
                         <p menu-close ng-click="tologin()">Нэвтрэх</p>
                     </center>
                 </ion-header>
-                 <ion-item menu-close href="#/app/content">
-                    Эхлэл
-                </ion-item>
-                <ion-item menu-close href="#/app/download">
-                    Татсан
-                </ion-item>
-                <ion-item menu-close href="#/app/type/{{category.id }}" ng-repeat="category in types">
-                    {{category.name}}
+                <ion-item menu-close href="#/app/category/{{c.id }}" ng-repeat="c in categories">
+                    {{c.name}}
                 </ion-item>
             </ion-list>
         </ion-content>

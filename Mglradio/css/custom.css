@@ -140,24 +140,25 @@
 }
 .leftsidemenu .user
 {
-    padding: 14px;
+    padding:0px;
+    
 }
 .leftsidemenu .user .img
 {
-    padding: 10px;
     border: 3px solid #fff;
     width: 25%;
     border-radius: 40px;
+    margin-top:20px;
 }
 .leftsidemenu .user img
 {
     width: 100%;
+    padding:10px;
 }
 .leftsidemenu .user h4
 {
     color: #fff;
-    margin-bottom: 0;
-    margin-top: 10px;
+    margin:0px;
 } 
 .leftsidemenu .user p
 {

@@ -171,12 +171,13 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.tologin=function()
         {
-            $window.location.href = '#/app/login';
+            alert(1);
+            //$window.location.href = '#/app/login';
         };
         
         $scope.tologout=function()
         {
-            $window.location.href = '#/app/logout'; 
+            //$window.location.href = '#/app/logout'; 
         };
         
         $scope.goBack = function() {
@@ -372,14 +373,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         if ($stateParams !== 'undefined') {
             $scope.category_news = [];
-            $scope.count = 0;
-            angular.forEach($scope.news, function(value, key) {
-                if (value.category_id===$stateParams.id) {
-                    $scope.category_news.push(value);
-                    $scope.count++;
-                }
-            });
+            
             $scope.category_id = $stateParams.id;
+            $http.get("http://app.mglradio.com/api/news.php?c="+$scope.category_id)
+                 .then(function(response) {
+                   console.log(response);
+                 });
             
             angular.forEach($scope.categories, function(value, key) {
                 if (value.id === $stateParams.id) {
