@@ -443,6 +443,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
         
         $scope.playstatus = false;
+        $('audio').mediaelementplayer({
+        	// Do not forget to put a final slash (/)
+        	//pluginPath: 'https://cdnjs.com/libraries/mediaelement/',
+        	// this will allow the CDN to use Flash without restrictions
+        	// (by default, this is set as `sameDomain`)
+        	shimScriptAccess: 'always'
+        	// more configuration
+        });
         /*
         $http.get(host+"/api/ts.php")
                  .then(function(response) 
