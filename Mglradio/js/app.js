@@ -370,35 +370,25 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }, 2000); 
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
-        $scope.news = [];
+        $scope.cnews = [];
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         $scope.category_id = $stateParams.id;
         $http.get("http://app.mglradio.com/api/cnews.php?c="+$scope.category_id)
                  .then(function(response) {
-                     $scope.news=response.data.news;
+                     $scope.cnews=response.data.news;
                      $ionicLoading.hide();
                  });
     })
     .controller('DetailCtrl', function($rootScope, $scope, $ionicLoading, $stateParams) {
-        $scope.categoryid = 0;
         
-        angular.forEach($scope.news, function(value, key) {
-            if (value.id===$stateParams.id) {
-                $scope.newsdetail = value;
-                $scope.categoryid = value.category_id;
-            }
-        });
+        //$stateParams.id
+         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+        $http.get("http://app.mglradio.com/api/cnews.php?c="+$scope.category_id)
+                 .then(function(response) {
+                     $scope.newsdetail=response.data.news;
+                     $ionicLoading.hide();
+                 });
         
-        $scope.relnews = [];
-        var count = 0;
-        angular.forEach($scope.news, function(value, key) {
-            if (count < 3) {
-                if (value.category_id === $scope.categoryid && value.id !== $stateParams.id) {
-                    $scope.relnews.push(value);
-                    count++;
-                }
-            }
-        });
         $scope.share = function() {
             // this is the complete list of currently supported params you can pass to the plugin (all optional)
             var options = {
