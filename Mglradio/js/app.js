@@ -370,32 +370,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }, 2000); 
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
-        $scope.category_news = [];
-        
+        $scope.cnews = [];
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
-        
         $scope.category_id = $stateParams.id;
-        for(var j=0;j<$scope.categories.lenght;j++)
-        {
-            console.log($scope.categories[j].id);
-        }
-        /*
-            $http.get("http://app.mglradio.com/api/cnews.php?c="+$scope.category_id)
+        $http.get("http://app.mglradio.com/api/cnews.php?c="+$scope.category_id)
                  .then(function(response) {
-                   console.log(response);
+                     $scope.cnews=response.data.news;
+                     $ionicLoading.hide();
                  });
-            
-            angular.forEach($scope.categories, function(value, key) {
-                if (value.id === $stateParams.id) {
-                    $scope.logo = "<p>" + value.name + "</p>";
-                    break;
-                }
-            });
-        
-        $timeout(function () {
-            $ionicLoading.hide();
-        }, 1000); 
-        */
     })
     .controller('DetailCtrl', function($rootScope, $scope, $ionicLoading, $stateParams) {
         $scope.categoryid = 0;

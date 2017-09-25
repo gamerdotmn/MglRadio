@@ -5,31 +5,31 @@
         </button>
     </ion-nav-buttons>
     <ion-content class="newsdiv" has-bouncing="true">
-        <ion-refresher on-refresh="doRefresh()">
+        <ion-refresher>
             <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <div ng-if="category_news.length==0" style="padding-top:20%;">
+        <div ng-if="cnews.length==0" style="padding-top:20%;">
             <br/>
             <center>
                 <span class="fa fa-warning" style="font-size:50px;"></span><br/><b>Уучлаарай, мэдээлэл хоосон байна.</b>
                 <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Одоогоор энэ ангилалд хамаарах мэдээ олдсонгүй, та дараа дахин шалгаарай.</p>
             </center>
         </div>
-            <ion-list ng-if="category_news.length!=0" ng-repeat="cn in category_news">
-                <a ng-href="#/app/detail/{{cn.id}}">
-                        <ion-item>
-                            <div ng-if="$index>0" class="left" style="position: absolute;top:0px;bottom:0px;background:white url({{cn.img}}) center center no-repeat;background-size:cover;">
-                        </div>
-                        <div ng-if="$index==0" class="left" >
-                            <img src="{{cn.img}}">
-                        </div>
-                        <div class="right">
-                            <h3>{{cn.title| limitTo:55 }}...</h3>
-                            <span class="timeago">{{cn.ot|timeago}}</span><span class="border">|</span><span class="category">{{cn.category_name}}</span> 
-                        </div>
-                    </ion-item>
-                </a>
-            </ion-list>
+            <ion-list ng-repeat="n in cnews">
+            <a ng-href="#/app/detail/{{n.id}}">
+                <ion-item>
+                    <div ng-if="$index>0" class="left" style="position: absolute;top:0px;bottom:0px;background:white center center no-repeat;background-size:cover;background-image:url(img\\loading.gif);" bimg="{{n.img}}" >
+                    </div>
+                    <div  ng-if="$index==0" class="left" >
+                        <img id="bigimg" imageonload src="{{n.img}}">
+                    </div>
+                    <div class="right">
+                        <h3>{{n.title| limitTo:55 }}...</h3>
+                        <span class="timeago">{{n.ot|timeago}}</span><span class="border">|</span><span class="category">{{n.category_name}}</span>
+                    </div>
+                </ion-item>
+            </a>
+        </ion-list>
     </ion-content>
 
 </ion-view>
