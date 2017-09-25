@@ -381,9 +381,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('DetailCtrl', function($rootScope, $scope, $ionicLoading, $stateParams,$http) {
         
-        //$stateParams.id
+        //
          $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
-        $http.get("http://app.mglradio.com/api/cnews.php?c="+$scope.category_id)
+        $http.get("http://app.mglradio.com/api/detail.php?i="+$stateParams.id)
                  .then(function(response) {
                      $scope.newsdetail=response.data.news[0];
                      $scope.relnews=response.data.rels;
