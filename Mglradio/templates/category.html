@@ -8,13 +8,6 @@
         <ion-refresher>
             <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <div ng-if="cnews.length==0" style="padding-top:20%;">
-            <br/>
-            <center>
-                <span class="fa fa-warning" style="font-size:50px;"></span><br/><b>Уучлаарай, мэдээлэл хоосон байна.</b>
-                <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Одоогоор энэ ангилалд хамаарах мэдээ олдсонгүй, та дараа дахин шалгаарай.</p>
-            </center>
-        </div>
             <ion-list ng-repeat="n in cnews">
             <a ng-href="#/app/detail/{{n.id}}">
                 <ion-item>

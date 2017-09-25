@@ -156,8 +156,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
         $scope.status = 0;
-        $scope.rs = 1;
-        $scope.logo = "<img src='img/logo.png' style='height: 100%;'>";
+        
         $scope.rtitle = 'MGL RADIO';
         $scope.page=0;
         $scope.moredata=false;
@@ -444,18 +443,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
         
         $scope.playstatus = false;
+        /*
         $http.get(host+"/api/ts.php")
                  .then(function(response) 
                     {
                         $scope.today=response.data.today;
                         $scope.timetables=response.data.timetables;
-                        if ($scope.timetables.length > 0) 
-                        {
-                            $scope.rs = 2;
-                        }
                         $scope.active();
                     });
-        
+        */
         setInterval(function() { 
             $scope.$apply(function () {
                 $scope.playstatus = isplaying;
@@ -629,11 +625,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
             $scope.type_id = $stateParams.id;
             
-            angular.forEach($scope.types, function(value, key) {
-                if (value.id === $stateParams.id) {
-                    $scope.logo = value.name;
-                }
-            });
         }
         $timeout(function () {
             $ionicLoading.hide();
