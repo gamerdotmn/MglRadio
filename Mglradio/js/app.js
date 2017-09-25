@@ -187,7 +187,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.loadmore=function(){
              if($scope.news!=null&&$scope.news.length>0)
              {
-                 $http.get("http://app.mglradio.com/api/news.php?p="+$scope.page)
+                 $http.get(host+"/api/news.php?p="+$scope.page)
                  .then(function(response) {
                    
                     for(var i=0;i<response.data.news.length;i++)
@@ -369,11 +369,17 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             }
         }, 2000); 
     })
-    .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams) {
+    .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
         $scope.category_news = [];
+        
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         
-            $scope.category_id = $stateParams.id;
+        $scope.category_id = $stateParams.id;
+        for(var j=0;j<$scope.categories.lenght;j++)
+        {
+            console.log($scope.categories[j].id);
+        }
+        /*
             $http.get("http://app.mglradio.com/api/cnews.php?c="+$scope.category_id)
                  .then(function(response) {
                    console.log(response);
@@ -389,6 +395,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $timeout(function () {
             $ionicLoading.hide();
         }, 1000); 
+        */
     })
     .controller('DetailCtrl', function($rootScope, $scope, $ionicLoading, $stateParams) {
         $scope.categoryid = 0;
@@ -463,7 +470,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
         
         $scope.playstatus = false;
-        $http.get("http://app.mglradio.com/api/ts.php")
+        $http.get(host+"/api/ts.php")
                  .then(function(response) 
                     {
                         $scope.today=response.data.today;
