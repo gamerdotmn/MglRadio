@@ -108,7 +108,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/detail/2873");
+        $urlRouterProvider.otherwise("/app/news");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
