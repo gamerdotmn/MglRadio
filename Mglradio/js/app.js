@@ -381,6 +381,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('DetailCtrl', function($rootScope, $scope, $ionicLoading, $stateParams) {
         $scope.categoryid = 0;
+        
         angular.forEach($scope.news, function(value, key) {
             if (value.id===$stateParams.id) {
                 $scope.newsdetail = value;
