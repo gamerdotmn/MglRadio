@@ -379,13 +379,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                      $ionicLoading.hide();
                  });
     })
-    .controller('DetailCtrl', function($rootScope, $scope, $ionicLoading, $stateParams) {
+    .controller('DetailCtrl', function($rootScope, $scope, $ionicLoading, $stateParams,$http) {
         
         //$stateParams.id
          $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         $http.get("http://app.mglradio.com/api/cnews.php?c="+$scope.category_id)
                  .then(function(response) {
-                     $scope.newsdetail=response.data.news;
+                     $scope.newsdetail=response.data.news[0];
+                     $scope.relnews=response.data.rels;
                      $ionicLoading.hide();
                  });
         
