@@ -442,12 +442,13 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
         
         $scope.playstatus = false;
-        
+        $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         $http.get(host+"/api/ts.php")
                  .then(function(response) 
                     {
                         $scope.timetables=response.data.timetables;
                         //$scope.active();
+                        $ionicLoading.hide();
                     });
         
         setInterval(function() { 
