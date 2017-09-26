@@ -1,59 +1,36 @@
 <ion-view title="{{logo}}">
+    <ion-nav-title>
+        <img src='img/logo.png' style='height: 100%;'>
+    </ion-nav-title>
     <ion-content scroll="false" id="ioncontent" class="animated fadeIn">
-         <div id="player-left-bottom">
-							<div id="time-container">
-								<span class="current-time">
-									<span class="amplitude-current-minutes" amplitude-main-current-minutes="true"></span>:<span class="amplitude-current-seconds" amplitude-main-current-seconds="true"></span>
-								</span>
-								<input type="range" class="amplitude-song-slider" amplitude-main-song-slider="true"/>
-								<span class="duration">
-									<span class="amplitude-duration-minutes" amplitude-main-duration-minutes="true"></span>:<span class="amplitude-duration-seconds" amplitude-main-duration-seconds="true"></span>
-								</span>
-							</div>
-
-							<div id="control-container">
-								<div id="repeat-container">
-									<div class="amplitude-repeat" id="repeat"></div>
-								</div>
-							
-								<div id="central-control-container">
-									<div id="central-controls">
-										<div class="amplitude-prev" id="previous"></div>
-										<div class="amplitude-play-pause" amplitude-main-play-pause="true" id="play-pause"></div>
-										<div class="amplitude-next" id="next"></div>
-									</div>
-								</div>
-								
-								<div id="shuffle-container">
-									<div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div>
-								</div>
-							</div>
-							
-							<div id="meta-container">
-								<span amplitude-song-info="name" amplitude-main-song-info="true" class="song-name"></span>
-								
-								<div class="song-artist-album">
-									<span amplitude-song-info="artist" amplitude-main-song-info="true"></span>
-									<span amplitude-song-info="album" amplitude-main-song-info="true"></span>
-								</div>
-							</div>
-						</div>
-            
-        <!--
         <div class="radiodiv" id="radiodiv">
             <center>
-                <button ng-if="!playstatus" ng-click="play()" class="button ion-play icon"></button>
+                <button ng-if="!playstatus" ng-click="play()" class="button ion-play icon"><span class="live bl">LIVE</span></button>
                 <button ng-if="playstatus" ng-click="pause()" class="button ion-ios-pause icon"></button>
                 <h5 class="bl">{{rtitle}}</h5>
             </center>
         </div>
-        -->
-        <!--
+        <ion-tabs class="top-tab">
+            <ion-tab title="Да<span class='span'>09/26</span>">
+            </ion-tab>
+            <ion-tab title="Мя<span class='span'>09/26</span>" >
+            </ion-tab>
+            <ion-tab title="Лх<span class='span'>09/26</span>">
+            </ion-tab>
+            <ion-tab title="Пү<span class='span'>09/26</span>">
+            </ion-tab>
+            <ion-tab title="Ба<span class='span'>09/26</span>">
+            </ion-tab>
+            <ion-tab title="Бя<span class='span'>09/26</span>">
+            </ion-tab>
+            <ion-tab title="Ня<span class='span'>09/26</span>">
+          </ion-tab>
+        </ion-tabs>        
         <ion-scroll class="hutulburdiv" id="hutulburdiv" has-bouncing="true">
             <ion-list ng-repeat="t in timetables" >
                 <a id="r{{t.id}}" ng-click="notif({{t.id}})">
                     <ion-item ng-class="(t.isactive==true) ? 'active' : ''">
-                        <h2>{{t.ttime}}</h2>
+                        <h2>{{t.time}}</h2>
                         <p>{{t.title}}</p><img ng-if="!t.isnotif" src="img/next.png"><img ng-if="t.isnotif" src="img/done.png">
                     </ion-item>
                 </a>
@@ -63,6 +40,6 @@
                 <input type="hidden" id="h" value=""/>
             </div>
         </ion-scroll>
-         -->
+        
     </ion-content>
 </ion-view>

@@ -13,13 +13,6 @@
          </button>
     </ion-nav-buttons>
     <ion-content class="newsdiv animated fadeIn" has-bouncing="true">
-        <div ng-if="!net" style="padding-top:20%;">
-            <br/>
-            <center>
-                <span class="fa fa-wifi" style="font-size:50px;"></span><br/><b>Уучлаарай, холболт амжилтгүй.</b>
-                <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Та интернет холболтоо шалгаад дахин үзээрэй.</p>
-            </center>
-        </div>
         <ion-refresher on-refresh="doRefresh()">
             <ion-refresher-content></ion-refresher-content>
         </ion-refresher>

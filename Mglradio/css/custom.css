@@ -116,6 +116,20 @@
 {
     bottom: 70px;
 }
+.live
+{
+    background:#ba0035;
+    color:#FFFFFF;
+    padding:3px;
+    border-radius:3px;
+    font-weight:bold;
+    font-size: 0.75em;
+    display:block;
+    line-height:10px;
+    position:absolute;
+    top: -10px;
+    left: 30px;
+}
 .leftsidemenu
 {
     background-color: #1e1e26;
@@ -575,6 +589,19 @@
 .top-tab .has-tabs
 {
     bottom: 27px !important;
+}
+.top-tab .tab-title
+{
+    line-height:30px;
+}
+.top-tab .span
+{
+    color:#CCCCCC;
+    font-weight:normal;
+    font-size:8px;
+    display:block;
+    line-height:8px;
+    margin-top:-10px;
 }
 .rent .list .item
 {

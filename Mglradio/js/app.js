@@ -380,8 +380,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('DetailCtrl', function($rootScope, $scope, $ionicLoading, $stateParams,$http) {
         
-        //
-         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+        $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         $http.get("http://app.mglradio.com/api/detail.php?i="+$stateParams.id)
                  .then(function(response) {
                      $scope.newsdetail=response.data.news[0];
@@ -443,23 +442,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
         
         $scope.playstatus = false;
-        $('audio').mediaelementplayer({
-        	// Do not forget to put a final slash (/)
-        	//pluginPath: 'https://cdnjs.com/libraries/mediaelement/',
-        	// this will allow the CDN to use Flash without restrictions
-        	// (by default, this is set as `sameDomain`)
-        	shimScriptAccess: 'always'
-        	// more configuration
-        });
-        /*
+        
         $http.get(host+"/api/ts.php")
                  .then(function(response) 
                     {
-                        $scope.today=response.data.today;
                         $scope.timetables=response.data.timetables;
-                        $scope.active();
+                        //$scope.active();
                     });
-        */
+        
         setInterval(function() { 
             $scope.$apply(function () {
                 $scope.playstatus = isplaying;
