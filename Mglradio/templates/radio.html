@@ -25,12 +25,14 @@
         
         <ion-scroll class="hutulburdiv" id="hutulburdiv" has-bouncing="true">
             <ion-list ng-repeat="t in timetables" >
-                <a id="r{{t.id}}" ng-click="notif({{t.id}})">
+                
                     <ion-item ng-class="(t.isactive==true) ? 'active' : ''">
+                        <a id="r{{t.id}}" ng-click="notif({{t.id}})">
                         <h2>{{t.time}}</h2>
+                        </a>
                         <p>{{t.title}}</p><img ng-if="!t.isnotif" src="img/next.png"><img ng-if="t.isnotif" src="img/done.png">
                     </ion-item>
-                </a>
+                
             </ion-list>
             <div style="height:30%;">
                 <input type="hidden" id="h" value=""/>
