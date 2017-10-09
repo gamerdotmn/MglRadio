@@ -402,14 +402,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http) {
-        $scope.timetables1=[];
-        $scope.timetables2=[];
-        $scope.timetables3=[];
-        $scope.timetables4=[];
-        $scope.timetables5=[];
-        $scope.timetables6=[];
-        $scope.timetables7=[];
-        $scope.d='1';
+    
+        $scope.d=1;
         $scope.getbyid = function(id) {
             var r = null;
             for (var i = $scope.timetables.length - 1;i >= 0;i--) {
@@ -424,7 +418,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.sc = function(d)
         {
             $scope.d=d;
-            $scope.d=$scope.d+'';
+            $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+            $http.get(host+"/api/ts.php?day="+$scope.d)
+                     .then(function(response) 
+                        {
+                            $scope.timetables=response.data.timetables;
+                            //$scope.active();
+                            $ionicLoading.hide();
+                        });
         };
         
         $scope.active = function() {
@@ -457,7 +458,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.playstatus = false;
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
-        $http.get(host+"/api/ts.php")
+        $http.get(host+"/api/ts.php?day="+$scope.d)
                  .then(function(response) 
                     {
                         $scope.timetables=response.data.timetables;
