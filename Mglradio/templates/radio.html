@@ -24,7 +24,7 @@
         </ion-tabs>
         <ion-scroll class="hutulburdiv" id="hutulburdiv" has-bouncing="true">
             <ion-list ng-repeat="t in timetables" >
-                
+                    
                     <ion-item ng-class="(t.isactive==true) ? 'active' : ''">
                         <a id="r{{t.id}}" ng-click="notif({{t.id}})">
                         <h2>{{t.time}}</h2>
