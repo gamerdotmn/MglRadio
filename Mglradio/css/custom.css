@@ -585,6 +585,7 @@
     box-shadow: inset 0px -2px 5px 0px rgba(255, 0, 72, 1) !important;
     max-width: 250px !important;
     opacity: 1 !important;
+    
 }
 .top-tab .has-tabs
 {
@@ -593,6 +594,7 @@
 .top-tab .tab-title
 {
     line-height:30px;
+    font-size:10px !important;
 }
 .top-tab .span
 {

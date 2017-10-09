@@ -10,22 +10,20 @@
                 <h5 class="bl">{{rtitle}}</h5>
             </center>
         </div>
-        <ion-tabs class="top-tab">
-            <ion-tab title="Да<span class='span'>09/26</span>">
-            </ion-tab>
-            <ion-tab title="Мя<span class='span'>09/26</span>" >
-            </ion-tab>
-            <ion-tab title="Лх<span class='span'>09/26</span>">
-            </ion-tab>
-            <ion-tab title="Пү<span class='span'>09/26</span>">
-            </ion-tab>
-            <ion-tab title="Ба<span class='span'>09/26</span>">
-            </ion-tab>
-            <ion-tab title="Бя<span class='span'>09/26</span>">
-            </ion-tab>
-            <ion-tab title="Ня<span class='span'>09/26</span>">
-          </ion-tab>
-        </ion-tabs>        
+          
+        <!-- -->
+        <ion-tabs class="top-tab tabs-bottom tabs-striped">
+        <div class="tab-nav tabs">
+            <a class="tab-item" ng-class="(d=='1') ? 'tab-item-active' : ''" ng-click="sc(1)" style=""><span class="tab-title">Да<span class="span">09/26</span></span></a>
+            <a class="tab-item" ng-class="(d=='2') ? 'tab-item-active' : ''" ng-click="sc(2)" style=""><span class="tab-title">Мя<span class="span">09/26</span></span></a>
+            <a class="tab-item" ng-class="(d=='3') ? 'tab-item-active' : ''" ng-click="sc(3)" style=""><span class="tab-title">Лх<span class="span">09/26</span></span></a>
+            <a class="tab-item" ng-class="(d=='4') ? 'tab-item-active' : ''" ng-click="sc(4)" style=""><span class="tab-title">Пү<span class="span">09/26</span></span></a>
+            <a class="tab-item" ng-class="(d=='5') ? 'tab-item-active' : ''" ng-click="sc(5)" style=""><span class="tab-title">Ба<span class="span">09/26</span></span></a>
+            <a class="tab-item" ng-class="(d=='6') ? 'tab-item-active' : ''" ng-click="sc(6)" style=""><span class="tab-title">Бя<span class="span">09/26</span></span></a>
+            <a class="tab-item" ng-class="(d=='7') ? 'tab-item-active' : ''" ng-click="sc(7)" style=""><span class="tab-title">Ня<span class="span">09/26</span></span></a>
+        </div> 
+        </ion-tabs>  
+        
         <ion-scroll class="hutulburdiv" id="hutulburdiv" has-bouncing="true">
             <ion-list ng-repeat="t in timetables" >
                 <a id="r{{t.id}}" ng-click="notif({{t.id}})">
@@ -35,11 +33,9 @@
                     </ion-item>
                 </a>
             </ion-list>
-            
             <div style="height:30%;">
                 <input type="hidden" id="h" value=""/>
             </div>
         </ion-scroll>
-        
     </ion-content>
 </ion-view>

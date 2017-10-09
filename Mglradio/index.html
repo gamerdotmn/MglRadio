@@ -97,11 +97,12 @@
                 
                 fileTransfer = new FileTransfer();
                 //download.startDownload();
-                
-                cordova.plugins.notification.local.on('click', function (notification) {
-                    setTimeout(function(){document.location='#/app/radio';}, 2000);
-                });
-                
+                if(typeof(cordova.plugins)!=="undefined")
+                {
+                    cordova.plugins.notification.local.on('click', function (notification) {
+                        setTimeout(function(){document.location='#/app/radio';}, 2000);
+                    });
+                }
                 if (navigator.onLine) {
                     net = true;
                 }
@@ -128,24 +129,25 @@
                     MusicControls.subscribe(events);
                     MusicControls.listen();
                 }
-                
-                db = window.sqlitePlugin.openDatabase({name: "mglradio.db"});
-                
-                db.transaction(function(tx) {
+                if(typeof(window.sqlitePlugin)!=="undefined")
+                {
+                    db = window.sqlitePlugin.openDatabase({name: "mglradio.db"});
                     
-                  //tx.executeSql('DROP TABLE IF EXISTS content');
-                  tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, typen text, time text)', [], function(tx, res) {
-                    
-                  }, function(error) {
-                    console.log('query error: ' + error.message);
-                  });
-                  
-                }, function(error) {
-                  console.log('transaction error: ' + error.message);
-                }, function() {
-                  //console.log('query ok');
-                });
-                
+                    db.transaction(function(tx) {
+                        
+                      //tx.executeSql('DROP TABLE IF EXISTS content');
+                      tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, typen text, time text)', [], function(tx, res) {
+                        
+                      }, function(error) {
+                        console.log('query error: ' + error.message);
+                      });
+                      
+                    }, function(error) {
+                      console.log('transaction error: ' + error.message);
+                    }, function() {
+                      //console.log('query ok');
+                    });
+                }
             }, false);
             
             function searchval(val) {
