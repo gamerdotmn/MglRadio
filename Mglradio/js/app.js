@@ -533,7 +533,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $http.get(host+"/api/ts.php?day="+$scope.d)
                  .then(function(response) 
                     {
-                        console.log(response);
                         $scope.timetables=response.data.timetables;
                         $scope.active();
                         $ionicLoading.hide();

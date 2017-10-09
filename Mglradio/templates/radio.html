@@ -29,14 +29,15 @@
                         <a id="r{{t.id}}" ng-click="notif({{t.id}})">
                         <h2>{{t.time}}</h2>
                         </a>
-                        <p style="color:#292931;">{{t.title}}</p>
+                        <p ng-if="t.type!=NULL" style="color:#ba0035;font-weight:bolder;">{{t.title}}</p>
+                        <p ng-if="t.type==NULL">{{t.title}}</p>
                         <a id="r{{t.id}}" ng-click="notif({{t.id}})">
                         <img ng-if="!t.isnotif" src="img/next.png"><img ng-if="t.isnotif" src="img/done.png">
                         </a>
                     </ion-item>
                 
             </ion-list>
-            <div style="height:30%;">
+            <div style="height:40%;">
                 <input type="hidden" id="h" value=""/>
             </div>
         </ion-scroll>
