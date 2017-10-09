@@ -403,7 +403,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http) {
     
-        $scope.d=1;
+        $scope.d=moment().weekday();
         $scope.getbyid = function(id) {
             var r = null;
             for (var i = $scope.timetables.length - 1;i >= 0;i--) {
@@ -423,12 +423,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                      .then(function(response) 
                         {
                             $scope.timetables=response.data.timetables;
-                            //$scope.active();
+                            $scope.active();
                             $ionicLoading.hide();
+                            
                         });
         };
         
         $scope.active = function() {
+            $ionicScrollDelegate.scrollTop();
             var now = moment();
             var d = false;
             if (typeof($scope.timetables)!=="undefined") {
@@ -438,7 +440,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     if (window.localStorage.getItem($scope.timetables[i].id)!==null) {
                         $scope.timetables[i].isnotif = true;
                     }
-                    var t = moment($scope.timetables[i].date + "T" + $scope.timetables[i].time + $scope.today[0].tz);
+                    var t = moment($scope.timetables[i].date + "T" + $scope.timetables[i].time + '+0800');
                     $scope.timetables[i].ttime = t.local().format('HH:mm');
                 
                     if (now.isAfter(t)) {
@@ -453,16 +455,16 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     }
                 }
             }
-        }
-        
+        };
         
         $scope.playstatus = false;
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         $http.get(host+"/api/ts.php?day="+$scope.d)
                  .then(function(response) 
                     {
+                        console.log(response);
                         $scope.timetables=response.data.timetables;
-                        //$scope.active();
+                        $scope.active();
                         $ionicLoading.hide();
                     });
         
@@ -510,7 +512,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     c.time + ' ' + c.title + '-г сануулах уу?', 
                     function(b) {
                         if (b === 1) {
-                            var t = moment(c.date + "T" + c.time + $scope.today[0].tz);
+                            var t = moment(c.date + "T" + c.time + '+0800');
                             var now = t.local().toDate();
                             cordova.plugins.notification.local.schedule({
                                                                             id: parseInt(c.id),
