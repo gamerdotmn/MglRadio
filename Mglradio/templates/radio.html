@@ -30,7 +30,10 @@
                         <a id="r{{t.id}}" ng-click="notif({{t.id}})">
                         <h2>{{t.time}}</h2>
                         </a>
-                        <p>{{t.title}}</p><img ng-if="!t.isnotif" src="img/next.png"><img ng-if="t.isnotif" src="img/done.png">
+                        <p>{{t.title}}</p>
+                        <a id="r{{t.id}}" ng-click="notif({{t.id}})">
+                        <img ng-if="!t.isnotif" src="img/next.png"><img ng-if="t.isnotif" src="img/done.png">
+                        </a>
                     </ion-item>
                 
             </ion-list>
