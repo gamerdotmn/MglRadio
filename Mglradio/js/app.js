@@ -402,7 +402,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http) {
-    
+        $scope.dt1=moment().add(1,'day').format('MM/DD');
+        $scope.dt2=moment().add(2,'day').format('MM/DD');
+        $scope.dt3=moment().add(3,'day').format('MM/DD');
+        $scope.dt4=moment().add(4,'day').format('MM/DD');
+        $scope.dt5=moment().add(5,'day').format('MM/DD');
+        $scope.dt6=moment().add(6,'day').format('MM/DD');
+        $scope.dt7=moment().add(7,'day').format('MM/DD');
+        
         $scope.d=moment().weekday();
         $scope.getbyid = function(id) {
             var r = null;
