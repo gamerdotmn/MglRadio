@@ -403,7 +403,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http) {
         $scope.d=moment().weekday();
-        
+        console.log(moment().formay('yyyy-mm-dd'));
         if($scope.d===1)
         {
             $scope.dt1=moment().add(0,'day').format('MM/DD');
@@ -500,22 +500,27 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         });
         };
         
+        
         $scope.active = function() {
             $ionicScrollDelegate.scrollTop();
             var now = moment();
+            
             var d = false;
             if (typeof($scope.timetables)!=="undefined") {
                 for (var i = $scope.timetables.length - 1;i >= 0;i--) {
+                    
                     $scope.timetables[i].isactive = false;
                     $scope.timetables[i].isnotif = false;
                     if (window.localStorage.getItem($scope.timetables[i].id)!==null) {
                         $scope.timetables[i].isnotif = true;
                     }
-                    var t = moment($scope.timetables[i].date + "T" + $scope.timetables[i].time+"08:00");
+                    var t = moment($scope.timetables[i].date + "T" + $scope.timetables[i].time+"+08:00");
                     $scope.timetables[i].ttime = t.local().format('HH:mm');
-                
+                    
                     if (now.isAfter(t)) {
                         if (d===false) {
+                            console.log(now);
+                            console.log(t);
                             $scope.timetables[i].isactive = true;
                             d = true;
                             $location.hash('r'+$scope.timetables[i].id);
