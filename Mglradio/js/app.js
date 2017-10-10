@@ -511,7 +511,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     if (window.localStorage.getItem($scope.timetables[i].id)!==null) {
                         $scope.timetables[i].isnotif = true;
                     }
-                    var t = moment($scope.timetables[i].date + "T" + $scope.timetables[i].time);
+                    var t = moment($scope.timetables[i].date + "T" + $scope.timetables[i].time+"08:00");
                     $scope.timetables[i].ttime = t.local().format('HH:mm');
                 
                     if (now.isAfter(t)) {
@@ -582,7 +582,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     c.time + ' ' + c.title + '-г сануулах уу?', 
                     function(b) {
                         if (b === 1) {
-                            var t = moment(c.date + "T" + c.time);
+                            var t = moment(c.date + "T" + c.time+"+08:00");
                             var now = t.local().toDate();
                             cordova.plugins.notification.local.schedule({
                                                                             id: parseInt(c.id),
