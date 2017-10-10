@@ -403,7 +403,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http) {
         $scope.d=moment().weekday();
-        console.log();
+        
         if($scope.d===1)
         {
             $scope.dt1=moment().add(0,'day').format('MM/DD');
@@ -679,12 +679,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 }
                 $rootScope.contents = contents;
               }, function(error) {
-                console.log(error.message);
+              
               });
             }, function(error) {
-              console.log(error.message);
+            
             }, function() {
-              //transaction ok
+            
             });
             $ionicLoading.hide();
         }).error(function() {
@@ -778,18 +778,18 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 
                 });
               }, function(error) {
-                console.log(error.message);
+              
               });
             }, function(error) {
-              console.log(error.message);
+            
             }, function() {
-              //transaction ok
+            
             });
         };
         $scope.refresh();
     })    
     .controller('LoginCtrl', function($scope, $window, $http, $rootScope, $timeout, $ionicLoading) {
-        console.log('login');
+        
         $scope.loginpage = true;
         $scope.signuppage = false;
         $scope.forgetpage = false;
