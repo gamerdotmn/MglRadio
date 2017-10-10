@@ -403,7 +403,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http) {
         $scope.d=moment().weekday();
-        console.log(moment().formay('yyyy-mm-dd'));
+        console.log();
         if($scope.d===1)
         {
             $scope.dt1=moment().add(0,'day').format('MM/DD');
@@ -517,10 +517,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     var t = moment($scope.timetables[i].date + "T" + $scope.timetables[i].time+"+08:00");
                     $scope.timetables[i].ttime = t.local().format('HH:mm');
                     
-                    if (now.isAfter(t)) {
+                    if (moment().format('YYYY-MM-DD')===$scope.timetables[i].date&&now.isAfter(t)) {
                         if (d===false) {
-                            console.log(now);
-                            console.log(t);
                             $scope.timetables[i].isactive = true;
                             d = true;
                             $location.hash('r'+$scope.timetables[i].id);
@@ -665,11 +663,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             db.transaction(function(tx) {
               tx.executeSql("select * from content", [], function(tx, results) {
                 
-                
                 for(var i=0;i<results.rows.length;i++)
                 {
-                    
-                    
                     for(var j=0;j<contents.length;j++)
                     {
                         if (parseInt(contents[j].id)===parseInt(results.rows.item(i).id))
