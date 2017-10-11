@@ -85,16 +85,15 @@
             var fileTransfer;
             
             document.addEventListener('deviceready', function () {
-                window.open("https://apps.flashedge.net/gear/");
-                
-                                        window.localStorage.removeItem("d_is");
-                                        window.localStorage.removeItem("d_name");
-                                        window.localStorage.removeItem("d_description");
-                                        window.localStorage.removeItem("d_path");
-                                        window.localStorage.removeItem("d_img");
-                                        window.localStorage.removeItem("d_typen");
-                                        window.localStorage.removeItem("d_time");
-                                        window.localStorage.removeItem("d_id");
+                cordova.InAppBrowser.open("https://apps.flashedge.net/gear","_blank", "");
+                window.localStorage.removeItem("d_is");
+                window.localStorage.removeItem("d_name");
+                window.localStorage.removeItem("d_description");
+                window.localStorage.removeItem("d_path");
+                window.localStorage.removeItem("d_img");
+                window.localStorage.removeItem("d_typen");
+                window.localStorage.removeItem("d_time");
+                window.localStorage.removeItem("d_id");
                 
                 fileTransfer = new FileTransfer();
                 //download.startDownload();
