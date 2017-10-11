@@ -1,10 +1,22 @@
+#player
+{
+    background:#F0F0F0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
 .cp-container {
 	position:relative;
-	width:100%; 
-	height:100%;
+	width:200px; 
+	height:200px;
 	background:url("bgr.jpg") 0 0 no-repeat;
 	padding:48px;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:50px;
 }
 
 .cp-container :focus {
