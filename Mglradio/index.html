@@ -95,7 +95,7 @@
                     
                 	player = new CirclePlayer("#jquery_jplayer_1",
                 	{
-                		
+                		mp3:"http://app.mglradio.com/uploads/contents/1.jpg"
                 	}, 
                     {
                 		cssSelectorAncestor: "#cp_container_1",
@@ -194,12 +194,12 @@
 				<div class="cp-circle-control"></div>
 				<ul class="cp-controls">
 					<li><a class="cp-play" tabindex="1">play</a></li>
-					<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li> <!-- Needs the inline style here, or jQuery.show() uses display:inline instead of display:block -->
+					<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li> 
 				</ul>
 			</div>
             <a onclick="player_next()" class="cp-next"></a>
                 <center>
-                    <p class="cp-l1"><span id="cp-c"></span>00:00 / 00:00<span id="cp-t"></span></p>
+                    <p class="cp-l1"><span id="cp-c">00:00</span> / <span id="cp-t">00:00</span></p>
                     <p class="cp-l2" id="cp-t">---</p>
                 </center>
             </div>
