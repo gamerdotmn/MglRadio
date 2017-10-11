@@ -103,7 +103,7 @@ CirclePlayer.prototype = {
 		// This event fired as play time increments
 		this.player.bind($.jPlayer.event.timeupdate + this.eventNamespace, function(event) {
 			if (!self.dragging) {
-				self._timeupdate(event.jPlayer.status.currentPercentAbsolute);
+				self._timeupdate(event.jPlayer.status.currentPercentAbsolute,event.jPlayer.status.duration,event.jPlayer.status.currentTime);
 			}
 		});
 
@@ -171,9 +171,17 @@ CirclePlayer.prototype = {
 			}
 		});
 	},
-	_timeupdate: function(percent) {
+	_timeupdate: function(percent,duration,current) {
 		var degs = percent * 3.6+"deg";
-
+        var seconds_1 = parseInt(duration);
+        var duration_1 = moment.duration(seconds_1, 'seconds');
+        var formatted_1 = duration_1.format("mm:ss");
+        
+        var seconds_2 = parseInt(current);
+        var duration_2 = moment.duration(seconds_2, 'seconds');
+        var formatted_2 = duration_2.format("mm:ss");
+        console.log(formatted_1);
+        console.log(formatted_2);
 		var spriteOffset = (Math.floor((Math.round(percent))*this.spriteRatio)-1)*-this.spritePitch;
 
 		if (percent <= 50) {
