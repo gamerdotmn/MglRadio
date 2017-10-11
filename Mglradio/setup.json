@@ -1,12 +1,10 @@
+
 {
   "id":"gearContainer",
-  "albumCover":"img/thumbs/01.jpg",
+  "albumCover":"01.jpg",
   "albumTitle":"Feel the Sound",
   "albumAuthor":"Audio Jungle",
   "soundcloudEnabled":false,
-  "soundcloudClientID":"go to http://soundcloud.com/you/apps/new and get your client ID there",
-  "soundcloudSet":"this should be something like http://soundcloud.com/you/sets/youralbum",
-  "soundcloudOverwrite":false,
   "autoPlay": true,
   "shuffle": true,
   "volume": 100,
