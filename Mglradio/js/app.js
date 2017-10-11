@@ -108,10 +108,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/radio");
+        $urlRouterProvider.otherwise("/app/news");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
+
     .directive('imageonload', function() {
         return {
             link: function(scope, element, attrs) {
@@ -153,6 +154,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
+    })
+    .controller('PlayerCtrl', function($scope, $state, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
+        
     })
     .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
         $scope.status = 0;
@@ -360,6 +364,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading,$timeout,$window) {
+        
         $timeout(function () {
             $scope.net=window.net;
             if($scope.net===false)
