@@ -89,9 +89,19 @@
             var downloadstatus="";
             var downloadanimate="slideInUp";
             var fileTransfer;
-            
+            var player;
             document.addEventListener('deviceready', function () {
-                
+                $(document).ready(function(){
+                    
+                	player = new CirclePlayer("#jquery_jplayer_1",
+                	{
+                		
+                	}, 
+                    {
+                		cssSelectorAncestor: "#cp_container_1",
+                		wmode: "window"
+                	});
+                });
                 window.localStorage.removeItem("d_is");
                 window.localStorage.removeItem("d_name");
                 window.localStorage.removeItem("d_description");
@@ -169,8 +179,8 @@
     <body>
             <div id="player" class="animated pulse">
             <div id="player-container">
-            <a class="cp-close"></a>
-            <a class="cp-prev"></a>
+            <a onclick="player_close()" class="cp-close"></a>
+            <a onclick="player_next()" class="cp-prev"></a>
             <div id="jquery_jplayer_1" class="cp-jplayer"></div>
 			<div id="cp_container_1" class="cp-container">
 				<div class="cp-buffer-holder">
@@ -187,27 +197,14 @@
 					<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li> <!-- Needs the inline style here, or jQuery.show() uses display:inline instead of display:block -->
 				</ul>
 			</div>
-            <a class="cp-next"></a>
+            <a onclick="player_next()" class="cp-next"></a>
                 <center>
-                    <p class="cp-l1">00:25 / 03:57</p>
-                    <p class="cp-l2">Аавын зөвлөгөө</p>
+                    <p class="cp-l1"><span id="cp-c"></span>00:00 / 00:00<span id="cp-t"></span></p>
+                    <p class="cp-l2" id="cp-t">---</p>
                 </center>
             </div>
                 
             </div>
         <ion-nav-view></ion-nav-view>
-        <script>
-           $(document).ready(function(){
-
-        	var myCirclePlayer = new CirclePlayer("#jquery_jplayer_1",
-        	{
-        		oga: "http://www.jplayer.org/audio/ogg/Miaow-07-Bubble.ogg"
-        	}, 
-            {
-        		cssSelectorAncestor: "#cp_container_1",
-        		wmode: "window"
-        	});
-        });
-        </script>
     </body>
 </html>
