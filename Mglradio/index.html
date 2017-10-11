@@ -170,14 +170,12 @@
     <body>
             <div id="jquery_jplayer_1" class="cp-jplayer"></div>
 
-			<!-- The container for the interface can go where you want to display it. Show and hide it as you need. -->
-
 			<div id="cp_container_1" class="cp-container">
-				<div class="cp-buffer-holder"> <!-- .cp-gt50 only needed when buffer is > than 50% -->
+				<div class="cp-buffer-holder">
 					<div class="cp-buffer-1"></div>
 					<div class="cp-buffer-2"></div>
 				</div>
-				<div class="cp-progress-holder"> <!-- .cp-gt50 only needed when progress is > than 50% -->
+				<div class="cp-progress-holder"> 
 					<div class="cp-progress-1"></div>
 					<div class="cp-progress-2"></div>
 				</div>
@@ -193,7 +191,6 @@
 
         	var myCirclePlayer = new CirclePlayer("#jquery_jplayer_1",
         	{
-                title: "123",
         		mp3: "http://app.mglradio.com/uploads/contents/1.mp3",
         	}, {
         		cssSelectorAncestor: "#cp_container_1",
