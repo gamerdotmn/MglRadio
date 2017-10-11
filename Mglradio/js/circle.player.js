@@ -173,6 +173,7 @@ CirclePlayer.prototype = {
 	},
 	_timeupdate: function(percent,duration,current) {
 		var degs = percent * 3.6+"deg";
+        /*
         var seconds_1 = parseInt(duration);
         var duration_1 = moment.duration(seconds_1, 'seconds');
         var formatted_1 = duration_1.format("mm:ss");
@@ -182,6 +183,7 @@ CirclePlayer.prototype = {
         var formatted_2 = duration_2.format("mm:ss");
         console.log(formatted_1);
         console.log(formatted_2);
+        */
 		var spriteOffset = (Math.floor((Math.round(percent))*this.spriteRatio)-1)*-this.spritePitch;
 
 		if (percent <= 50) {
