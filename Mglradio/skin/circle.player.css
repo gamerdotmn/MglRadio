@@ -1,11 +1,23 @@
 #player
 {
-    background:#F0F0F0;
+    background:rgba(0,0,0,0.5);
     width: 100%;
     height: 100%;
     position: fixed;
     top: 0px;
     left: 0px;
+    z-index:999;
+}
+#player-container
+{
+    width:300px;
+    height:285px;
+    background:url(container.png) center center no-repeat;
+    margin-left:auto;
+    margin-right:auto;
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.25);
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.25);
 }
 .cp-container {
 	position:relative;
@@ -18,7 +30,35 @@
     margin-right:auto;
     margin-top:50px;
 }
-
+.cp-close
+{
+    position:absolute;
+    top:40px;
+    right:0px;
+    width:50px;
+    height:50px;
+    background:url("close.png") center center no-repeat;
+}
+.cp-prev
+{
+    position:absolute;
+    width:70px;
+    height:70px;
+    background:url("prev.png") center center no-repeat;
+    top:115px;
+    left:20px;
+    z-index:1000;
+}
+.cp-next
+{
+    position:absolute;
+    width:70px;
+    height:70px;
+    background:url("next.png") center center no-repeat;
+    top:115px;
+    right:20px;
+    z-index:1000;
+}
 .cp-container :focus {
 	border:none;
 	outline:0;
@@ -128,4 +168,8 @@
 .cp-jplayer {
 	width:0;
 	height:0;
+}
+.cp-prev
+{
+    
 }
