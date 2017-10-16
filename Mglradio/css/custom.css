@@ -990,7 +990,11 @@ line-height: 12px;
     padding-right:10px;
     border:none !important;
     background:none !important;
-    border-bottom:#CCC 1px solid !important;
+    
+}
+.playlist ion-content
+{
+    border-top:#CCC 1px solid !important;
 }
 .playlist .item
 {
