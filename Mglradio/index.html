@@ -90,14 +90,16 @@
             var player;
             document.addEventListener('deviceready', function () {
                 
-            	player = new CirclePlayer("#jquery_jplayer_1",
-            	{
-            		mp3:""
-            	}, 
-                {
-            		cssSelectorAncestor: "#cp_container_1",
-            		wmode: "window"
-            	});
+                $(document).ready(function(){
+                	player = new CirclePlayer("#jquery_jplayer_1",
+                	{
+                		mp3:"http://app.mglradio.com/uploads/contents/1.mp3"
+                	}, 
+                    {
+                		cssSelectorAncestor: "#cp_container_1",
+                		wmode: "window"
+                	});
+                });
                 
                 window.localStorage.removeItem("d_is");
                 window.localStorage.removeItem("d_name");

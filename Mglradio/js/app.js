@@ -487,12 +487,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.playType = function(id) {
             $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
-            $http.get(host+"/api/playlist.php?id="+$scope.d)
+            $http.get(host+"/api/playlist.php?id="+id)
                      .then(function(response) 
                         {
                             $scope.plist=response.data.list;
                             gplaylist=$scope.plist;
-                            $scope.ptitle=$scope.plist[0].tname;
+                            if($scope.plist.length>0)
+                            {
+                                $scope.ptitle=$scope.plist[0].tname;
+                            }
                             $ionicLoading.hide();
                             $scope.modalt.show();
                         });
