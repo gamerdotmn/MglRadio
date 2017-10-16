@@ -982,6 +982,11 @@ line-height: 12px;
     top: 15%;
     border-radius: 15px;
 }
+.playlist ion-header-bar
+{
+    padding: 20px;
+    text-align:center;
+}
 .payment
 {
     background-color: #fff;
