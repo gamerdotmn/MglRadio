@@ -32,7 +32,11 @@
             var my_media = null;
             var net = false;
             var isplaying = false;
-            var playlist=[];
+            var playlist=[
+            {
+                name: 'test',
+                url: 'http://app.mglradio.com/uploads/contents/1.mp3'
+            }];
             function play() {
                 if (my_media===null) {
                     my_media = new Media("http://50.7.76.251:8080/;steam.mp3", 
@@ -92,7 +96,7 @@
                 
             	player = new CirclePlayer("#jquery_jplayer_1",
             	{
-            		mp3:"http://app.mglradio.com/uploads/contents/1.jpg"
+            		mp3:""
             	}, 
                 {
             		cssSelectorAncestor: "#cp_container_1",
@@ -171,24 +175,27 @@
                 });
             }
             
-            function player_set(i)
+            function player_show(i)
             {
-                alert('next');
+                player.setMedia(playlist[0].url);
+                $("#cp-t").html(playlist[0].name);
+                $("#player").show();
+                player.play(0);
             }
             
             function player_next()
             {
-                alert('next');
+                
             }
             
             function player_prev()
             {
-                alert('prev');
+                
             }
             
-            function player_close()
+            function player_hide()
             {
-                alert('close');
+                $("#player").hide();
             }
         </script>
         
@@ -197,7 +204,7 @@
         
             <div id="player" class="animated pulse" style="display:none;">
             <div id="player-container">
-            <a onclick="player_close()" class="cp-close"></a>
+            <a onclick="player_hide()" class="cp-close"></a>
             <a onclick="player_next()" class="cp-prev"></a>
             <div id="jquery_jplayer_1" class="cp-jplayer"></div>
 			<div id="cp_container_1" class="cp-container">
