@@ -485,7 +485,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         });
         
         $scope.playType = function(id) {
-            $scope.modalt.show();
+            $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+            $http.get(host+"/api/playlist.php?id="+$scope.d)
+                     .then(function(response) 
+                        {
+                            console.log(response);
+                            $ionicLoading.hide();
+                            $scope.modalt.show();
+                        });
         };
         
         $scope.closeType = function() {
