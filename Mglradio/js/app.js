@@ -605,6 +605,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.playlist=function(o)
         {
+            $scope.pause();
             $scope.closeType();
             player_show(o);
         };
