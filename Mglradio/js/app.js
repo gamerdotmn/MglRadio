@@ -406,7 +406,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
         }
     })
-    .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http) {
+    .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http,$ionicModal) {
         $scope.d=moment().weekday();
         
         if($scope.d===1)
@@ -480,6 +480,19 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.dt7=moment().add(1,'day').format('MM/DD');
         }
         
+        $ionicModal.fromTemplateUrl('playlist.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+          }).then(function(modal) {
+            $scope.modal = modal;
+          });
+          $scope.openModal = function(id) {
+            $scope.modal.show();
+          };
+          $scope.closeModal = function() {
+            $scope.modal.hide();
+          };
+                
         $scope.getbyid = function(id) {
             var r = null;
             for (var i = $scope.timetables.length - 1;i >= 0;i--) {
