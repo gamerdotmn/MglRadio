@@ -509,6 +509,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.sc = function(d)
         {
             $scope.d=d;
+            $scope.timetables=[];
             $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
             $http.get(host+"/api/ts.php?day="+$scope.d)
                      .then(function(response) 
@@ -519,7 +520,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                             
                         });
         };
-        
         
         $scope.active = function() {
             $ionicScrollDelegate.scrollTop();
@@ -549,7 +549,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     }
                 }
             }
-        };
+        }
         
         $scope.playstatus = false;
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
