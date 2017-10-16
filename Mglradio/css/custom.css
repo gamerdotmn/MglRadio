@@ -984,14 +984,26 @@ line-height: 12px;
 }
 .playlist ion-header-bar
 {
-    padding: 20px;
+    padding: 10px;
     text-align:center;
     padding-left:10px;
     padding-right:10px;
+    border:none !important;
+    background:none !important;
+    border-bottom:#CCC 1px solid !important;
 }
 .playlist .item
 {
     font-family: 'Ubuntu Regular';
+    border:none !important;
+    padding-left:20px
+}
+.playlist .item i
+{
+    margin-right:10px;
+}
+.playlist .bar
+{
     border:none !important;
 }
 .payment
