@@ -277,8 +277,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                         $scope.modal = modal;
                                     });
         
-        
-        
         $scope.detail = function(id) {
             if($rootScope.loginstatus===false&&window.net===true)
             {
