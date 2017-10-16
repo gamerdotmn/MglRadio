@@ -32,7 +32,7 @@
             var my_media = null;
             var net = false;
             var isplaying = false;
-            
+            var playlist=[];
             function play() {
                 if (my_media===null) {
                     my_media = new Media("http://50.7.76.251:8080/;steam.mp3", 
@@ -89,19 +89,16 @@
             var fileTransfer;
             var player;
             document.addEventListener('deviceready', function () {
-                /*
-                $(document).ready(function(){
-                    
-                	player = new CirclePlayer("#jquery_jplayer_1",
-                	{
-                		mp3:"http://app.mglradio.com/uploads/contents/1.jpg"
-                	}, 
-                    {
-                		cssSelectorAncestor: "#cp_container_1",
-                		wmode: "window"
-                	});
-                });
-                */
+                
+            	player = new CirclePlayer("#jquery_jplayer_1",
+            	{
+            		mp3:"http://app.mglradio.com/uploads/contents/1.jpg"
+            	}, 
+                {
+            		cssSelectorAncestor: "#cp_container_1",
+            		wmode: "window"
+            	});
+                
                 window.localStorage.removeItem("d_is");
                 window.localStorage.removeItem("d_name");
                 window.localStorage.removeItem("d_description");
@@ -172,6 +169,11 @@
                 $rootScope.$apply(function () {                        
                     $rootScope.searchvalue = val;
                 });
+            }
+            
+            function player_set(i)
+            {
+                alert('next');
             }
             
             function player_next()
