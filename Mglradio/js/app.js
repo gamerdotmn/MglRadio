@@ -518,9 +518,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.sc = function(d)
         {
+            $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
             $scope.d=d;
             $scope.timetables=[];
-            $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
             $http.get(host+"/api/ts.php?day="+$scope.d)
                      .then(function(response) 
                         {
