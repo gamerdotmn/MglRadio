@@ -567,7 +567,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         setInterval(function() { 
             $scope.active();
-        }, 10000);
+        }, 60000);
         
         $scope.playstatus = true;
         $scope.play = function() {
