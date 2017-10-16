@@ -346,11 +346,15 @@
     margin-top:-75px;
     text-align: justify;
     font-size: 15px;
-    background:#e5e5e5;
+    background:#e5e5e5 !important;
 }
 .newsdetail .content p
 {
     font-family: "Ubuntu Regular";
+}
+.newsdetail .content *
+{
+    background:#e5e5e5 !important;
 }
 .newsdetail .content img, iframe, embed
 {
