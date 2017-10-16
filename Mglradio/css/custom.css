@@ -346,6 +346,7 @@
     margin-top:-75px;
     text-align: justify;
     font-size: 15px;
+    background:#e5e5e5;
 }
 .newsdetail .content p
 {
@@ -422,8 +423,7 @@
     /*url(../img/bar.gif)*/
     background-size: cover;
     color: #ffffff;
-    padding: 20px 10px;
-    border-bottom: 3px solid #c10033;
+    padding: 15px 10px;
 }
 .radiodiv button
 {

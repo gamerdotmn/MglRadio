@@ -55,13 +55,16 @@
             }
             
             function pause() {
-                my_media.pause();
-                MusicControls.updateIsPlaying(false);
-                isplaying = false;
-                try {
-                document.getElementById("radiodiv").style.backgroundImage = "";
+                if(my_media!=null&&MusicControls!=null)
+                {
+                    my_media.pause();
+                    MusicControls.updateIsPlaying(false);
+                    isplaying = false;
+                    try {
+                    document.getElementById("radiodiv").style.backgroundImage = "";
+                    }
+                    catch(err) {}
                 }
-                catch(err) {}
             }
             
             function create_success() {
