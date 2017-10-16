@@ -556,6 +556,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                             $timeout(function () {
                                 $ionicScrollDelegate.anchorScroll(true);
                             },100);
+                            $timeout(function () {
+                                console.log($ionicScrollDelegate.getScrollPosition());
+                            },1000);
                         }
                     }
                 }
