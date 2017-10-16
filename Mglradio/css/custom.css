@@ -992,6 +992,7 @@ line-height: 12px;
 .playlist .item
 {
     font-family: 'Ubuntu Regular';
+    border:none !important;
 }
 .payment
 {
