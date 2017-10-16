@@ -178,9 +178,9 @@
             
             function player_next()
             {
-                console.log(gplaylist);
-                if(gplaylist.length<playerc+1)
+                if(gplaylist.length>playerc+1)
                 {
+                    player.pause(0);
                     playerc=playerc+1;
                     $("#cp-h").html(gplaylist[playerc].name);
                     player.setMedia({mp3:gplaylist[playerc].path});
@@ -192,9 +192,9 @@
             
             function player_prev()
             {
-                console.log(gplaylist);
                 if(playerc-1>=0)
                 {
+                    player.pause(0);
                     playerc=playerc-1;
                     $("#cp-h").html(gplaylist[playerc].name);
                     player.setMedia({mp3:gplaylist[playerc].path});
