@@ -32,11 +32,7 @@
             var my_media = null;
             var net = false;
             var isplaying = false;
-            var gplaylist=[
-            {
-                name: 'test',
-                url: 'http://app.mglradio.com/uploads/contents/1.mp3'
-            }];
+            var gplaylist=[];
             function play() {
                 if (my_media===null) {
                     my_media = new Media("http://50.7.76.251:8080/;steam.mp3", 
@@ -177,8 +173,8 @@
             
             function player_show(i)
             {
-                player.setMedia(playlist[0].url);
-                $("#cp-t").html(playlist[0].name);
+                player.setMedia(gplaylist[i].url);
+                $("#cp-h").html(gplaylist[i].name);
                 $("#player").show();
                 player.play(0);
             }
@@ -225,7 +221,7 @@
             <a onclick="player_next()" class="cp-next"></a>
                 <center>
                     <p class="cp-l1"><span id="cp-c">00:00</span> / <span id="cp-t">00:00</span></p>
-                    <p class="cp-l2" id="cp-t">---</p>
+                    <p class="cp-l2" id="cp-h">---</p>
                 </center>
             </div>
             </div>
