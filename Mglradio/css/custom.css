@@ -972,6 +972,16 @@ line-height: 12px;
 {
     background: rgba(0, 0, 0, .7);
 }
+.playlist
+{
+    background-color: #fff;
+    width: 90%;
+    min-height: 70%;
+    position: absolute;
+    left: 5%;
+    top: 15%;
+    border-radius: 15px;
+}
 .payment
 {
     background-color: #fff;
