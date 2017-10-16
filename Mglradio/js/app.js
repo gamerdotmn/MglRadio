@@ -262,7 +262,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                   }, function error() {
                       $scope.status = 0;
                   });
-        }, 3000);
+        }, 5000);
         
         $ionicModal.fromTemplateUrl('templates/payment.html', {
                                         scope: $scope
