@@ -88,6 +88,7 @@
             var downloadanimate="slideInUp";
             var fileTransfer;
             var player;
+            var playerc=0;
             document.addEventListener('deviceready', function () {
                 
                 
@@ -165,9 +166,11 @@
             
             function player_show(i)
             {
-                $("#cp-h").html(gplaylist[i].name);
+                playerc=i;
+                $("#cp-h").html(gplaylist[playerc].name);
                 $("#player").show();
-            	player = new CirclePlayer("#jquery_jplayer_1",{mp3:gplaylist[i].path},{wmode: "window"});
+            	player = new CirclePlayer("#jquery_jplayer_1",{mp3:gplaylist[playerc].path},{wmode: "window"});
+                player.setMedia({mp3:gplaylist[playerc].path});
                 setTimeout(function(){
                     player.play(0);
                 },1000);
@@ -175,19 +178,34 @@
             
             function player_next()
             {
-                
+                if(gplaylist.length<playerc+1)
+                {
+                    playerc=playerc+1;
+                    $("#cp-h").html(gplaylist[playerc].name);
+                    player.setMedia({mp3:gplaylist[playerc].path});
+                    setTimeout(function(){
+                        player.play(0);
+                    },1000);
+                }
             }
             
             function player_prev()
             {
-                
+                if(playerc-1>=0)
+                {
+                    playerc=playerc-1;
+                    $("#cp-h").html(gplaylist[playerc].name);
+                    player.setMedia({mp3:gplaylist[playerc].path});
+                    setTimeout(function(){
+                        player.play(0);
+                    },1000);
+                }
             }
             
             function player_hide()
             {
                 player.pause(0);
                 $("#player").hide();
-                
             }
         </script>
         
