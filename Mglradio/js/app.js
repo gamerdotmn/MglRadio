@@ -479,7 +479,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.dt7=moment().add(1,'day').format('MM/DD');
         }
         
-        $ionicModal.fromTemplateUrl('playlist.html', {
+        $ionicModal.fromTemplateUrl('templates/playlist.html', {
             scope: $scope,
             animation: 'slide-in-up'
           }).then(function(modal) {
