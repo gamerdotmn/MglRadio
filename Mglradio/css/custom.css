@@ -987,6 +987,10 @@ line-height: 12px;
     padding: 20px;
     text-align:center;
 }
+.playlist .item
+{
+    font-family: 'Ubuntu Regular';
+}
 .payment
 {
     background-color: #fff;
