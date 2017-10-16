@@ -986,6 +986,8 @@ line-height: 12px;
 {
     padding: 20px;
     text-align:center;
+    padding-left:10px;
+    padding-right:10px;
 }
 .playlist .item
 {
