@@ -485,13 +485,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             animation: 'slide-in-up'
           }).then(function(modal) {
             $scope.modalt = modal;
-          });
-          $scope.playType = function(id) {
+        });
+        
+        $scope.playType = function(id) {
             $scope.modalt.show();
-          };
-          $scope.closeType = function() {
+        };
+        
+        $scope.closeType = function() {
             $scope.modalt.hide();
-          };
+        };
                 
         $scope.getbyid = function(id) {
             var r = null;
