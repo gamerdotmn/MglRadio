@@ -486,10 +486,10 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
           }).then(function(modal) {
             $scope.modal = modal;
           });
-          $scope.openModal = function(id) {
+          $scope.playType = function(id) {
             $scope.modal.show();
           };
-          $scope.closeModal = function() {
+          $scope.closeType = function() {
             $scope.modal.hide();
           };
                 
