@@ -144,7 +144,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.moredata=false;
         $rootScope.loginstatus=false;
         
-        
+        if(window.localStorage.getItem("username")!==null)
+        {
+            $rootScope.username=window.localStorage.getItem("username");
+            $rootScope.loginstatus=true;
+        }
         
         $scope.tologin=function()
         {
@@ -156,7 +160,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $rootScope.loginstatus = false; 
             $rootScope.username = "";
             window.localStorage.removeItem("username");
-            $window.location.href = '#/app/content';
+            $window.location.href = '#/app/news';
         };
         
         $scope.goBack = function() {
@@ -274,20 +278,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.playvideo=function()
         {
-            
-                var options = {
-                    successCallback: function() {
-                      
-                    },
-                    errorCallback: function(errMsg) {
-                      
-                    },
-                    orientation: 'landscape',
-                    shouldAutoClose: true,  
-                    controls: true
-                  };
-                  window.plugins.streamingMedia.playVideo($rootScope.contentdetail.path, options); 
-            
+            gplaylist=[{id:$rootScope.contentdetail.id,name:$rootScope.contentdetail.bane,path:$rootScope.contentdetail.path,tname:$rootScope.contentdetail.typen}];
+            player_show(0);
         };
         
         $scope.downloadvideo=function()
@@ -339,11 +331,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading,$timeout,$window) {
         
-        if(window.localStorage.getItem("username")!==null)
-        {
-            $rootScope.username=window.localStorage.getItem("username");
-            $rootScope.loginstatus=true;
-        }
         
         $timeout(function () {
             $scope.net=window.net;
