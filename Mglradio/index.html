@@ -9,7 +9,6 @@
         <!--css -->
         <link href="css/ionic.min.css" rel="stylesheet">
         <link href="css/animate.css" rel="stylesheet">
-        <link href="css/ionic.filter.bar.min.css" rel="stylesheet">
         <link href="css/swiper.min.css" rel="stylesheet">
         <link href="css/custom.css" rel="stylesheet">
         <link href="skin/circle.player.css" rel="stylesheet">
@@ -157,14 +156,6 @@
                     });
                 }
             }, false);
-            
-            function searchval(val) {
-                var $body = angular.element(document.body);            
-                var $rootScope = $body.injector().get('$rootScope');   
-                $rootScope.$apply(function () {                        
-                    $rootScope.searchvalue = val;
-                });
-            }
             
             function player_show(i)
             {

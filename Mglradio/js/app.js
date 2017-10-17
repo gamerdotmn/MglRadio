@@ -90,15 +90,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    })
-            .state('app.search', {
-                       url: "/search",
-                       views: {
-                    'contentContent' :{
-                                   templateUrl: "templates/search.html",
-                                   controller: "SearchCtrl"
-                               }
-                }
-                   })
             .state('app.download', {
                        url: "/download",
                        views: {
@@ -108,7 +99,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/news");
+        $urlRouterProvider.otherwise("/app/content");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -719,11 +710,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         };
         
         
-        $scope.search=function()
-        {
-            $window.location.href = '#/app/search';
-        };
-        
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
             var contents=data.contents;
@@ -785,18 +771,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $timeout(function () {
             $ionicLoading.hide();
         }, 1000); 
-    })
-    .controller('SearchCtrl', function($scope,$window) {
-        $scope.input = "<input type='text' id='searchinput' ng-model='searchvalue' onkeyup='searchval(this.value)' placeholder='Хайлт' class='searchinput' >";
-        
-        var h = window.innerHeight;
-        var sh = (h * 30) / 100;
-        $scope.height = sh;
-        
-        $scope.back=function()
-        {
-            $window.location.href = '#/app/content';      
-        };
     })
     .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope) {
         $scope.downloadstatus="";
