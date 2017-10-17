@@ -138,7 +138,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
         $scope.status = 0;
-        
+        console.log($location);
         $scope.rtitle = 'MGL RADIO';
         $scope.page=0;
         $scope.moredata=false;
@@ -688,6 +688,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         {
             $window.location.href = '#/app/download';  
         };
+        
         
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
