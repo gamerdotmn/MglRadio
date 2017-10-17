@@ -945,7 +945,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                             } else if (data === "0") {
                                                 navigator.notification.alert("Нэвтрэх нэр давхардаж байна!", alertCallback, "Алдаа", "Хаах");
                                             } else if (data === "1") {
-                                                navigator.notification.alert("И-мейл хаяг давхардаж байна!", alertCallback, "Алдаа", "Хаах");
+                                                navigator.notification.alert("Мэйл хаяг давхардаж байна!", alertCallback, "Алдаа", "Хаах");
                                             } else {
                                                 navigator.notification.alert("Бүртгэхэд алдаа гарлаа дахин оролдоно уу!", alertCallback, "Алдаа", "Хаах");
                                             }

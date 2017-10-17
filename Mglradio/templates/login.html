@@ -13,13 +13,13 @@
         </center>
         <center ng-show="signuppage" class="animated fadeIn">
             <input ng-model="newUser.user_id" type="text" placeholder="НЭВТРЭХ НЭР" >
-            <input ng-model="newUser.email" type="email" placeholder="И-МЕЙЛ" >
+            <input ng-model="newUser.email" type="email" placeholder="МЭЙЛ ХАЯГ" >
             <input ng-model="newUser.pwd" type="password" placeholder="НУУЦ ҮГ" >
             <input ng-model="newUser.confirm" type="password" placeholder="НУУЦ ҮГ ДАВТАХ" >
             <button class="button submit" ng-click="signup(newUser)">БҮРТГҮҮЛЭХ</button>
         </center>
         <center ng-show="forgetpage" class="animated fadeIn">
-            <input ng-model="forget.email" type="email" placeholder="БҮРТГЭЛТЭЙ И-МЕЙЛ"> 
+            <input ng-model="forget.email" type="email" placeholder="БҮРТГЭЛТЭЙ МЭЙЛ"> 
             <button class="button submit" ng-click="forget(forget)">СЭРГЭЭХ</button>
         </center>
     </ion-content>
