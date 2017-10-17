@@ -661,13 +661,44 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
        
     })
-    .controller('TvCtrl', function($rootScope, $scope, $ionicLoading, $http, $timeout) {
-        $scope.playVideo = function() {
+    .controller('TvCtrl', function($rootScope, $scope, $ionicLoading, $http, $timeout,$ionicModal) {
+        $scope.playVideo = function(app,id,vid) {
+            if (app==="youtube") {
+                window.open('https://www.youtube.com/watch?v=' + vid, '_system');
+            } else {
+                window.open('https://www.facebook.com/' + id + '/videos/' + vid, '_system');
+            }
+        };
+        
+         $scope.playLiveVideo = function() {
             if ($scope.app==="youtube") {
                 window.open('https://www.youtube.com/watch?v=' + $scope.vid, '_system');
             } else {
                 window.open('https://www.facebook.com/' + $scope.id + '/videos/' + $scope.vid, '_system');
             }
+        };
+        
+        $ionicModal.fromTemplateUrl('templates/tvlist.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+          }).then(function(modal) {
+            $scope.modalt = modal;
+        });
+        
+        $scope.playTV = function() {
+            
+            $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+            $http.get(host+"/api/tvlist.php")
+                     .then(function(response) 
+                        {
+                            $scope.tlist=response.data.list;
+                            $ionicLoading.hide();
+                            $scope.modalt.show();
+                        });
+        };
+        
+        $scope.closeTV = function() {
+            $scope.modalt.hide();
         };
     })
     .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {

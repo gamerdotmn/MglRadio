@@ -1,0 +1,11 @@
+ <ion-modal-view class="playlist">
+    <ion-header-bar>
+      <center style="width:100%;">Өмнөх бичлэгүүд</center>
+         <button class="button button-clear" ng-click="closeTV()"><i class="icon ion-close-circled" aria-hidden="true"></i></button>
+    </ion-header-bar>
+    <ion-content has-bouncing="true">
+      <ion-list>
+          <li class="item" ng-click="playTV(p.app,p.id,p.vid)" ng-repeat="p in tlist"><i class="icon ion-play" aria-hidden="true"></i>{{p.title}}</li>
+      </ion-list>
+    </ion-content>
+</ion-modal-view>

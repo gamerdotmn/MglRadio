@@ -1,11 +1,11 @@
  <ion-modal-view class="playlist">
     <ion-header-bar>
       <center style="width:100%;">{{ptitle}}</center>
-         <button class="button button-clear" ng-click="closeType()"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+         <button class="button button-clear" ng-click="closeType()"><i class="icon ion-close-circled" aria-hidden="true"></i></button>
     </ion-header-bar>
     <ion-content has-bouncing="true">
       <ion-list>
-          <li class="item" ng-click="playlist($index)" ng-repeat="p in plist"><i class="fa fa-play-circle" aria-hidden="true"></i>{{p.name}}</li>
+          <li class="item" ng-click="playlist($index)" ng-repeat="p in plist"><i class="icon ion-play" aria-hidden="true"></i>{{p.name}}</li>
       </ion-list>
     </ion-content>
 </ion-modal-view>
