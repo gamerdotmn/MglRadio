@@ -1,36 +1,19 @@
 <ion-view title="{{logo}}" class="rent">
     <ion-nav-buttons side="left" >
         <button class="button sidemenu" menu-toggle="left">
-            <i class="icon fa fa-bars"></i>
+            <i class="icon ion-navicon-round"></i>
         </button>
     </ion-nav-buttons>
-    <ion-nav-buttons side="right" >
-        <button class="button sidemenu" ng-click="search()">
-            <i class="icon fa fa-search"></i>
-        </button>
-    </ion-nav-buttons>
+    
     <ion-content class="animated fadeIn" has-bouncing="true">
         <div ng-if="!net" style="padding-top:20%;">
             <br/>
             <center>
-                <span class="fa fa-wifi" style="font-size:50px;"></span><br/><b>Уучлаарай, холболт амжилтгүй.</b>
+                <span class="ion-android-wifi" style="font-size:50px;"></span><br/><b>Уучлаарай, холболт амжилтгүй.</b>
                 <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Та интернет холболтоо шалгаад дахин үзээрэй.</p>
             </center>
         </div>
         <ion-list ng-if="net">
-            <ion-item>
-                <p class="name">Санал болгох</p>
-            </ion-item>
-            <div class="myslides">
-                <ks-swiper-container initial-slide="0" loop="false" show-nav-buttons="false" slides-per-view="3" pagination-clickable="false">
-                    <ks-swiper-slide class="swiper-slide" ng-repeat="content in contents"  ng-show="content.highlight == 1" ng-click="detail(content.id)">
-                        <div class="img" bimg="{{content.img}}" style="background-color:#343436;background-image:url(img\\loading2.gif);">
-                        </div>
-                        <p class="slide-caption">{{content.name|limitTo:35}}</p>
-                    </ks-swiper-slide>
-
-                </ks-swiper-container>
-            </div>
             <div ng-repeat="type in types" ng-if="type.cnt>0">
                 <ion-item>
                     <p class="name">{{type.name}}</p>

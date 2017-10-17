@@ -359,7 +359,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             {
                 //$window.location.href = '#/app/download';
             }
-        }, 2000); 
+        }, 3000); 
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
         $scope.cnews = [];
