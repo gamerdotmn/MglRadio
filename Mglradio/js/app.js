@@ -90,7 +90,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/content");
+        $urlRouterProvider.otherwise("/app/news");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -278,7 +278,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.playvideo=function()
         {
-            gplaylist=[{id:$rootScope.contentdetail.id,name:$rootScope.contentdetail.bane,path:$rootScope.contentdetail.path,tname:$rootScope.contentdetail.typen}];
+            $scope.modal.hide();
+            gplaylist=[{id:$rootScope.contentdetail.id,name:$rootScope.contentdetail.name,path:$rootScope.contentdetail.path,tname:$rootScope.contentdetail.typen}];
             player_show(0);
         };
         
@@ -691,7 +692,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
             var contents=data.contents;
-            
+            $rootScope.contents = contents;
             $rootScope.types=data.types;
             
             db.transaction(function(tx) {
@@ -720,6 +721,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             }, function() {
             
             });
+            
             $ionicLoading.hide();
         }).error(function() {
             $ionicLoading.hide();

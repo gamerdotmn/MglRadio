@@ -159,6 +159,7 @@
             
             function player_show(i)
             {
+                console.log(gplaylist);
                 playerc=i;
                 $("#cp-h").html(gplaylist[playerc].name);
                 $("#player").show();
@@ -207,6 +208,7 @@
         
     </head>
     <body>
+        <ion-nav-view></ion-nav-view>
         
             <div id="player" class="animated pulse" style="display:none;">
             <div id="player-container">
@@ -235,7 +237,5 @@
                 </center>
             </div>
             </div>
-        
-        <ion-nav-view></ion-nav-view>
     </body>
 </html>

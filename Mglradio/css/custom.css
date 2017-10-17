@@ -696,7 +696,6 @@ line-height: 12px;
 }
 .detail.modal
 {
-    
     min-height: 100%;
     width: 100%;
     background: #292931;
@@ -974,7 +973,7 @@ line-height: 12px;
 }
 .modal-backdrop-bg
 {
-    background: rgba(0, 0, 0, .7);
+    background: rgba(0, 0, 0, 0.5);
 }
 .playlist
 {
