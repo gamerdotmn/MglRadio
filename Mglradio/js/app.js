@@ -138,11 +138,25 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
         $scope.status = 0;
-        console.log($location);
         $scope.rtitle = 'MGL RADIO';
         $scope.page=0;
         $scope.moredata=false;
         $rootScope.loginstatus=false;
+        
+        $scope.menu =0;
+        
+        $rootScope.$on('$stateChangeSuccess', 
+                       function(event, toState, toParams, fromState, fromParams) { 
+                           if ($state.current.name === "app.news") {
+                               $scope.menu = 0;
+                           }
+                           if ($state.current.name === "app.content") {
+                               $scope.menu = 1;
+                           }
+                           if ($state.current.name === "app.download") {
+                               $scope.menu = 1;
+                           }
+                       });
         
         if(window.localStorage.getItem("username")!==null)
         {
@@ -253,7 +267,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             
         $ionicModal.fromTemplateUrl('templates/contentdetail.html', {
                                         scope: $scope,
-                                        animation: 'animated slideInRight'
+                                        animation: 'slide-in-up'
                                     }).then(function(modal) {
                                         $scope.modal = modal;
                                     });
@@ -280,7 +294,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         {
             $scope.modal.hide();
             gplaylist=[{id:$rootScope.contentdetail.id,name:$rootScope.contentdetail.name,path:$rootScope.contentdetail.path,tname:$rootScope.contentdetail.typen}];
-            player_show(0);
+            player_show(0,false);
         };
         
         $scope.downloadvideo=function()
@@ -331,8 +345,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading,$timeout,$window) {
-        
-        
+       
         $timeout(function () {
             $scope.net=window.net;
             if($scope.net===false)
@@ -578,7 +591,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.playlist=function(o)
         {
             $scope.closeType();
-            player_show(o);
+            player_show(o,true);
         };
         
         $scope.pause = function() {
@@ -673,6 +686,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         };
     })
     .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
+       
         $scope.net=true;
         $timeout(function () {
             $scope.net=window.net;
@@ -754,6 +768,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }, 1000); 
     })
     .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope) {
+        
         $scope.downloadstatus="";
         $scope.dc=[];
         angular.forEach($rootScope.contents, function(value, key) {
@@ -768,6 +783,10 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.downloadstatus=window.downloadstatus;
         }, 1000);
         
+        $scope.tocontents=function()
+        {
+            $window.location.href = '#/app/content';  
+        };
         
         $scope.detailo = function(id) {
             for(var i=0;i<$scope.dc.length;i++)

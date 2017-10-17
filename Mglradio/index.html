@@ -142,7 +142,7 @@
                     
                     db.transaction(function(tx) {
                         
-                      //tx.executeSql('DROP TABLE IF EXISTS content');
+                      tx.executeSql('DROP TABLE IF EXISTS content');
                       tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, typen text, time text)', [], function(tx, res) {
                         
                       }, function(error) {
@@ -157,7 +157,7 @@
                 }
             }, false);
             
-            function player_show(i)
+            function player_show(i,h)
             {
                 console.log(gplaylist);
                 playerc=i;
@@ -168,6 +168,16 @@
                 setTimeout(function(){
                     player.play(0);
                 },1000);
+                if(h)
+                {
+                    $("#cp-next").show();
+                    $("#cp-prev").show();
+                }
+                else
+                {
+                    $("#cp-next").hide();
+                    $("#cp-prev").hide();
+                }
             }
             
             function player_next()
@@ -213,7 +223,7 @@
             <div id="player" class="animated pulse" style="display:none;">
             <div id="player-container">
             <a onclick="player_hide()" class="cp-close"></a>
-            <a onclick="player_prev()" class="cp-prev"></a>
+            <a onclick="player_prev()" class="cp-prev" id="cp-prev"></a>
             <div id="jquery_jplayer_1" class="cp-jplayer"></div>
 			<div id="cp_container_1" class="cp-container">
 				<div class="cp-buffer-holder">
@@ -230,7 +240,7 @@
 					<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li> 
 				</ul>
 			</div>
-            <a onclick="player_next()" class="cp-next"></a>
+            <a onclick="player_next()" class="cp-next" id="cp-next"></a>
                 <center>
                     <p class="cp-l1"><span id="cp-c">00:00</span> / <span id="cp-t">00:00</span></p>
                     <p class="cp-l2" id="cp-h">---</p>

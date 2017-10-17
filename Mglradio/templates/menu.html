@@ -43,16 +43,16 @@
                         <p menu-close ng-click="tologin()">Нэвтрэх</p>
                     </center>
                 </ion-header>
-                <ion-item menu-close href="#/app/content">
+                <ion-item ng-if="menu==1" menu-close href="#/app/content">
                     Татах
                 </ion-item>
-                <ion-item menu-close href="#/app/download">
+                <ion-item ng-if="menu==1" menu-close href="#/app/download">
                     Татсан
                 </ion-item>
-                <ion-item menu-close href="#/app/news">
+                <ion-item ng-if="menu==0" menu-close href="#/app/news">
                     Бүх
                 </ion-item>
-                <ion-item menu-close href="#/app/category/{{c.id }}" ng-repeat="c in categories">
+                <ion-item ng-if="menu==0" menu-close href="#/app/category/{{c.id }}" ng-repeat="c in categories">
                     {{c.name}}
                 </ion-item>
             </ion-list>

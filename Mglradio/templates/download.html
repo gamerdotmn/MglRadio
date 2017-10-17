@@ -1,14 +1,19 @@
 <ion-view title="ТАТСАН">
     <ion-nav-buttons side="left" >
         <button class="button sidemenu" menu-toggle="left">
-            <i class="icon fa fa-bars"></i>
+            <i class="icon ion-navicon-round"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right" >
+        <button class="button sidemenu" ng-click="tocontents()">
+            <i class="icon ion-android-download"></i>
         </button>
     </ion-nav-buttons>
     <ion-content class="download" has-bouncing="true">
         <div ng-if="dc.length==0" style="padding-top:20%;">
             <br/>
             <center>
-                <span class="fa fa-download" style="font-size:50px;color:white;"></span><br/><b style="color:white;">Татагдсан видео байхгүй байна.</b>
+                <span class="ion-ipod" style="font-size:50px;color:white;"></span><br/><b style="color:white;">Татагдсан видео байхгүй байна.</b>
                 <p style="color:white;margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Та хүссэн видеогоо татаж интернетгүй орчинд ч үзэх боломжтой.</p>
             </center>
         </div>
