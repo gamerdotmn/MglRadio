@@ -15,8 +15,8 @@
                     <td ng-repeat="type in types" ng-if="type.id==contentdetail.type_id">{{contentdetail.typen}}</td>
                 </tr>
                 <tr>
-                    <td>Хугацаа:</td>
-                    <td>{{contentdetail.ot}}</td>
+                    <td>Оруулсан:</td>
+                    <td>{{contentdetail.ot|timeago2}}</td>
                 </tr>
             </table>
             <button ng-if="contentdetail.downloaded==0" class="button download button-block" ng-click="downloadvideo()">Татах</button>

@@ -81,15 +81,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    })
-            .state('app.logout', {
-                       url: "/logout",
-                       views: {
-                    'contentContent' :{
-                                   templateUrl: "templates/logout.html",
-                                   controller: "LogoutCtrl"
-                               }
-                }
-                   })
             .state('app.download', {
                        url: "/download",
                        views: {
@@ -162,7 +153,10 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.tologout=function()
         {
-            $window.location.href = '#/app/logout'; 
+            $rootScope.loginstatus = false; 
+            $rootScope.username = "";
+            window.localStorage.removeItem("username");
+            $window.location.href = '#/app/content';
         };
         
         $scope.goBack = function() {
@@ -707,7 +701,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $window.location.href = '#/app/download';  
         };
         
-        
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
             var contents=data.contents;
@@ -1013,15 +1006,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             }
         }
     })
-    .controller('LogoutCtrl', function($scope, $window, $rootScope) {
-        alert(1);
-        $rootScope.loginstatus = false; 
-        $rootScope.username = "";
-        window.localStorage.removeItem("username");
-        $window.location.href = '#/app/content';
-    })
     .filter('trustAsHtml', function($sce) {
         return $sce.trustAsHtml;
+    })
+    .filter('timeago2', function($sce) {
+        return "123";
     })
     .filter("timeago", function () {
         return function (time, local, raw) {
