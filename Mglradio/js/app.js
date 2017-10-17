@@ -662,6 +662,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
        
     })
     .controller('TvCtrl', function($rootScope, $scope, $ionicLoading, $http, $timeout,$ionicModal) {
+        
         $scope.playVideo = function(app,id,vid) {
             if (app==="youtube") {
                 window.open('https://www.youtube.com/watch?v=' + vid, '_system');
@@ -670,7 +671,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             }
         };
         
-         $scope.playLiveVideo = function() {
+        $scope.playLiveVideo = function() {
             if ($scope.app==="youtube") {
                 window.open('https://www.youtube.com/watch?v=' + $scope.vid, '_system');
             } else {
