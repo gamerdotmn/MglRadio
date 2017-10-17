@@ -99,7 +99,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/content");
+        $urlRouterProvider.otherwise("/app/news");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -145,9 +145,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             StatusBar.styleDefault();
         }
     })
-    .controller('PlayerCtrl', function($scope, $state, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
-        
-    })
     .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
         $scope.status = 0;
         
@@ -160,22 +157,21 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         {
             $rootScope.username=window.localStorage.getItem("username");
             $rootScope.loginstatus=true;
-        }
+        };
         
         $scope.tologin=function()
         {
-            alert(1);
-            //$window.location.href = '#/app/login';
+            $window.location.href = '#/app/login';
         };
         
         $scope.tologout=function()
         {
-            //$window.location.href = '#/app/logout'; 
+            $window.location.href = '#/app/logout'; 
         };
         
         $scope.goBack = function() {
             $ionicHistory.goBack();
-        }
+        };
         
         $scope.loadmore=function(){
              if($scope.news!=null&&$scope.news.length>0)
