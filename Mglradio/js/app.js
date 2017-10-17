@@ -152,12 +152,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.page=0;
         $scope.moredata=false;
         $rootScope.loginstatus=false;
-        console.log(window.localStorage.getItem("username"));
-        if(window.localStorage.getItem("username")!==null)
-        {
-            $rootScope.username=window.localStorage.getItem("username");
-            $rootScope.loginstatus=true;
-        }
+        
+        
         
         $scope.tologin=function()
         {
@@ -348,6 +344,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading,$timeout,$window) {
+        
+        if(window.localStorage.getItem("username")!==null)
+        {
+            $rootScope.username=window.localStorage.getItem("username");
+            $rootScope.loginstatus=true;
+        }
         
         $timeout(function () {
             $scope.net=window.net;
