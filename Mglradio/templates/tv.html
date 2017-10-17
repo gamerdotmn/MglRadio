@@ -1,17 +1,20 @@
 <ion-view title="{{logo}}">
+    <ion-nav-title>
+        <img src='img/logo.png' style='height: 100%;'>
+    </ion-nav-title>
     <ion-content scroll="false" id="tv" class="tv animated fadeIn">
         <div ng-if="status==0" style="padding-top:20%;">
             <br/>
             <center>
-                <span class="fa fa-television" style="font-size:50px;"></span><br/><b>Шууд эфир байхгүй.</b>
-                <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Одоогоор шууд дамжуулалт байхгүй байна, та дараа дахин үзээрэй.</p>
-                <button class="button submit" ng-click="login(user)"></button>
+                <span class="fa fa-television" style="font-size:50px;"></span><br/><b>Шууд эфир байхгүй байна.</b>
+                <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Одоогоор шууд дамжуулалт байхгүй, та "Бичлэгүүд" дарж бусад бичлэгүүд үзэж болно.</p>
+                <button class="button ion-videocamera icon" ng-click="login(user)"> <span style="font-size:0.75em;">БИЧЛЭГҮҮД</span></button>
             </center>
         </div>
         <div ng-if="status==0" style="padding-top:50%;">
             <br/>
             <center>
-                <button  ng-click="playVideo()" class="button"></button>
+                <button  ng-click="playVideo()" class="button ion-ios-play icon"></button>
             </center>
         </div>
     </ion-content>
