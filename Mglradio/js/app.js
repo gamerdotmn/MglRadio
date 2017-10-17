@@ -691,10 +691,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.net=true;
         $timeout(function () {
             $scope.net=window.net;
-            if($scope.net===false)
-            {
-                $window.location.href = '#/app/download';
-            }
         }, 1000); 
         
         
@@ -766,6 +762,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $timeout(function () {
             $ionicLoading.hide();
         }, 1000); 
+        
     })
     .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope) {
         
@@ -779,7 +776,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     $scope.downloadimg=value.img;
                 }
             });
+        
         $interval(function () {
+            if(window.downloadstatus!=$scope.downloadstatus)
+            {
+                $scope.refresh();
+            }
             $scope.downloadstatus=window.downloadstatus;
         }, 1000);
         
@@ -811,16 +813,16 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.refresh=function()
         {
-              $scope.dc=[];
+              var dct=[];
               db.transaction(function(tx) {
               tx.executeSql("select * from content", [], function(tx, results) {
                 $scope.$apply(function () {
                     
                 for(var i=0;i<results.rows.length;i++)
                 {
-                    $scope.dc.push({id:results.rows.item(i).id,name:results.rows.item(i).name,description:results.rows.item(i).description,path:results.rows.item(i).path,img:results.rows.item(i).img,typen:results.rows.item(i).typen,time:results.rows.item(i).time});
+                    dct.push({id:results.rows.item(i).id,name:results.rows.item(i).name,description:results.rows.item(i).description,path:results.rows.item(i).path,img:results.rows.item(i).img,typen:results.rows.item(i).typen,time:results.rows.item(i).time});
                 }
-                
+                $scope.dc=dct;
                 });
               }, function(error) {
               
@@ -832,9 +834,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             });
         };
         $scope.refresh();
-        $interval(function () {
-           $scope.refresh();
-        }, 2500);
     })    
     .controller('LoginCtrl', function($scope, $window, $http, $rootScope, $timeout, $ionicLoading) {
         

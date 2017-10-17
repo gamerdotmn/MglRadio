@@ -119,6 +119,7 @@
                         if (!net) {
                             net = true;
                             location.reload();
+                            
                         }
                     }
                 }, 2500);
@@ -159,7 +160,6 @@
             
             function player_show(i,h)
             {
-                console.log(gplaylist);
                 playerc=i;
                 $("#cp-h").html(gplaylist[playerc].name);
                 $("#player").show();
