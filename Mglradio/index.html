@@ -71,7 +71,6 @@
             function create_error() {
             }            
             
-            
             function events(action) {
                 switch (action) {
                     case 'music-controls-pause':
@@ -90,6 +89,7 @@
             var fileTransfer;
             var player;
             var playerc=0;
+            
             document.addEventListener('deviceready', function () {
                 
                 
@@ -141,8 +141,8 @@
                     db = window.sqlitePlugin.openDatabase({name: "mglradio.db"});
                     
                     db.transaction(function(tx) {
-                        
-                      tx.executeSql('DROP TABLE IF EXISTS content');
+                       
+                      //tx.executeSql('DROP TABLE IF EXISTS content');
                       tx.executeSql('CREATE TABLE IF NOT EXISTS content (id integer primary key, name text, description text, path text, img text, typen text, time text)', [], function(tx, res) {
                         
                       }, function(error) {

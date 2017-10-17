@@ -10,7 +10,7 @@
         </button>
     </ion-nav-buttons>
     <ion-content class="download" has-bouncing="true">
-        <div ng-if="dc.length==0" style="padding-top:20%;">
+        <div ng-if="dc.length==0&&downloadstatus==''" style="padding-top:20%;">
             <br/>
             <center>
                 <span class="ion-ipod" style="font-size:50px;color:white;"></span><br/><b style="color:white;">Татагдсан видео байхгүй байна.</b>
@@ -28,7 +28,7 @@
                         <td>{{downloadtypen}}</td>
                     </tr>
                     <tr>
-                        <td>Хугацаа:</td>
+                        <td>Оруулсан:</td>
                         <td>{{downloadtime}}</td>
                     </tr>
                 </table>

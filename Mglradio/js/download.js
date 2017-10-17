@@ -7,6 +7,7 @@ var download = {
     d_img:"",
     d_image:"",
     d_video:"",
+    d_time:"",
     downloadFile: function(uriString, targetFile) {
     
         var complete = function() {

@@ -16,12 +16,13 @@
                 </tr>
                 <tr>
                     <td>Оруулсан:</td>
-                    <td>{{contentdetail.ot}}</td>
+                    <td>{{contentdetail.time}}</td>
                 </tr>
             </table>
             <button ng-if="contentdetail.downloaded==0" class="button download button-block" ng-click="downloadvideo()">Татах</button>
             <button ng-if="contentdetail.downloaded==1" class="button download button-block" disabled>Татаж байна</button>
             <p class="description" >{{contentdetail.description}}</p>
+            
         </div>
     </ion-content>
 </ion-modal-view>

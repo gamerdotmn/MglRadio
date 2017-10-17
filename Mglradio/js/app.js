@@ -319,6 +319,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 window.download.d_path=encodeURI($rootScope.contentdetail.path);
                 window.download.d_img=encodeURI($rootScope.contentdetail.img);
                 window.download.d_name=$rootScope.contentdetail.name;
+                window.download.d_time=$rootScope.contentdetail.time;
                 window.download.startDownload();
             }
             else
@@ -350,9 +351,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.net=window.net;
             if($scope.net===false)
             {
-                //$window.location.href = '#/app/download';
+                $window.location.href = '#/app/download';
             }
-        }, 3000); 
+        }, 2500); 
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
         $scope.cnews = [];
@@ -719,7 +720,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     {
                         if (parseInt(contents[j].id)===parseInt(results.rows.item(i).id))
                         {
-                            //console.log(JSON.stringify(results.rows.item(i)));
                             contents[j].img=results.rows.item(i).img;
                             contents[j].path=results.rows.item(i).path;
                             contents[j].downloaded=2;
@@ -811,6 +811,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.refresh=function()
         {
+              $scope.dc=[];
               db.transaction(function(tx) {
               tx.executeSql("select * from content", [], function(tx, results) {
                 $scope.$apply(function () {
@@ -831,6 +832,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             });
         };
         $scope.refresh();
+        $interval(function () {
+           $scope.refresh();
+        }, 2500);
     })    
     .controller('LoginCtrl', function($scope, $window, $http, $rootScope, $timeout, $ionicLoading) {
         
