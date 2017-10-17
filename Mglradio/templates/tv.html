@@ -5,12 +5,13 @@
             <center>
                 <span class="fa fa-television" style="font-size:50px;"></span><br/><b>Шууд эфир байхгүй.</b>
                 <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Одоогоор шууд дамжуулалт байхгүй байна, та дараа дахин үзээрэй.</p>
+                <button class="button submit" ng-click="login(user)"></button>
             </center>
         </div>
-        <div ng-if="status==1" style="padding-top:50%;">
+        <div ng-if="status==0" style="padding-top:50%;">
             <br/>
             <center>
-                <button ng-click="playVideo()" class="playbtn button"><img src="img/play.png"></button>
+                <button  ng-click="playVideo()" class="button"></button>
             </center>
         </div>
     </ion-content>

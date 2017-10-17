@@ -108,7 +108,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/news");
+        $urlRouterProvider.otherwise("/app/tv");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -618,11 +618,13 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.notif = function(id) { 
             var c = $scope.getbyid(id);
             if (!c.isnotif) {
+                
                 navigator.notification.confirm(
                     c.time + ' ' + c.title + '-г сануулах уу?', 
                     function(b) {
                         if (b === 1) {
                             var t = moment(c.date + "T" + c.time+"+08:00");
+                            
                             var now = t.local().toDate();
                             cordova.plugins.notification.local.schedule({
                                                                             id: parseInt(c.id),
