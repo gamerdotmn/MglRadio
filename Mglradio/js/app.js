@@ -45,7 +45,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    })
-            .state('app.detail', {
+            .state('app.detail2', {
                        url: "/detail2/:id",
                        views: {
                     'newsContent' :{
