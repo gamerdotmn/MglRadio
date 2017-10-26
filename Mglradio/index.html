@@ -119,13 +119,15 @@
                 if (navigator.onLine) {
                     net = true;
                 }
-                
                 setInterval(function() { 
                     if (navigator.onLine) {
                         if (!net) {
                             net = true;
-                            location.reload();
-                            
+                            location='#/app/news';
+                            setTimeout(function()
+                            {
+                                location.reload();
+                            },1000);
                         }
                     }
                 }, 2500);
@@ -143,6 +145,7 @@
                     MusicControls.subscribe(events);
                     MusicControls.listen();
                 }
+                
                 if(typeof(window.sqlitePlugin)!=="undefined")
                 {
                     db = window.sqlitePlugin.openDatabase({name: "mglradio.db"});
