@@ -5,6 +5,12 @@
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right" >
+        <button ng-if="gv==0" class="button sidemenu" ng-click="grid()">
+            <i class="icon ion-ios-grid-view"></i>
+        </button>
+        <button ng-if="gv==1" class="button sidemenu" ng-click="list()">
+            <i class="icon ion-ios-list"></i>
+        </button>
         <button class="button sidemenu" ng-click="todownloading()">
             <i class="icon ion-android-download"></i>
         </button>
@@ -17,7 +23,7 @@
                 <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Та интернет холболтоо шалгаад дахин үзээрэй.</p>
             </center>
         </div>
-        <ion-list ng-if="net">
+        <ion-list ng-if="net&&gv==1">
             <div ng-repeat="type in types" ng-if="type.cnt>0">
                 <ion-item>
                     <p class="name">{{type.name}}</p>
@@ -34,6 +40,14 @@
                 </div>
             </div>
         </ion-list>
+        <ul class="list">
+            <li class="item">
+              1
+            </li>
+            <li class="item">
+              2
+            </li>
+        </ul>
         <div style="height:40px;"></div>
     </ion-content>
     

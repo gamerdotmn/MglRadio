@@ -108,7 +108,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/news");
+        $urlRouterProvider.otherwise("/app/content");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
@@ -777,8 +777,10 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.modalt.hide();
         };
     })
-    .controller('ContentCtrl', function($rootScope, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
+    .controller('ContentCtrl', function($rootScope, $ionicScrollDelegate, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
        
+        $scope.gv=1;
+        
         $scope.net=true;
         $timeout(function () {
             $scope.net=window.net;
@@ -788,6 +790,18 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.todownloading=function()
         {
             $window.location.href = '#/app/download';  
+        };
+        
+        $scope.grid=function()
+        {
+            $scope.gv=1;  
+            $ionicScrollDelegate.resize();
+        };
+        
+        $scope.list=function()
+        {
+            $scope.gv=0;
+            $ionicScrollDelegate.resize();
         };
         
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
