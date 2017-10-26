@@ -75,7 +75,7 @@ CirclePlayer.prototype = {
 				self._timeupdate(event.jPlayer.status.currentPercentAbsolute,event.jPlayer.status.duration,event.jPlayer.status.currentTime);
 			}
 		});
-
+        
 		// This event fired as buffered time increments
 		this.player.bind($.jPlayer.event.progress + this.eventNamespace, function(event) {
 			var percent = 0;

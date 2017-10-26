@@ -339,6 +339,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.playvideo=function()
         {
             $scope.modal.hide();
+            
+            //
             gplaylist=[{id:$rootScope.contentdetail.id,name:$rootScope.contentdetail.name,path:$rootScope.contentdetail.path,tname:$rootScope.contentdetail.typen}];
             player_show(0,false);
         };
@@ -784,6 +786,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         };
         
         
+        
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
             var contents=data.contents;
@@ -807,6 +810,13 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     }
                 }
                 $rootScope.contents = contents;
+                var plist=[];
+                for(var k=0;j<$rootScope.contents.length;k++)
+                {
+                    //{id:"",name:"",path:"",tname:""}
+                    plist.push({id:$rootScope.contents[k].id,name:$rootScope.contents[k].name,img:$rootScope.contents[k].img,path:$rootScope.contents[k].path});         
+                }
+                gplaylist=plist;
               }, function(error) {
               
               });
@@ -897,15 +907,20 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.refresh=function()
         {
               var dct=[];
+              var plist=[];
+                
               db.transaction(function(tx) {
               tx.executeSql("select * from content", [], function(tx, results) {
                 $scope.$apply(function () {
                     
                 for(var i=0;i<results.rows.length;i++)
                 {
+                    plist.push({id:results.rows.item(i).id,name:results.rows.item(i).name,img:results.rows.item(i).img,path:results.rows.item(i).path});       
                     dct.push({id:results.rows.item(i).id,name:results.rows.item(i).name,description:results.rows.item(i).description,path:results.rows.item(i).path,img:results.rows.item(i).img,typen:results.rows.item(i).typen,time:results.rows.item(i).time});
                 }
                 $scope.dc=dct;
+                gplaylist=plist;
+                    
                 });
               }, function(error) {
               
