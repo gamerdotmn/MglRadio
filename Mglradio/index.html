@@ -169,9 +169,13 @@
                     });
                 }
             }, false);
+            
             function player_end()
             {
-                   alert(1);
+                setTimeout(function()
+                {
+                    player_next();
+                },250);
             }
             
             function player_show(i)

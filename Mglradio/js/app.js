@@ -340,6 +340,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         {
             $scope.modal.hide();
             var ind=0;
+            
             for(var k=0;k<gplaylist.length;k++)
             {
                 if($rootScope.contentdetail.id===gplaylist[k].id)
@@ -413,7 +414,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('Category2Ctrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
         $scope.cnews = [];
-        console.log('c2');
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         $scope.category_id = $stateParams.id;
         $http.get("http://app.mglradio.com/api/cnews2.php?c="+$scope.category_id)
@@ -785,13 +785,10 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }, 1000); 
         
         
-        
         $scope.todownloading=function()
         {
             $window.location.href = '#/app/download';  
         };
-        
-        
         
         $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
         dataService.getContent().success(function(data) {
@@ -815,13 +812,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         }
                     }
                 }
+                
                 $rootScope.contents = contents;
-                var plist=[];
+                
+                gplaylist=[];
+                
                 for(var k=0;j<$rootScope.contents.length;k++)
                 {
-                    plist.push({id:$rootScope.contents[k].id,name:$rootScope.contents[k].name,img:$rootScope.contents[k].img,path:$rootScope.contents[k].path});         
+                    gplaylist[k]={id:$rootScope.contents[k].id,name:$rootScope.contents[k].name,img:$rootScope.contents[k].img,path:$rootScope.contents[k].path};         
                 }
-                gplaylist=plist;
                 console.log(gplaylist);
                 
               }, function(error) {
@@ -913,20 +912,19 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.refresh=function()
         {
+              gplaylist=[];
               var dct=[];
-              var plist=[];
-                
               db.transaction(function(tx) {
               tx.executeSql("select * from content", [], function(tx, results) {
                 $scope.$apply(function () {
                     
                 for(var i=0;i<results.rows.length;i++)
                 {
-                    plist.push({id:results.rows.item(i).id,name:results.rows.item(i).name,img:results.rows.item(i).img,path:results.rows.item(i).path});       
+                    gplaylist[i]={id:results.rows.item(i).id,name:results.rows.item(i).name,img:results.rows.item(i).img,path:results.rows.item(i).path};       
                     dct.push({id:results.rows.item(i).id,name:results.rows.item(i).name,description:results.rows.item(i).description,path:results.rows.item(i).path,img:results.rows.item(i).img,typen:results.rows.item(i).typen,time:results.rows.item(i).time});
                 }
+                
                 $scope.dc=dct;
-                gplaylist=plist;
                 
                 });
               }, function(error) {
