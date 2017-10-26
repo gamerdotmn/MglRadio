@@ -348,7 +348,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     break;
                 }
             }
-            player_show(ind,false);
+            player_show(ind);
         };
         
         $scope.downloadvideo=function()
