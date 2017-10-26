@@ -1,20 +1,21 @@
 var download = {
 
-    videoName: "",
-    imgName:"",
-    d_name: "",
-    d_path:"",
-    d_img:"",
-    d_image:"",
-    d_video:"",
-    d_time:"",
+    videoName: "",//22cc07b5-b740-4a37-a536-10020272442e
+    imgName:"",//c13fd8ee-36c8-4d25-b2d0-ca70a6b5abc5
+    d_name: "",//test
+    d_path:"",//http://
+    d_img:"",//http://
+    d_image:"",//file://
+    d_video:"",//file://
+    d_time:"",//2017-09-29
     downloadFile: function(uriString, targetFile) {
     
         var complete = function() {
              if(window.localStorage.getItem("d_is")!==null)
              {
                  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-                    fileSystem.root.getFile(download.imgName, { create: true }, function (filePath) {
+                    fileSystem.root.getDirectory("mglr",{create:true},function(dir) {
+                    fileSystem.root.getFile("mglr/"+download.imgName, { create: true }, function (filePath) {
                         
                         download.d_image=filePath.toURL();
                         
@@ -79,10 +80,12 @@ var download = {
                             }  
                         );
                     });
+                  },function(){});
                 });
                  
             }
         };
+        
         var error = function (err) {
             console.log('Error: ' + err);
         };
@@ -101,13 +104,18 @@ var download = {
     },
     
     startDownload: function () {
-        download.videoName=download.d_path.substring(download.d_path.lastIndexOf('/') + 1);
-        download.imgName=download.d_img.substring(download.d_img.lastIndexOf('/') + 1);
+        download.videoName=uuidv4();
+        download.imgName=uuidv4();
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-            fileSystem.root.getFile(download.videoName, { create: true }, function (newFile) {
+            
+            fileSystem.root.getDirectory("mglr",{create:true},function(dir) {
+            
+            fileSystem.root.getFile("mglr/"+download.videoName, { create: true }, function (newFile) {
                 download.d_video=newFile.toURL();
                 download.downloadFile(download.d_path, newFile);
             });
+            
+            },function(){});
         });
     },
     

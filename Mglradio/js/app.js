@@ -362,10 +362,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 window.localStorage.setItem("d_img",$rootScope.contentdetail.img);
                 window.localStorage.setItem("d_typen",$rootScope.contentdetail.typen);
                 window.localStorage.setItem("d_time",$rootScope.contentdetail.time);
+                
                 window.download.d_path=encodeURI($rootScope.contentdetail.path);
                 window.download.d_img=encodeURI($rootScope.contentdetail.img);
                 window.download.d_name=$rootScope.contentdetail.name;
                 window.download.d_time=$rootScope.contentdetail.time;
+                
                 window.download.startDownload();
             }
             else
