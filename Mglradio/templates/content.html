@@ -25,7 +25,7 @@
         </div>
         <ion-list ng-if="net&&gv==1">
             <div ng-repeat="type in types" ng-if="type.cnt>0">
-                <ion-item>
+                <ion-item class="rli">
                     <p class="name">{{type.name}}</p>
                 </ion-item>
                 <div class="myslides">
@@ -39,16 +39,19 @@
                     </ks-swiper-container>
                 </div>
             </div>
+            <div style="height:40px;"></div>
         </ion-list>
-        <ul class="list">
-            <li class="item">
-              1
-            </li>
-            <li class="item">
-              2
-            </li>
+        <ul class="list cl"  ng-if="net&&gv==0">
+            <div ng-repeat="type in types" ng-if="type.cnt>0">
+                <li class="item head">
+                      {{type.name}}
+                </li>
+                <li class="item nrml" ng-repeat="content in contents" ng-show="content.type_id == type.id" ng-click="detail(content.id)">
+                      <span>{{content.name}}</span> <i class="ion-ios-arrow-right"></i>
+                </li>
+            </div>
         </ul>
-        <div style="height:40px;"></div>
+        
     </ion-content>
     
     <div class="mylist animated {{downloadanimate}}" id="mylist">

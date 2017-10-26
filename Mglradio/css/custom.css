@@ -609,13 +609,13 @@
     line-height:8px;
     margin-top:-10px;
 }
-.rent .list .item
+.rent .rli
 {
     background: transparent;
     border: none;
     padding: 0;
 }  
-.rent .list .item .name
+.rent .rli .name
 {
     display: inline-block;
     color: #fff;
@@ -623,6 +623,26 @@
     padding: 10px;
     letter-spacing: -1;
     font-family: "Ubuntu Regular";
+}
+.cl .head
+{
+    font-size:0.9em;
+    font-weight:normal;
+    text-align:center;
+}
+.cl .nrml
+{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.cl .nrml span
+{
+    font-size:0.8em;
+    font-weight:100;
+}
+.cl .nrml i
+{
+    float:right;
 }
 /*.rent .list .item.grid
 {
