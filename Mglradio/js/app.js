@@ -782,17 +782,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.gv=1;
         
-        $scope.grid=function()
-        {
-            $scope.gv=1;  
-            $ionicScrollDelegate.resize();
-        };
         
-        $scope.list=function()
-        {
-            $scope.gv=0;
-            $ionicScrollDelegate.resize();
-        };
         
         $scope.$on('$ionicView.enter', function(){
         
@@ -893,6 +883,18 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope) {
         
         $scope.gv=1;
+        
+        $scope.grid=function()
+        {
+            $scope.gv=1;  
+            $ionicScrollDelegate.resize();
+        };
+        
+        $scope.list=function()
+        {
+            $scope.gv=0;
+            $ionicScrollDelegate.resize();
+        };
         
         $scope.downloadstatus="";
         $scope.dc=[];
