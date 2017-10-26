@@ -9,7 +9,7 @@
             <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
             <ion-list ng-repeat="n in cnews">
-            <a ng-href="#/app/detail/{{n.id}}">
+            <a ng-href="#/app/detail2/{{n.id}}">
                 <ion-item>
                     <div ng-if="$index>0" class="left" style="position: absolute;top:0px;bottom:0px;background:white center center no-repeat;background-size:cover;background-image:url(img\\loading.gif);" bimg="{{n.img}}" >
                     </div>
@@ -24,5 +24,4 @@
             </a>
         </ion-list>
     </ion-content>
-
 </ion-view>

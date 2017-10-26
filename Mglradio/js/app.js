@@ -28,7 +28,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 }
                    })
             .state('app.category2', {
-                       url: "/categor2/:id",
+                       url: "/category2/:id",
                        views: {
                     'newsContent' :{
                                    templateUrl: "templates/category2.html",
@@ -42,6 +42,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     'newsContent' :{
                                    templateUrl: "templates/detail.html",
                                    controller: "DetailCtrl"
+                               }
+                }
+                   })
+            .state('app.detail', {
+                       url: "/detail2/:id",
+                       views: {
+                    'newsContent' :{
+                                   templateUrl: "templates/detail2.html",
+                                   controller: "Detail2Ctrl"
                                }
                 }
                    })
@@ -394,12 +403,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('Category2Ctrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
         $scope.cnews = [];
+        console.log('c2');
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         $scope.category_id = $stateParams.id;
         $http.get("http://app.mglradio.com/api/cnews2.php?c="+$scope.category_id)
                  .then(function(response) {
                      $scope.cnews=response.data.news;
                      $ionicLoading.hide();
+                     
                  });
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
@@ -416,6 +427,29 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
         $http.get("http://app.mglradio.com/api/detail.php?i="+$stateParams.id)
+                 .then(function(response) {
+                     $scope.newsdetail=response.data.news[0];
+                     $scope.relnews=response.data.rels;
+                     $ionicLoading.hide();
+                 });
+        
+        $scope.share = function() {
+            // this is the complete list of currently supported params you can pass to the plugin (all optional)
+            var options = {
+                url: $scope.newsdetail.share,
+            } 
+            var onSuccess = function() {
+            }
+
+            var onError = function() {
+            }
+            window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+        }
+    })
+.controller('Detail2Ctrl', function($rootScope, $scope, $ionicLoading, $stateParams,$http) {
+        
+        $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+        $http.get("http://app.mglradio.com/api/detail2.php?i="+$stateParams.id)
                  .then(function(response) {
                      $scope.newsdetail=response.data.news[0];
                      $scope.relnews=response.data.rels;

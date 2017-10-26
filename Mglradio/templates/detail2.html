@@ -1,0 +1,38 @@
+<ion-view >
+    <ion-nav-buttons side="left" >
+        <button class="button button-clear ion-ios-arrow-back close" ng-click="goBack()">
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right" >
+        <button class="button sidemenu" ng-click="share()">
+            <i class="icon ion-share"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="newsdetail" has-bouncing="true" scroll="true">
+        <div class="desc" ng-if="newsdetail.id>0">
+            <h3>{{newsdetail.title}}</h3> 
+            <span class="timeago">{{newsdetail.ot|timeago}}</span><span class="border">|</span><span class="category">{{newsdetail.category_name}}</span>
+        </div>
+        <div class="content">
+            <p ng-bind-html="newsdetail.description |  trustAsHtml"></p>
+        </div>
+        <div class="related" ng-if="relnews.length>0">
+            <div class="header">
+                <h3>Холбоотой мэдээ</h3>
+            </div>
+            <ion-list ng-repeat="r in relnews">
+                <a ng-href="#/app/detail2/{{r.id}}">
+                        <ion-item>
+                            <div class="left" style="position: absolute;top:0px;bottom:0px;background:white url({{r.img}}) center center no-repeat;background-size:cover;">
+                        </div>
+                        <div class="right">
+                            <h3>{{r.title| limitTo:55 }}...</h3>
+                            <span class="timeago">{{r.ot|timeago}}"</span><span class="border">|</span><span class="category">{{r.category_name}}"</span>
+                        </div>
+                    </ion-item>
+                </a>
+            </ion-list>
+        </div>
+    </ion-content>
+
+</ion-view>
