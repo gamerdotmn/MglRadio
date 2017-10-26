@@ -3,19 +3,18 @@
         <img src='img/logo.png' style='height: 100%;'>
     </ion-nav-title>
     <ion-content scroll="false" id="tv" class="tv animated fadeIn">
-        <div ng-if="status==0" style="padding-top:20%;">
+        <div style="padding-top:20%;">
             <br/>
             <center>
-                <span class="icon ion-monitor" style="font-size:50px;"></span><br/><b>Шууд эфир байхгүй байна.</b>
-                <p style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Одоогоор шууд дамжуулалт байхгүй, та "Бичлэгүүд" дарж өмнөх бичлэгүүд үзэж болно.</p>
-                <button class="button ion-videocamera icon" ng-click="playTV()"> <span style="font-size:0.75em;">БИЧЛЭГҮҮД</span></button>
-            </center>
-        </div>
-        <div ng-if="status==1" style="padding-top:50%;">
-            <br/>
-            <center>
-                <button  ng-click="playLiveVideo()" class="button ion-ios-play icon"></button>
+                <button ng-if="status==1" ng-click="playLiveVideo()" class="button ion-ios-play icon"></button>
+                <br/>
+                <b ng-if="status==1">Шууд эфир үзэх.</b>
+                <span ng-if="status==0" class="icon ion-monitor" style="font-size:50px;"></span><br ng-if="status==0"/><b ng-if="status==0">Шууд эфир байхгүй байна.</b>
+                <p ng-if="status==0" style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Одоогоор шууд дамжуулалт байхгүй, та "Нөхөж үзэх" дарж өмнөх бичлэгүүд үзэж болно.</p>
+                <p ng-if="status==1" style="margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Дэлхийн Монголчуудын Радио.</p>
+                <br/>
+                <button class="button ion-videocamera icon" ng-click="playTV()"> <span style="font-size:0.75em;">НӨХӨЖ ҮЗЭХ</span></button>
             </center>
         </div>
     </ion-content>
-</ion-view>
+</ion-view> 
