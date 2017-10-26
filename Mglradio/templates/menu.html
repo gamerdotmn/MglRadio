@@ -49,14 +49,21 @@
                 <ion-item ng-if="menu==1" menu-close href="#/app/download">
                     Татсан
                 </ion-item>
-                <!--
+                <ion-item>
+                    Мэдээ
+                </ion-item>
                 <ion-item ng-if="menu==0" menu-close href="#/app/news">
                     Бүх
                 </ion-item>
                 <ion-item ng-if="menu==0" menu-close href="#/app/category/{{c.id }}" ng-repeat="c in categories">
                     {{c.name}}
                 </ion-item>
-                -->
+                <ion-item>
+                    Сонирхолтой
+                </ion-item>
+                <ion-item ng-if="menu==0" menu-close href="#/app/category2/{{c.id }}" ng-repeat="c in categories2">
+                    {{c.name}}
+                </ion-item>
                 
             </ion-list>
         </ion-content>
