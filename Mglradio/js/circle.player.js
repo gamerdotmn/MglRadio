@@ -99,6 +99,7 @@ CirclePlayer.prototype = {
 
 		this.player.bind($.jPlayer.event.ended + this.eventNamespace, function(event) {
 			self._resetSolution();
+            player_end();
 		});
 	},
 	_initSolution: function() {
