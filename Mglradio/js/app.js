@@ -27,6 +27,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    })
+            .state('app.category2', {
+                       url: "/categor2y/:id",
+                       views: {
+                    'newsContent' :{
+                                   templateUrl: "templates/category2.html",
+                                   controller: "Category2Ctrl"
+                               }
+                }
+                   })
             .state('app.detail', {
                        url: "/detail/:id",
                        views: {
@@ -136,7 +145,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             StatusBar.styleDefault();
         }
     })
-    .controller('IndexCtrl', function($scope, $state, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
+    .controller('IndexCtrl', function($scope, $state,$ionicScrollDelegate, $rootScope, $ionicModal, $location, $ionicHistory, $ionicLoading, dataService, $http, $interval, $timeout, $window) {
         $scope.status = 0;
         $scope.rtitle = 'MGL RADIO';
         $scope.page=0;
@@ -157,6 +166,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             {
                 $scope.nexpand=0;
             }
+            $ionicScrollDelegate.resize();
         };
         
         $scope.iexp=function()
@@ -168,7 +178,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             else
             {
                 $scope.iexpand=0;
-            } 
+            }
+            $ionicScrollDelegate.resize();
         };
         
         $rootScope.$on('$stateChangeSuccess', 
@@ -380,6 +391,16 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 $window.location.href = '#/app/download';
             }
         }, 2500); 
+    })
+    .controller('Category2Ctrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
+        $scope.cnews = [];
+        $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+        $scope.category_id = $stateParams.id;
+        $http.get("http://app.mglradio.com/api/cnews2.php?c="+$scope.category_id)
+                 .then(function(response) {
+                     $scope.cnews=response.data.news;
+                     $ionicLoading.hide();
+                 });
     })
     .controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
         $scope.cnews = [];

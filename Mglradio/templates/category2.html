@@ -1,0 +1,28 @@
+<ion-view title="{{logo}}">
+    <ion-nav-buttons side="left" >
+        <button class="button sidemenu" menu-toggle="left">
+            <i class="icon ion-navicon-round"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="newsdiv" has-bouncing="true">
+        <ion-refresher>
+            <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+            <ion-list ng-repeat="n in cnews">
+            <a ng-href="#/app/detail/{{n.id}}">
+                <ion-item>
+                    <div ng-if="$index>0" class="left" style="position: absolute;top:0px;bottom:0px;background:white center center no-repeat;background-size:cover;background-image:url(img\\loading.gif);" bimg="{{n.img}}" >
+                    </div>
+                    <div  ng-if="$index==0" class="left" >
+                        <img id="bigimg" imageonload src="{{n.img}}">
+                    </div>
+                    <div class="right">
+                        <h3>{{n.title| limitTo:55 }}...</h3>
+                        <span class="timeago">{{n.ot|timeago}}</span><span class="border">|</span><span class="category">{{n.category_name}}</span>
+                    </div>
+                </ion-item>
+            </a>
+        </ion-list>
+    </ion-content>
+
+</ion-view>
