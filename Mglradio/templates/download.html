@@ -5,6 +5,12 @@
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right" >
+        <button ng-if="gv==0" class="button sidemenu" ng-click="grid()">
+            <i class="icon ion-ios-grid-view"></i>
+        </button>
+        <button ng-if="gv==1" class="button sidemenu" ng-click="list()">
+            <i class="icon ion-ios-list"></i>
+        </button>
         <button class="button sidemenu" ng-click="tocontents()">
             <i class="icon ion-android-download"></i>
         </button>
@@ -17,6 +23,11 @@
                 <p style="color:white;margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Та хүссэн видеогоо татаж интернетгүй орчинд ч үзэх боломжтой.</p>
             </center>
         </div>
+        <ul class="list cld">
+                <li class="item nrml" ng-repeat="d in dc" ng-click="detailo(d.id)">
+                      <span>{{d.name}}</span> <i class="ion-ios-arrow-right"></i>
+                </li>
+        </ul>
         <div ng-if="downloadstatus!==''" class="download-list" >
             <div class="img" style="background-image:url(img\\loading.gif);" bimg="{{downloadimg}}">
             </div>

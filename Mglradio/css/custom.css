@@ -624,6 +624,31 @@
     letter-spacing: -1;
     font-family: "Ubuntu Regular";
 }
+.cld
+{
+    padding:0px;
+    margin:-10px;
+}
+.cld .head
+{
+    font-size:0.9em;
+    font-weight:normal;
+    text-align:center;
+}
+.cld .nrml
+{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.cld .nrml span
+{
+    font-size:0.8em;
+    font-weight:100;
+}
+.cld .nrml i
+{
+    float:right;
+}
 .cl .head
 {
     font-size:0.9em;
