@@ -339,10 +339,16 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.playvideo=function()
         {
             $scope.modal.hide();
-            
-            //
-            gplaylist=[{id:$rootScope.contentdetail.id,name:$rootScope.contentdetail.name,path:$rootScope.contentdetail.path,tname:$rootScope.contentdetail.typen}];
-            player_show(0,false);
+            var ind=0;
+            for(var k=0;k<gplaylist.length;k++)
+            {
+                if($rootScope.contentdetail.id===gplaylist[k].id)
+                {
+                    ind=k;
+                    break;
+                }
+            }
+            player_show(ind,false);
         };
         
         $scope.downloadvideo=function()
@@ -677,7 +683,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.playlist=function(o)
         {
             $scope.closeType();
-            player_show(o,true);
+            player_show(o);
         };
         
         $scope.pause = function() {
@@ -920,7 +926,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 }
                 $scope.dc=dct;
                 gplaylist=plist;
-                    
+                
                 });
               }, function(error) {
               

@@ -87,6 +87,7 @@
                         break;
                     case 'music-controls-play':
                         play();
+                        play();
                         break;
                     default:
                         break;
@@ -172,7 +173,8 @@
             {
                    alert(1);
             }
-            function player_show(i,h)
+            
+            function player_show(i)
             {
                 playerc=i;
                 $("#cp-h").html(gplaylist[playerc].name);
@@ -182,16 +184,6 @@
                 setTimeout(function(){
                     player.play(0);
                 },1000);
-                if(h)
-                {
-                    $("#cp-next").show();
-                    $("#cp-prev").show();
-                }
-                else
-                {
-                    $("#cp-next").hide();
-                    $("#cp-prev").hide();
-                }
             }
             
             function player_next()
