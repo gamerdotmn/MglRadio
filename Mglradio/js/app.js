@@ -28,7 +28,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 }
                    })
             .state('app.category2', {
-                       url: "/categor2y/:id",
+                       url: "/categor2/:id",
                        views: {
                     'newsContent' :{
                                    templateUrl: "templates/category2.html",
