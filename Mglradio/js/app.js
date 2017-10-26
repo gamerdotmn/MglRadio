@@ -112,6 +112,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
+
     .directive('imageonload', function() {
         return {
             link: function(scope, element, attrs) {
@@ -835,7 +836,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 {
                     gplaylist[k]={id:$rootScope.contents[k].id,name:$rootScope.contents[k].name,img:$rootScope.contents[k].img,path:$rootScope.contents[k].path};         
                 }
-                console.log(gplaylist);
                 
               }, function(error) {
               
@@ -849,9 +849,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $ionicLoading.hide();
         }).error(function() {
             $ionicLoading.hide();
-        });
-        
-        
+        });        
 
     })
     .controller('TypeCtrl', function($scope, $ionicLoading, $timeout, $stateParams, $rootScope) {
