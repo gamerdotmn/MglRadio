@@ -144,6 +144,32 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $rootScope.loginstatus=false;
         
         $scope.menu =0;
+        $scope.nexpand=0;
+        $scope.iexpand=0;
+        
+        $scope.nexp=function()
+        {
+            if($scope.nexpand===0)
+            {
+                $scope.nexpand=1;
+            }
+            else
+            {
+                $scope.nexpand=0;
+            }
+        };
+        
+        $scope.iexp=function()
+        {
+           if($scope.iexpand===0)
+            {
+                $scope.iexpand=1;
+            }
+            else
+            {
+                $scope.iexpand=0;
+            } 
+        };
         
         $rootScope.$on('$stateChangeSuccess', 
                        function(event, toState, toParams, fromState, fromParams) { 
