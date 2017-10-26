@@ -836,9 +836,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.net=window.net;
         }, 1000); 
         
-        $scope.$on('$viewContentLoaded', function() {
-            console.log('content');
-        });
         
         $scope.todownloading=function()
         {
@@ -927,7 +924,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             
             $scope.modal.show();
         };
-        console.log('download');
+        
         $scope.refresh=function()
         {
               gplaylist=[];
@@ -941,7 +938,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     gplaylist[i]={id:results.rows.item(i).id,name:results.rows.item(i).name,img:results.rows.item(i).img,path:results.rows.item(i).path};       
                     dct.push({id:results.rows.item(i).id,name:results.rows.item(i).name,description:results.rows.item(i).description,path:results.rows.item(i).path,img:results.rows.item(i).img,typen:results.rows.item(i).typen,time:results.rows.item(i).time});
                 }
-                console.log(gplaylist);
+                
                 $scope.dc=dct;
                 
                 });
