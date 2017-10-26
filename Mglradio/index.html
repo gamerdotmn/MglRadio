@@ -16,6 +16,7 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+        <script type="text/javascript" src="js/jplayer.playlist.min.js"></script>
         <script type="text/javascript" src="js/jquery.transform2d.js"></script>
         <script type="text/javascript" src="js/jquery.grab.js"></script>
         <script type="text/javascript" src="js/mod.csstransforms.min.js"></script>
@@ -31,6 +32,7 @@
             var net = false;
             var isplaying = false;
             var gplaylist=[];
+            
             function play() {
                 if (my_media===null) {
                     my_media = new Media("http://50.7.76.251:8080/;steam.mp3", 
@@ -166,7 +168,10 @@
                     });
                 }
             }, false);
-            
+            function player_end()
+            {
+                   alert(1);
+            }
             function player_show(i,h)
             {
                 playerc=i;
