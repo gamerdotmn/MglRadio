@@ -779,14 +779,66 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         };
     })
     .controller('ContentCtrl', function($rootScope, $ionicScrollDelegate, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
-       
+        
         $scope.gv=1;
         
+        $scope.$on('$ionicView.enter', function(){
+        
+            $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
+            dataService.getContent().success(function(data) {
+                var contents=data.contents;
+                $rootScope.contents = contents;
+                $rootScope.types=data.types;
+                
+                db.transaction(function(tx) {
+                  tx.executeSql("select * from content", [], function(tx, results) {
+                    
+                    for(var i=0;i<results.rows.length;i++)
+                    {
+                        for(var j=0;j<contents.length;j++)
+                        {
+                            if (parseInt(contents[j].id)===parseInt(results.rows.item(i).id))
+                            {
+                                contents[j].img=results.rows.item(i).img;
+                                contents[j].path=results.rows.item(i).path;
+                                contents[j].downloaded=2;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    $rootScope.contents = contents;
+                    
+                    gplaylist=[];
+                    
+                    for(var k=0;j<$rootScope.contents.length;k++)
+                    {
+                        gplaylist[k]={id:$rootScope.contents[k].id,name:$rootScope.contents[k].name,img:$rootScope.contents[k].img,path:$rootScope.contents[k].path};         
+                    }
+                      
+                  }, function(error) {
+                  
+                  });
+                }, function(error) {
+                
+                }, function() {
+                
+                });
+                
+                $ionicLoading.hide();
+            }).error(function() {
+                $ionicLoading.hide();
+            });    
+            
+        });
         $scope.net=true;
         $timeout(function () {
             $scope.net=window.net;
         }, 1000); 
         
+        $scope.$on('$viewContentLoaded', function() {
+            console.log('content');
+        });
         
         $scope.todownloading=function()
         {
@@ -804,52 +856,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.gv=0;
             $ionicScrollDelegate.resize();
         };
-        
-        $ionicLoading.show({template:'<ion-spinner icon="ripple"></ion-spinner>'});
-        dataService.getContent().success(function(data) {
-            var contents=data.contents;
-            $rootScope.contents = contents;
-            $rootScope.types=data.types;
-            
-            db.transaction(function(tx) {
-              tx.executeSql("select * from content", [], function(tx, results) {
-                
-                for(var i=0;i<results.rows.length;i++)
-                {
-                    for(var j=0;j<contents.length;j++)
-                    {
-                        if (parseInt(contents[j].id)===parseInt(results.rows.item(i).id))
-                        {
-                            contents[j].img=results.rows.item(i).img;
-                            contents[j].path=results.rows.item(i).path;
-                            contents[j].downloaded=2;
-                            break;
-                        }
-                    }
-                }
-                
-                $rootScope.contents = contents;
-                
-                gplaylist=[];
-                
-                for(var k=0;j<$rootScope.contents.length;k++)
-                {
-                    gplaylist[k]={id:$rootScope.contents[k].id,name:$rootScope.contents[k].name,img:$rootScope.contents[k].img,path:$rootScope.contents[k].path};         
-                }
-                
-              }, function(error) {
-              
-              });
-            }, function(error) {
-            
-            }, function() {
-            
-            });
-            
-            $ionicLoading.hide();
-        }).error(function() {
-            $ionicLoading.hide();
-        });        
 
     })
     .controller('TypeCtrl', function($scope, $ionicLoading, $timeout, $stateParams, $rootScope) {
@@ -921,7 +927,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             
             $scope.modal.show();
         };
-        
+        console.log('download');
         $scope.refresh=function()
         {
               gplaylist=[];
@@ -935,7 +941,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     gplaylist[i]={id:results.rows.item(i).id,name:results.rows.item(i).name,img:results.rows.item(i).img,path:results.rows.item(i).path};       
                     dct.push({id:results.rows.item(i).id,name:results.rows.item(i).name,description:results.rows.item(i).description,path:results.rows.item(i).path,img:results.rows.item(i).img,typen:results.rows.item(i).typen,time:results.rows.item(i).time});
                 }
-                
+                console.log(gplaylist);
                 $scope.dc=dct;
                 
                 });
