@@ -819,10 +819,11 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 var plist=[];
                 for(var k=0;j<$rootScope.contents.length;k++)
                 {
-                    //{id:"",name:"",path:"",tname:""}
                     plist.push({id:$rootScope.contents[k].id,name:$rootScope.contents[k].name,img:$rootScope.contents[k].img,path:$rootScope.contents[k].path});         
                 }
                 gplaylist=plist;
+                console.log(gplaylist);
+                
               }, function(error) {
               
               });
