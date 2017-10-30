@@ -43,13 +43,6 @@
         <source-file src="src/android/KillBinder.java" target-dir="src/com/homerours/musiccontrols" />
     </platform>
 
-    <!-- windows -->
-  	<platform name="windows">
-    	<js-module src="src/windows/MusicControlsProxy.js" name="MusicControlsProxy">
-    		<merges target="" />
-    	</js-module>
-    </platform>
-
     <platform name="ios">
       <config-file target="config.xml" parent="/*">
           <feature name="MusicControls">
