@@ -7,7 +7,7 @@
   "Author": "",
   "Description": "Mgl Radio",
   "BundleVersion": "2.0",
-  "AndroidVersionCode": "20",
+  "AndroidVersionCode": "35",
   "iOSDeviceFamily": [
     "1"
   ],
