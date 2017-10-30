@@ -622,7 +622,6 @@
     text-transform: initial;
     padding: 10px;
     letter-spacing: -1;
-    font-family: "Ubuntu Regular";
 }
 .cld
 {
@@ -633,12 +632,18 @@
 {
     font-size:0.9em;
     font-weight:normal;
-    text-align:center;
+    background:#212121;
+    color:white;
+    border-color:#424242;
 }
 .cld .nrml
 {
     padding-top:10px;
     padding-bottom:10px;
+    font-family: Ubuntu Regular;
+    background:#212121;
+    color:white;
+    border-color:#424242;    
 }
 .cld .nrml span
 {
@@ -653,12 +658,18 @@
 {
     font-size:0.9em;
     font-weight:normal;
-    text-align:center;
+    background:#212121;
+    color:white;
+    border-color:#424242;
 }
 .cl .nrml
 {
     padding-top:10px;
     padding-bottom:10px;
+    font-family: Ubuntu Regular;
+    background:#212121;
+    color:white;
+    border-color:#424242;
 }
 .cl .nrml span
 {
