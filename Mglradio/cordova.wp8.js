@@ -1,4 +1,4 @@
-// Platform: wp8
+﻿// Platform: wp8
 // 8e9610fe33fc743fcaf5d920064f0deb2cad1715
 /*
  Licensed to the Apache Software Foundation (ASF) under one
