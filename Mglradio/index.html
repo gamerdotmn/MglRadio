@@ -102,14 +102,14 @@
             
             document.addEventListener('deviceready', function () {
                 
-                window.localStorage.removeItem("d_is");
-                window.localStorage.removeItem("d_name");
-                window.localStorage.removeItem("d_description");
-                window.localStorage.removeItem("d_path");
-                window.localStorage.removeItem("d_img");
-                window.localStorage.removeItem("d_typen");
-                window.localStorage.removeItem("d_time");
-                window.localStorage.removeItem("d_id");
+                NativeStorage.remove("d_is",function(){},function(){});
+                NativeStorage.remove("d_name",function(){},function(){});
+                NativeStorage.remove("d_description",function(){},function(){});
+                NativeStorage.remove("d_path",function(){},function(){});
+                NativeStorage.remove("d_img",function(){},function(){});
+                NativeStorage.remove("d_typen",function(){},function(){});
+                NativeStorage.remove("d_time",function(){},function(){});
+                NativeStorage.remove("d_id",function(){},function(){});
                 
                 fileTransfer = new FileTransfer();
                 //download.startDownload();
