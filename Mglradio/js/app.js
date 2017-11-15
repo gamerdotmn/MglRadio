@@ -205,6 +205,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                            }
                        });
         
+        
         if(window.localStorage.getItem("username")!==null)
         {
             $rootScope.username=window.localStorage.getItem("username");

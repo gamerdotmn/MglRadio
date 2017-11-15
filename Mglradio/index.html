@@ -100,7 +100,14 @@
             var player;
             var playerc=0;
             
+            
             document.addEventListener('deviceready', function () {
+                
+                
+                //NativeStorage.remove("test",function(obj){},function(err){});
+                //NativeStorage.getItem("test",function(obj){alert(obj);},function(err){});
+                ///NativeStorage.setItem("test","123");
+                
                 
                 NativeStorage.remove("d_is",function(){},function(){});
                 NativeStorage.remove("d_name",function(){},function(){});
