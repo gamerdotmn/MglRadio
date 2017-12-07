@@ -2,14 +2,15 @@
   "ProjectName": "Mglradio",
   "ProjectGuid": "365b4d09-1a2b-4376-b8e4-015af10019b6",
   "projectVersion": 1,
-  "AppIdentifier": "MGLRADIO.COM",
+  "AppIdentifier": "com.hureemedia.mglradio",
   "DisplayName": "Mgl Radio",
   "Author": "",
   "Description": "Mgl Radio",
   "BundleVersion": "4.0",
   "AndroidVersionCode": "35",
   "iOSDeviceFamily": [
-    "1"
+    "1",
+    "2"
   ],
   "iOSBackgroundMode": [
     "audio"

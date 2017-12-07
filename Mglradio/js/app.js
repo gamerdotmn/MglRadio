@@ -632,7 +632,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                             d = true;
                             $location.hash('r'+$scope.timetables[i].id);
                             $timeout(function () {
-                                $ionicScrollDelegate.anchorScroll(true);$ionicScrollDelegate.scrollBy(0,-30);
+                                $ionicScrollDelegate.anchorScroll(true);
+                                $ionicScrollDelegate.scrollBy(0,-30);
                             },100);
                         }
                     }
