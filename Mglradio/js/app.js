@@ -108,11 +108,10 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                }
                 }
                    });
-        $urlRouterProvider.otherwise("/app/news");
+        $urlRouterProvider.otherwise("/app/radio");
         $ionicConfigProvider.views.transition('ios');
         $ionicConfigProvider.scrolling.jsScrolling(true);
     })
-
     .directive('imageonload', function() {
         return {
             link: function(scope, element, attrs) {
