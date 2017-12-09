@@ -482,6 +482,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http,$ionicModal) {
         $scope.d=moment().weekday();
+        alert($scope.d);
         $scope.ptitle="";
         
         if($scope.d===1)
@@ -602,8 +603,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $http.get(host+"/api/ts.php?day="+$scope.d)
                      .then(function(response) 
                         {
-                            console.log('ts');
-                            console.log(response);
                             $scope.timetables=response.data.timetables;
                             $scope.active();
                             $ionicLoading.hide();
