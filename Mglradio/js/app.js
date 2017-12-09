@@ -782,9 +782,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('ContentCtrl', function($rootScope, $ionicScrollDelegate, $scope, $ionicLoading, $ionicModal, $window, dataService, $timeout) {
         
-        $scope.gv=1;
-        
-        
+        $scope.gv=true;
         
         $scope.$on('$ionicView.enter', function(){
         
@@ -848,16 +846,27 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.grid=function()
         {
-            $scope.gv=1;  
+            $scope.gv=true;  
             $ionicScrollDelegate.resize();
         };
         
         $scope.list=function()
         {
-            $scope.gv=0;
+            $scope.gv=false;
             $ionicScrollDelegate.resize();
         };
-
+        
+        $scope.ot=function()
+        {
+            if($scope.gv)
+            {
+                $scope.list();
+            }
+            else
+            {
+                $scope.grid();
+            }
+        };
     })
     .controller('TypeCtrl', function($scope, $ionicLoading, $timeout, $stateParams, $rootScope) {
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
@@ -884,18 +893,30 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope) {
         
-        $scope.gv=1;
+        $scope.gv=true;
         
         $scope.grid=function()
         {
-            $scope.gv=1;  
+            $scope.gv=true;  
             $ionicScrollDelegate.resize();
         };
         
         $scope.list=function()
         {
-            $scope.gv=0;
+            $scope.gv=false;
             $ionicScrollDelegate.resize();
+        };
+        
+        $scope.ot=function()
+        {
+            if($scope.gv)
+            {
+                $scope.list();
+            }
+            else
+            {
+                $scope.grid();
+            }
         };
         
         $scope.downloadstatus="";

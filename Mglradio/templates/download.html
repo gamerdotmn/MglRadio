@@ -5,17 +5,13 @@
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right" >
-        <button ng-if="gv==0" class="button sidemenu" ng-click="grid()">
-            <i class="icon ion-ios-grid-view"></i>
-        </button>
-        <button ng-if="gv==1" class="button sidemenu" ng-click="list()">
-            <i class="icon ion-ios-list"></i>
-        </button>
         <button class="button sidemenu" ng-click="tocontents()">
             <i class="icon ion-android-download"></i>
         </button>
     </ion-nav-buttons>
+    
     <ion-content class="download" has-bouncing="true">
+        <ion-toggle toggle-class="toggle-assertive" style="margin:-10px;background:none;color:white;border:none;border-bottom:#333 1px solid;" ng-click="ot()" ng-checked="false"><i class="icon ion-ios-list"></i></ion-toggle>
         <div ng-if="dc.length==0&&downloadstatus==''&&gv==1" style="padding-top:20%;">
             <br/>
             <center>
@@ -23,7 +19,7 @@
                 <p style="color:white;margin-top:8px;line-height:15px;margin-left:10%;margin-right:10%;font-size:12px;font-family: 'Ubuntu Regular';">Та хүссэн видеогоо татаж интернетгүй орчинд ч үзэх боломжтой.</p>
             </center>
         </div>
-        <ul ng-if="gv==0" class="list cld">
+        <ul ng-if="gv==false" class="list cld">
             <li class="item nrml" ng-repeat="d in dc" ng-click="detailo(d.id)">
                   <span>{{d.name}}</span> <i class="ion-ios-arrow-right"></i>
             </li>
@@ -46,7 +42,7 @@
                 <p class="description">{{downloadstatus}}</p>
             </div>
         </div>
-        <div ng-if="gv==1" class="download-list" ng-repeat="d in dc" ng-click="detailo(d.id)">
+        <div ng-if="gv==true" class="download-list" ng-repeat="d in dc" ng-click="detailo(d.id)">
             <div class="img" style="background-image:url(img\\loading.gif);" bimg="{{d.img}}">
             </div>
             <div class="other">
