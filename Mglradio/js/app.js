@@ -204,15 +204,21 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                            }
                        });
         
-        NativeStorage.getItem("username",function(obj){
+        setTimeout(function()
+        {
             
-            if(obj!==null)
-            {
-                $rootScope.username=obj;
-                $rootScope.loginstatus=true;
-            }
+            NativeStorage.getItem("username",function(obj){
             
-        },function(err){});
+                if(obj!==null)
+                {
+                    $rootScope.username=obj;
+                    $rootScope.loginstatus=true;
+                }
+            
+            },function(err){});
+            
+        },5000);
+        
         
         $scope.tologin=function()
         {
@@ -646,6 +652,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                 }
             }
         }
+        
         
         $scope.playstatus = false;
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
