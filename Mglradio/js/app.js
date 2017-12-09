@@ -489,32 +489,24 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             {
                 $window.location.href = '#/app/download';
             }
-        }, 5000); 
+        }, 10000); 
         
+        setTimeout(function()
+        {
+            var url = "http://www.intelligrape.com/images/logo.png"; // image url
+              window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
+                  var imagePath = fs.root.fullPath + "/logo.png"; // full file path
+                  var fileTransfer = new FileTransfer();
+                  fileTransfer.download(url, imagePath, function (entry) {
+                           console.log(entry.fullPath); // entry is fileEntry object
+                  }, function (error) {
+                           console.log(error);
+                  });
+               })
+
         
-        console.log('start');
-        var gid=uuidv4()+'.jpeg';
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-            console.log(fileSystem);
-            fileSystem.root.getDirectory("mglr",{create:true},function(dir) {
-            console.log(dir);
-            fileSystem.root.getFile("mglr/"+gid, { create: true }, function (filePath) {
-                console.log(filePath);
-                
-                fileTransfer.download(
-                    'http://app.mglradio.com/uploads/contents/7.jpg',
-                    fileSystem.root.toURL()+'/mglr/'+gid,
-                    function(entry) {
-                        console.log(entry);
-                        },
-                    function(error) {  
-                        console.log(JSON.parse(error));
-                    }  
-                );
-            });
-          },function(){});
-        });
-            
+        },10000);
+        
         $scope.d=moment().weekday();
         $scope.ptitle="";
         
