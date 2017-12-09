@@ -481,8 +481,12 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http,$ionicModal) {
         $scope.d=moment().weekday();
-        
         $scope.ptitle="";
+        
+        if($scope.d===0)
+        {
+            $scope.d=7;
+        }
         
         if($scope.d===1)
         {
@@ -536,16 +540,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
         else if($scope.d===6)
         {
-            $scope.dt1=moment().add(-1,'day').format('MM/DD');
-            $scope.dt2=moment().add(0,'day').format('MM/DD');
-            $scope.dt3=moment().add(1,'day').format('MM/DD');
-            $scope.dt4=moment().add(2,'day').format('MM/DD');
-            $scope.dt5=moment().add(3,'day').format('MM/DD');
-            $scope.dt6=moment().add(4,'day').format('MM/DD');
-            $scope.dt7=moment().add(5,'day').format('MM/DD');
-        }
-        else if($scope.d===7)
-        {
             $scope.dt1=moment().add(-5,'day').format('MM/DD');
             $scope.dt2=moment().add(-4,'day').format('MM/DD');
             $scope.dt3=moment().add(-3,'day').format('MM/DD');
@@ -553,6 +547,16 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.dt5=moment().add(-1,'day').format('MM/DD');
             $scope.dt6=moment().add(0,'day').format('MM/DD');
             $scope.dt7=moment().add(1,'day').format('MM/DD');
+        }
+        else if($scope.d===7)
+        {
+            $scope.dt1=moment().add(-6,'day').format('MM/DD');
+            $scope.dt2=moment().add(-5,'day').format('MM/DD');
+            $scope.dt3=moment().add(-4,'day').format('MM/DD');
+            $scope.dt4=moment().add(-3,'day').format('MM/DD');
+            $scope.dt5=moment().add(-2,'day').format('MM/DD');
+            $scope.dt6=moment().add(-1,'day').format('MM/DD');
+            $scope.dt7=moment().add(0,'day').format('MM/DD');
         }
         
         $ionicModal.fromTemplateUrl('templates/playlist.html', {
@@ -582,7 +586,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $scope.closeType = function() {
             $scope.modalt.hide();
         };
-                
+           
         $scope.getbyid = function(id) {
             var r = null;
             for (var i = $scope.timetables.length - 1;i >= 0;i--) {
@@ -642,6 +646,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         $scope.playstatus = false;
         $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+        
         $http.get(host+"/api/ts.php?day="+$scope.d)
                  .then(function(response) 
                     {
