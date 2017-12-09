@@ -278,7 +278,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         $rootScope.contents = [];
         
         
-        $scope.load();
         $scope.doRefresh = function() {
             $scope.page=0;
             $scope.load();
@@ -414,13 +413,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('NewsCtrl', function($rootScope, $scope, $ionicLoading,$timeout,$window) {
        
-        $timeout(function () {
-            $scope.net=window.net;
-            if($scope.net===false)
-            {
-                $window.location.href = '#/app/download';
-            }
-        }, 2500); 
+        $scope.load();
+        
     })
     .controller('Category2Ctrl', function($scope, $ionicLoading, $timeout, $stateParams,$http) {
         $scope.cnews = [];
@@ -489,6 +483,38 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http,$ionicModal) {
+        $timeout(function () {
+            $scope.net=window.net;
+            if($scope.net===false)
+            {
+                $window.location.href = '#/app/download';
+            }
+        }, 5000); 
+        
+        
+        console.log('start');
+        var gid=uuidv4()+'.jpeg';
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+            console.log(fileSystem);
+            fileSystem.root.getDirectory("mglr",{create:true},function(dir) {
+            console.log(dir);
+            fileSystem.root.getFile("mglr/"+gid, { create: true }, function (filePath) {
+                console.log(filePath);
+                
+                fileTransfer.download(
+                    'http://app.mglradio.com/uploads/contents/7.jpg',
+                    fileSystem.root.toURL()+'/mglr/'+gid,
+                    function(entry) {
+                        console.log(entry);
+                        },
+                    function(error) {  
+                        console.log(JSON.parse(error));
+                    }  
+                );
+            });
+          },function(){});
+        });
+            
         $scope.d=moment().weekday();
         $scope.ptitle="";
         

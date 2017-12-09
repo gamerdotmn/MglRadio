@@ -112,7 +112,7 @@ var download = {
             
             fileSystem.root.getFile("mglr/"+download.videoName, { create: true }, function (newFile) {
                 download.d_video=newFile.toURL();
-                download.downloadFile(download.d_path, newFile);
+                download.downloadFile(download.d_path, download.d_video);
             });
             
             },function(){});
