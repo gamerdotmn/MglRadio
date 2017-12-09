@@ -204,12 +204,15 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                            }
                        });
         
-        
-        if(window.localStorage.getItem("username")!==null)
-        {
-            $rootScope.username=window.localStorage.getItem("username");
-            $rootScope.loginstatus=true;
-        }
+        NativeStorage.getItem("username",function(obj){
+            
+            if(obj!==null)
+            {
+                $rootScope.username=obj;
+                $rootScope.loginstatus=true;
+            }
+            
+        },function(err){});
         
         $scope.tologin=function()
         {
@@ -220,7 +223,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         {
             $rootScope.loginstatus = false; 
             $rootScope.username = "";
-            window.localStorage.removeItem("username");
+            NativeStorage.remove("username",function(obj){},function(err){});
             $window.location.href = '#/app/news';
         };
         
@@ -1059,7 +1062,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         var loginresponse = $http.post(host + "/api/login.php", data, {});
                         loginresponse.success(function(data, status, headers, config) {
                             if (data === "1") {
-                                window.localStorage.setItem("username", user.name);
+                                NativeStorage.setItem("username",user.name);
                                 $rootScope.loginstatus = true;
                                 $rootScope.username = user.name;
                                 $window.location.href = '#/app/content';
@@ -1106,7 +1109,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                                         signupresponse.success(function(data, status, headers, config) {
                                             
                                             if (data === "2") {
-                                                window.localStorage.setItem("username", user.user_id);
+                                                NativeStorage.setItem("username",user.user_id);
                                                 $rootScope.loginstatus = true; 
                                                 $rootScope.username = user.user_id;
                                                 $window.location.href = '#/app/content';
@@ -1156,7 +1159,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                         if (data !== "0") {
                             var str = data;
                             var res = str.split("=");
-                            window.localStorage.setItem("username", res[0]);
+                            NativeStorage.setItem("username",res[0]);
                             $rootScope.loginstatus = true;
                             $rootScope.username = res[0];
                             navigator.notification.alert("Таны и-мейл хаягруу шинэ нууц үгийг илгээлээ. И-мейл хаягаа шалган шинэ нууц үгээрээ нэвтэрнэ үү.!", alertCallback, "Амжилттай", "Хаах");

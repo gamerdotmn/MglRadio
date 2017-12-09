@@ -106,16 +106,16 @@
                 //NativeStorage.remove("test",function(obj){},function(err){});
                 //NativeStorage.getItem("test",function(obj){alert(obj);},function(err){});
                 ///NativeStorage.setItem("test","123");
-                /*
-                NativeStorage.remove("d_is",function(){},function(){});
-                NativeStorage.remove("d_name",function(){},function(){});
-                NativeStorage.remove("d_description",function(){},function(){});
-                NativeStorage.remove("d_path",function(){},function(){});
-                NativeStorage.remove("d_img",function(){},function(){});
-                NativeStorage.remove("d_typen",function(){},function(){});
-                NativeStorage.remove("d_time",function(){},function(){});
-                NativeStorage.remove("d_id",function(){},function(){});
-                */
+                
+                window.localStorage.removeItem("d_is");
+                window.localStorage.removeItem("d_name");
+                window.localStorage.removeItem("d_description");
+                window.localStorage.removeItem("d_path");
+                window.localStorage.removeItem("d_img");
+                window.localStorage.removeItem("d_typen");
+                window.localStorage.removeItem("d_time");
+                window.localStorage.removeItem("d_id");
+                
                 fileTransfer = new FileTransfer();
                 //download.startDownload();
                 if(typeof(cordova.plugins)!=="undefined")
