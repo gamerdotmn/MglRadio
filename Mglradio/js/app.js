@@ -1,4 +1,4 @@
-var host = "http://app.mglradio.com";
+var host = "https://app.mglradio.com";
 
 angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
