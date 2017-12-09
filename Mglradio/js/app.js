@@ -482,7 +482,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     })
     .controller('RadioCtrl', function($rootScope, $scope, $ionicLoading, $window, $timeout, $ionicScrollDelegate,$location,$http,$ionicModal) {
         $scope.d=moment().weekday();
-        alert($scope.d);
+        
         $scope.ptitle="";
         
         if($scope.d===1)
@@ -1044,6 +1044,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         function alertCallback() {
         }
+        
         $scope.login = function(user) {
             if (user) {
                 if (typeof user.name !== "undefined" && user.name !== "") {
