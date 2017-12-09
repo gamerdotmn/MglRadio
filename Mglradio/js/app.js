@@ -1,4 +1,4 @@
-var host = "https://app.mglradio.com";
+var host = "http://app.mglradio.com";
 
 angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
     .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -814,10 +814,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     }
                     
                     $rootScope.contents = contents;
-                    
                     gplaylist=[];
                     
-                    for(var k=0;j<$rootScope.contents.length;k++)
+                    for(var k=0;k<$rootScope.contents.length;k++)
                     {
                         gplaylist[k]={id:$rootScope.contents[k].id,name:$rootScope.contents[k].name,img:$rootScope.contents[k].img,path:$rootScope.contents[k].path};         
                     }
