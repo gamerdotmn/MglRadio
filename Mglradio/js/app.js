@@ -219,7 +219,6 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             
         },5000);
         
-        
         $scope.tologin=function()
         {
             $window.location.href = '#/app/login';
@@ -277,6 +276,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             });
         };
         $rootScope.contents = [];
+        
         
         $scope.load();
         $scope.doRefresh = function() {
@@ -904,7 +904,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         }, 1000); 
         
     })
-    .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope) {
+    .controller('DownloadCtrl', function($scope, $window, $timeout,$interval,$rootScope,$ionicScrollDelegate) {
         
         $scope.gv=true;
         
