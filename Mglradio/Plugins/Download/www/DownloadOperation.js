@@ -60,7 +60,6 @@ DownloadOperation.prototype.startAsync = function() {
             deferral.reject(err);
         };
     
-    alert(this.resultFile.toURL());
     
     exec(successCallback, errorCallback, "BackgroundDownload", "startAsync", [this.uri, this.resultFile.toURL()]);
 
