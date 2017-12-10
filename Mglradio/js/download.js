@@ -89,8 +89,8 @@ var download = {
         var error = function (err) {
             console.log('Error: ' + err);
         };
-        var progress = function(progress) {
-           window.downloadstatus=parseInt(100 * progress.bytesReceived / progress.totalBytesToReceive) + '% ТАТСАН';
+        var progress = function(p) {
+           window.downloadstatus=parseInt(100 * p.bytesReceived / p.totalBytesToReceive) + '% ТАТСАН';
         };
         try {
             
