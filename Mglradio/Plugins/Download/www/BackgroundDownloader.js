@@ -1,4 +1,4 @@
-/*
+﻿/*
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -35,8 +35,8 @@ var BackgroundDownloader = function() {
  * @param {string} uri The location of the resource.
  * @param {File} resultFile The file that the response will be written to.
  */
-BackgroundDownloader.prototype.createDownload = function(uri, resultFile,title) {
-    return new DownloadOperation(uri, resultFile, title);
+BackgroundDownloader.prototype.createDownload = function(uri, resultFile) {
+    return new DownloadOperation(uri, resultFile);
 };
 
 module.exports = BackgroundDownloader;

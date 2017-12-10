@@ -493,17 +493,26 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         setTimeout(function()
         {
-            var url = "http://www.intelligrape.com/images/logo.png"; // image url
-              window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
-                  var imagePath = fs.root.fullPath + "/logo.png"; // full file path
-                  var fileTransfer = new FileTransfer();
-                  fileTransfer.download(url, imagePath, function (entry) {
-                           console.log(entry.fullPath); // entry is fileEntry object
-                  }, function (error) {
-                           console.log(error);
-                  });
-               })
-
+            var fileName = "photo.jpg",
+            uriString = "https://content.ikon.mn/news/2017/12/8/28b833_MPA_PHOTO-4717_x974.jpg";
+            
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+                fileSystem.root.getFile(fileName, { create: true }, function (targetFile) {
+                    var complete = function() {
+                        console.log('complete');
+                    };
+                    var error = function (e) {
+                        console.log(e);
+                    };
+                    var progress = function(p) {
+                        console.log(p);
+                    };
+                    var downloader = new BackgroundTransfer.BackgroundDownloader();
+                    var download = downloader.createDownload(uriString, targetFile);
+                    app.downloadPromise = download.startAsync().then(complete, error, progress);
+                    
+                });
+            });
         
         },10000);
         

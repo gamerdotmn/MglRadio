@@ -68,10 +68,10 @@ var download = {
                                 });
                                 
                                 cordova.plugins.notification.local.schedule({
-                                                                                          title: "FM 102.1",
-                                                                                          text: "Амжилттай татагдлаа - "+download.d_name,
-                                                                                          autoClear:  true
-                                                                                      });
+                                      title: "FM 102.1",
+                                      text: "Амжилттай татагдлаа - "+download.d_name,
+                                      autoClear:  true
+                                });
                                 window.downloadstatus="";
                                 
                             },
