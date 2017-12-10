@@ -509,12 +509,13 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
                     };
                     var downloader = new BackgroundTransfer.BackgroundDownloader();
                     var download = downloader.createDownload(uriString, targetFile);
-                    app.downloadPromise = download.startAsync().then(complete, error, progress);
+                    download.startAsync().then(complete, error, progress);
                     
                 });
             });
         
         },10000);
+        
         
         $scope.d=moment().weekday();
         $scope.ptitle="";
