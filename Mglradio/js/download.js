@@ -111,7 +111,7 @@ var download = {
             fileSystem.root.getDirectory("mglr",{create:true},function(dir) {
             
             fileSystem.root.getFile("mglr/"+download.videoName, { create: true }, function (newFile) {
-                download.d_video=newFile.toURL();
+                download.d_video=newFile;
                 download.downloadFile(download.d_path, download.d_video);
             });
             

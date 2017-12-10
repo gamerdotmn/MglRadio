@@ -487,29 +487,9 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.net=window.net;
             if($scope.net===false)
             {
-                //$window.location.href = '#/app/download';
+                $window.location.href = '#/app/download';
             }
         }, 10000); 
-        
-        setTimeout(function()
-        {
-            var fileName = "2df736_24992996_935997519888136_134898782_o_20171208125348_x974.jpg",
-            uriString = "https://content.ikon.mn/news/2017/12/8/2df736_24992996_935997519888136_134898782_o_20171208125348_x974.jpg";
-            
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-                fileSystem.root.getFile(fileName, { create: true }, function (targetFile) {
-                    
-                    var onSuccess, onError, onProgress; 
-            
-                    var downloader = new BackgroundTransfer.BackgroundDownloader();
-                    
-                    var download = downloader.createDownload(uriString, targetFile);
-                    
-                    app.downloadPromise = download.startAsync().then(onSuccess, onError, onProgress);
-                });
-            });
-        
-        },10000);
         
         $scope.d=moment().weekday();
         $scope.ptitle="";
