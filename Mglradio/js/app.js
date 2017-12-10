@@ -493,14 +493,14 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         setTimeout(function()
         {
-            var fileName = "photo.jpg",
+            var fileName = "photos.jpg",
             uriString = "https://content.ikon.mn/news/2017/12/8/28b833_MPA_PHOTO-4717_x974.jpg";
-            console.log('start');
+            alert('start');
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                 fileSystem.root.getFile(fileName, { create: true }, function (targetFile) {
                     var complete = function() {
                         targetFile.file(function (meta) {
-                            alert(JSON.parse(meta));
+                            alert(meta);
                         });
                     };
                     var error = function (e) {
