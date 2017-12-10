@@ -495,27 +495,26 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         {
             var fileName = "photo.jpg",
             uriString = "https://content.ikon.mn/news/2017/12/8/28b833_MPA_PHOTO-4717_x974.jpg";
-            console.log('start');
-            alert(1);
+            
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                 fileSystem.root.getFile(fileName, { create: true }, function (targetFile) {
                     var complete = function() {
                         targetFile.file(function (meta) {
-                            console.log(meta);
+                            alert(JSON.parse(meta));
                         });
                     };
                     var error = function (e) {
-                        console.log(e);
+                        alert('error'+e);
                     };
                     var progress = function(p) {
-                        console.log(parseInt(100 * p.bytesReceived / p.totalBytesToReceive));
+                        //console.log(parseInt(100 * p.bytesReceived / p.totalBytesToReceive));
                     };
                     var downloader = new BackgroundTransfer.BackgroundDownloader();
                     var download = downloader.createDownload(uriString, targetFile);
                     download.startAsync().then(complete, error, progress);
                     
-                },function(e2){console.log(e2);});
-            },function(e1){console.log(e1);});
+                },function(e1){alert(e1);});
+            },function(e2){alert(e2);});
         
         },10000);
         
