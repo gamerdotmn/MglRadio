@@ -1,4 +1,4 @@
-﻿/*
+/*
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -59,7 +59,9 @@ DownloadOperation.prototype.startAsync = function() {
         errorCallback = function(err) {
             deferral.reject(err);
         };
-
+    
+    alert(this.resultFile.toURL());
+    
     exec(successCallback, errorCallback, "BackgroundDownload", "startAsync", [this.uri, this.resultFile.toURL()]);
 
     // custom mechanism to trigger stop when user cancels pending operation

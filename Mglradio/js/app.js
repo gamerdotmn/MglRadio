@@ -493,8 +493,8 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         setTimeout(function()
         {
-            var fileName = "PointerEventsCordovaPlugin.wmv",
-            uriString = "http://media.ch9.ms/ch9/8c03/f4fe2512-59e5-4a07-bded-124b06ac8c03/PointerEventsCordovaPlugin.wmv";
+            var fileName = "2df736_24992996_935997519888136_134898782_o_20171208125348_x974.jpg",
+            uriString = "https://content.ikon.mn/news/2017/12/8/2df736_24992996_935997519888136_134898782_o_20171208125348_x974.jpg";
             
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                 fileSystem.root.getFile(fileName, { create: true }, function (targetFile) {
