@@ -19,11 +19,13 @@
 
 #import "BackgroundDownload.h"
 
-@implementation BackgroundDownload
-//https://developer.apple.com/library/IOs/samplecode/SimpleBackgroundTransfer/Introduction/Intro.html
-// https://www.captechconsulting.com/blog/nicholas-cipollina/ios-7-tutorial-series-nsurlsession
-// http://www.shinobicontrols.com/blog/posts/2013/09/20/ios7-day-by-day-day-1-nsurlsession/
-//http://stackoverflow.com/questions/13996621/downloading-multiple-files-in-batches-in-ios
+@implementation BackgroundDownload {
+    bool ignoreNextError;
+}
+
+@synthesize session;
+@synthesize downloadTask;
+
 - (void)startAsync:(CDVInvokedUrlCommand*)command
 {
     self.downloadUri = [command.arguments objectAtIndex:0];
@@ -33,11 +35,18 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.downloadUri]];
     
+    ignoreNextError = NO;
     
-    self.session = self.backgroundSession;
-    self.downloadTask = [self.session downloadTaskWithRequest:request];
+    session = [self backgroundSession];
     
-    [self.downloadTask resume];
+    [session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        if (downloadTasks.count > 0) {
+            downloadTask = downloadTasks[0];
+        } else {
+            downloadTask = [session downloadTaskWithRequest:request];
+        }
+        [downloadTask resume];
+    }];
     
 }
 
@@ -46,12 +55,11 @@
     static NSURLSession *backgroundSession = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfiguration:@"com.cordova.plugin.BackgroundDownload.BackgroundSession"];
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"com.cordova.plugin.BackgroundDownload.BackgroundSession"];
         backgroundSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     });
     return backgroundSession;
 }
-
 
 - (void)stop:(CDVInvokedUrlCommand*)command
 {
@@ -63,37 +71,56 @@
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Arg was null"];
     }
+    
+    [downloadTask cancel];
+    
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-
-
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
-    if (downloadTask == self.downloadTask){
-        int64_t progress = 100 * totalBytesWritten / totalBytesExpectedToWrite;
-        
-        NSMutableDictionary* progressObj = [NSMutableDictionary dictionaryWithCapacity:1];
-        [progressObj setObject:[NSNumber numberWithInteger:progress] forKey:@"progress"];
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:progressObj];
-        result.keepCallback = [NSNumber numberWithInteger: TRUE];
-        [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
-    }
+    NSMutableDictionary* progressObj = [NSMutableDictionary dictionaryWithCapacity:1];
+    [progressObj setObject:[NSNumber numberWithInteger:totalBytesWritten] forKey:@"bytesReceived"];
+    [progressObj setObject:[NSNumber numberWithInteger:totalBytesExpectedToWrite] forKey:@"totalBytesToReceive"];
+    NSMutableDictionary* resObj = [NSMutableDictionary dictionaryWithCapacity:1];
+    [resObj setObject:progressObj forKey:@"progress"];
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resObj];
+    result.keepCallback = [NSNumber numberWithInteger: TRUE];
+    [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
 }
 
-
+-(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    if (ignoreNextError) {
+        ignoreNextError = NO;
+        return;
+    }
+    
+    if (error != nil) {
+        if ((error.code == -999)) {
+            NSData* resumeData = [[error userInfo] objectForKey:NSURLSessionDownloadTaskResumeData];
+            // resumeData is available only if operation was terminated by the system (no connection or other reason)
+            // this happens when application is closed when there is pending download, so we try to resume it
+            if (resumeData != nil) {
+                ignoreNextError = YES;
+                [downloadTask cancel];
+                downloadTask = [self.session downloadTaskWithResumeData:resumeData];
+                [downloadTask resume];
+                return;
+            }
+        }
+        CDVPluginResult* errorResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+        [self.commandDelegate sendPluginResult:errorResult callbackId:self.callbackId];
+    } else {
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
+    }
+}
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    NSError *error;
+    NSURL *targetURL = [NSURL URLWithString:_targetFile];
     
-    [fileManager removeItemAtPath:self.targetFile error:NULL];
-    BOOL success = [fileManager copyItemAtPath:[location absoluteString] toPath:self.targetFile error:&error];
-    
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
+    [fileManager removeItemAtPath:targetURL.path error: nil];
+    [fileManager createFileAtPath:targetURL.path contents:[fileManager contentsAtPath:[location path]] attributes:nil];
 }
-
-
-
 @end

@@ -493,28 +493,21 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
         
         setTimeout(function()
         {
-            var fileName = "photos.jpg",
-            uriString = "https://content.ikon.mn/news/2017/12/8/28b833_MPA_PHOTO-4717_x974.jpg";
-            alert('start');
+            var fileName = "PointerEventsCordovaPlugin.wmv",
+            uriString = "http://media.ch9.ms/ch9/8c03/f4fe2512-59e5-4a07-bded-124b06ac8c03/PointerEventsCordovaPlugin.wmv";
+            
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                 fileSystem.root.getFile(fileName, { create: true }, function (targetFile) {
-                    var complete = function() {
-                        targetFile.file(function (meta) {
-                            alert(meta);
-                        });
-                    };
-                    var error = function (e) {
-                        alert('error'+e);
-                    };
-                    var progress = function(p) {
-                        console.log(parseInt(100 * p.bytesReceived / p.totalBytesToReceive));
-                    };
-                    var downloader = new BackgroundTransfer.BackgroundDownloader();
-                    var download = downloader.createDownload(uriString, targetFile);
-                    download.startAsync().then(complete, error, progress);
                     
-                },function(e1){alert(e1);});
-            },function(e2){alert(e2);});
+                    var onSuccess, onError, onProgress; 
+            
+                    var downloader = new BackgroundTransfer.BackgroundDownloader();
+                    
+                    var download = downloader.createDownload(uriString, targetFile);
+                    
+                    app.downloadPromise = download.startAsync().then(onSuccess, onError, onProgress);
+                });
+            });
         
         },10000);
         
