@@ -499,23 +499,24 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                 fileSystem.root.getFile(fileName, { create: true }, function (targetFile) {
                     var complete = function() {
-                        console.log('complete');
+                        targetFile.file(function (meta) {
+                            console.log(meta);
+                        });
                     };
                     var error = function (e) {
                         console.log(e);
                     };
                     var progress = function(p) {
-                        console.log(p);
+                        console.log(parseInt(100 * p.bytesReceived / p.totalBytesToReceive));
                     };
                     var downloader = new BackgroundTransfer.BackgroundDownloader();
                     var download = downloader.createDownload(uriString, targetFile);
                     download.startAsync().then(complete, error, progress);
                     
-                });
-            });
+                },function(e2){console.log(e2);});
+            },function(e1){console.log(e1);});
         
         },10000);
-        
         
         $scope.d=moment().weekday();
         $scope.ptitle="";
