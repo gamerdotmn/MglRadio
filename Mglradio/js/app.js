@@ -487,6 +487,7 @@ angular.module('mglradioapp', ['ionic','ngAnimate','ngSanitize', 'ksSwiper'])
             $scope.net=window.net;
             if($scope.net===false)
             {
+                $ionicLoading.hide();
                 $window.location.href = '#/app/download';
             }
         }, 10000); 
